@@ -1,83 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SidebarMenu } from '../interfaces/SidebarInterface';
+import { useSidebarMenuItem } from '../hooks/useSidebarMenuItem';
 
 interface Props {
-  menuItem:    SidebarMenu;
-  isCollapsed: boolean;
+  menuItem: SidebarMenu;
 }
 
-type MenuItemAction = 'show' | 'hide';
+export const SidebarMenuItem = ({ menuItem }: Props) => {
 
-export const SidebarMenuItem = ({ menuItem, isCollapsed }: Props) => {
+  const { 
+    customStyle, 
+    menuItemStatus, 
+    submenuIsCollapsing, 
+    handleClickMenu, 
+    handleClickSubmenu, 
+  } = useSidebarMenuItem( menuItem );
 
-  const [ menuItemState, setMenuItemState ] = useState<MenuItemAction>('hide');
-  const [ isCollapsing, setIsCollapsing ] = useState<boolean>( false );
-  const [ customStyle, setCustomStyle ] = useState<React.CSSProperties>();
-
-  const handleMenuAction = () => {
-    setIsCollapsing( true );
-
-    setTimeout(() => {
-      setMenuItemState( menuItemState === 'show' ? 'hide' : 'show' );
-      setIsCollapsing( false );
-    }, 150);
-  }
-
-  useEffect(() => {
-    if( isCollapsing ) {
-      if( menuItemState === 'hide'  ) {
-        setCustomStyle({
-          height: ( menuItem.subitem?.header ? 60 : 0 ) + ( menuItem.subitem ? menuItem.subitem.items.length * 36 : 0 )
-        });
-      } else {
-        setCustomStyle({});
-      }
-    } else {
-      if( menuItemState === 'show'  ) {
-        setCustomStyle({
-          height: ( menuItem.subitem?.header ? 60 : 0 ) + ( menuItem.subitem ? menuItem.subitem.items.length * 36 : 0 )
-        });
-      } else {
-        setCustomStyle({});
-      }
-    }
-  }, [ isCollapsing ]);
-
-  useEffect(() => {
-    if( isCollapsed ) {
-      if( menuItemState === 'show' ) {
-        handleMenuAction();
-      }
-    }
-  }, [ isCollapsed, handleMenuAction ]);
-  
-  useEffect(() => {
-    if( menuItem.active && menuItem.subitem ) {
-      setMenuItemState('show');
-    } else {
-      setMenuItemState('hide');
-    }
-  }, []);
-  
   return (
     <>
       {/* Nav Item - Pages Collapse Menu */}
-      <li className={`nav-item ${ menuItem.active ? 'active' : '' }`} onBlur={ isCollapsed ? handleMenuAction : () => {} }>
-        <a 
-          className={`nav-link ${ menuItemState === 'hide' ? 'collapsed' : '' }`} 
-          href='#' 
+      <li className={`nav-item ${ menuItem.item.active ? 'active' : '' }`}>
+        <span
+          className={`nav-link ${ menuItemStatus === 'hide' ? 'collapsed' : '' }`}
           data-toggle={ menuItem.subitem ? 'collapse' : '' }
-          onClick={ menuItem.subitem ? handleMenuAction : () => { /** Redirection */ } }
+          onClick={ () => handleClickMenu( menuItem.item.id ) }
         >
           <i className={`fas fa-fw ${ menuItem.icon }`}></i>
           <span> { menuItem.item.name } </span>
-        </a>
-        
+        </span>
+
         {
           ( menuItem.subitem ) && (
             <div 
               id='collapseTwo' 
-              className={`${ isCollapsing ? 'collapsing' : menuItemState === 'show' ? 'collapse show' : 'collapse' }`}
+              className={`${ 
+                submenuIsCollapsing 
+                  ? 'collapsing' 
+                  : menuItemStatus === 'show'
+                    ? 'collapse show'
+                    : 'collapse'
+              }`}
               style={ customStyle }
             >
               <div className='bg-white py-2 collapse-inner rounded'>
@@ -87,13 +49,13 @@ export const SidebarMenuItem = ({ menuItem, isCollapsed }: Props) => {
 
                 {
                   menuItem.subitem.items.map( ( item, index ) => (
-                    <a 
-                      className='collapse-item' 
-                      href={ item.redirection }
+                    <span
+                      className={`collapse-item ${ item.active ? 'active' : '' }`} 
+                      onClick={ () => handleClickSubmenu( menuItem.item.id, item.id ) }
                       key={ index }
                     >
                       { item.name }
-                    </a>
+                    </span>
                   ))
                 }
               </div>

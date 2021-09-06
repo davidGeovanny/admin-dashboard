@@ -1,58 +1,94 @@
 import { SidebarMenu } from '../interfaces/SidebarInterface';
+import { v4 } from 'uuid';
 
 export const menu: SidebarMenu[] = [
   {
-    active: false,
     item: {
+      id: v4(),
       name: 'Dashboard',
+      active: false,
       redirection: '#'
     },
     icon: 'fa-tachometer-alt',
   },
   {
-    active: true,
     item: {
+      id: v4(),
       name: 'Components',
+      active: false,
       redirection: '#'
     },
     icon: 'fa-cog',
     subitem: {
+      isOpen: false,
       header: 'Custom header',
       items: [
         {
+          id: v4(),
           name: 'Buttons',
+          active: false,
           redirection: '#'
         },
         {
+          id: v4(),
           name: 'Cards',
+          active: false,
           redirection: '#'
         },
       ]
     }
   },
   {
-    active: false,
     item: {
-      name: 'Utilities',
+      id: v4(),
+      name: 'Charts',
+      active: false,
       redirection: '#'
     },
-    icon: 'fa-wrench',
+    icon: 'fa-chart-line',
     subitem: {
-      header: 'Custom header',
+      isOpen: false,
+      header: 'Custom graphs',
       items: [
         {
-          name: 'Colors',
+          id: v4(),
+          name: 'Line chart',
+          active: false,
           redirection: '#'
         },
         {
-          name: 'Borders',
-          redirection: '#'
-        },
-        {
-          name: 'Animations',
+          id: v4(),
+          name: 'Circle chart',
+          active: false,
           redirection: '#'
         },
       ]
     }
   },
+  // {
+  //   id: v4(),
+  //   active: false,
+  //   item: {
+  //     name: 'Utilities',
+  //     redirection: '#'
+  //   },
+  //   icon: 'fa-wrench',
+  //   subitem: {
+  //     header: 'Custom header',
+  //     items: [
+  //       {
+  //         name: 'Colors',
+  //         redirection: '#'
+  //       },
+  //       {
+  //         name: 'Borders',
+  //         redirection: '#'
+  //       },
+  //       {
+  //         name: 'Animations',
+  //         redirection: '#'
+  //       },
+  //     ]
+  //   }
+  // },
 ]

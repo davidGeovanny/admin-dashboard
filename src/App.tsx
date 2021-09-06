@@ -1,12 +1,23 @@
 import React from 'react';
 import { Sidebar } from './components/Sidebar';
+import { SidebarProvider } from './context/SidebarContext';
 
-function App() {
+const App = () => {
   return (
-    <div className='wrapper'>
-      <Sidebar />
-    </div>
+    <AppState>
+      <div className='wrapper'>
+        <Sidebar />
+      </div>
+    </AppState>
   );
+}
+
+const AppState: React.FC = ({ children }) => {
+  return (
+    <SidebarProvider>
+      { children }
+    </SidebarProvider>
+  )
 }
 
 export default App;

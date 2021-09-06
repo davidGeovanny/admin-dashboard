@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { SidebarMenuItem } from './SidebarMenuItem';
-import { menu } from '../data/menu';
+import { SidebarContext } from '../context/SidebarContext';
 
 export const Sidebar = () => {
 
-  const [ isCollapsed, setIsCollapsed ] = useState( false );
-
-  const onCollapseSidebar = () => {
-    setIsCollapsed( !isCollapsed );
-  }
+  const { menuState, onCollapseSidebar } = useContext( SidebarContext );
+  const { isSidebarCollapsed, menu } = menuState;
 
   return (
     <div>
-      <ul className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${ isCollapsed && 'toggled' }`}>
+      <ul className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${ isSidebarCollapsed && 'toggled' }`}>
         <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
           
           {/* Sidebar - Brand */}
@@ -29,8 +26,7 @@ export const Sidebar = () => {
         {/* Nav Item - Dashboard */}
         <SidebarMenuItem
           menuItem={ menu[0] }
-          isCollapsed={ isCollapsed }
-          />
+        />
 
         {/* Divider */}
         <hr className="sidebar-divider" />
@@ -43,12 +39,10 @@ export const Sidebar = () => {
         {/* Nav Item - Pages Collapse Menu */}
         <SidebarMenuItem
           menuItem={ menu[1] }
-          isCollapsed={ isCollapsed }
         />
 
         <SidebarMenuItem
           menuItem={ menu[2] }
-          isCollapsed={ isCollapsed }
         />
 
         {/* Divider */}
@@ -57,8 +51,8 @@ export const Sidebar = () => {
         {/* Sidebar Toggler (Sidebar) */}
         <div className="text-center d-none d-md-inline">
           <button 
-            className="rounded-circle border-0" 
             id="sidebarToggle"
+            className="rounded-circle border-0" 
             onClick={ onCollapseSidebar }
           ></button>
         </div>
