@@ -1,4 +1,5 @@
 .nav-item .nav-link:hover,
-.collapse-item:hover {
+.collapse-item:hover,
+span.dropdown-item {
   cursor: pointer;
 }

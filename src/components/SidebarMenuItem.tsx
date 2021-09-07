@@ -32,7 +32,6 @@ export const SidebarMenuItem = ({ menuItem }: Props) => {
         {
           ( menuItem.subitem ) && (
             <div 
-              id='collapseTwo' 
               className={`${ 
                 submenuIsCollapsing 
                   ? 'collapsing' 

@@ -1,5 +1,5 @@
-import { SidebarMenu } from '../interfaces/SidebarInterface';
 import { v4 } from 'uuid';
+import { SidebarMenu } from '../interfaces/SidebarInterface';
 
 export const menu: SidebarMenu[] = [
   {
@@ -65,30 +65,4 @@ export const menu: SidebarMenu[] = [
       ]
     }
   },
-  // {
-  //   id: v4(),
-  //   active: false,
-  //   item: {
-  //     name: 'Utilities',
-  //     redirection: '#'
-  //   },
-  //   icon: 'fa-wrench',
-  //   subitem: {
-  //     header: 'Custom header',
-  //     items: [
-  //       {
-  //         name: 'Colors',
-  //         redirection: '#'
-  //       },
-  //       {
-  //         name: 'Borders',
-  //         redirection: '#'
-  //       },
-  //       {
-  //         name: 'Animations',
-  //         redirection: '#'
-  //       },
-  //     ]
-  //   }
-  // },
 ]
