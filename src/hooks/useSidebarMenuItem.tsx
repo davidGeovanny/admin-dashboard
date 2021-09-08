@@ -11,13 +11,13 @@ export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
   const [ menuItemStatus, setMenuItemStatus ] = useState<MenuItemAction>('hide');
   const [ customStyle, setCustomStyle ] = useState<React.CSSProperties>();
 
-  const handleClickMenu = ( id: string ) => {
+  const handleClickMenu = ( id: string, redirectTo: string ) => {
     if( menuItem.subitem ) {
       setCollapsingSubmenu();
       
       onCollapseSubmenu( id, ( menuItemStatus === 'show' ? false : true ) );
     } else {
-      onClickMenu( id );
+      onClickMenu( id, redirectTo );
     }
   }
 
@@ -30,8 +30,8 @@ export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
     }, 150);
   }, [ menuItemStatus ] );
   
-  const handleClickSubmenu = ( id: string, subId: string ) => {
-    onClickMenu( id, subId );
+  const handleClickSubmenu = ( id: string, redirectTo: string ) => {
+    onClickMenu( id, redirectTo );
   }
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { SidebarMenuItem } from './SidebarMenuItem';
 import { SidebarContext } from '../context/SidebarContext';
 
@@ -9,15 +10,17 @@ export const Sidebar = () => {
 
   return (
     <ul className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${ isSidebarCollapsed && 'toggled' }`}>
-      <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        
+      <Link 
+        className="sidebar-brand d-flex align-items-center justify-content-center"
+        to='/'
+      >
         {/* Sidebar - Brand */}
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-laugh-wink"></i>
         </div>
 
         <div className="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-      </a>
+      </Link>
 
       {/* Divider */}
       <hr className="sidebar-divider my-0" />
@@ -40,9 +43,9 @@ export const Sidebar = () => {
         menuItem={ menu[1] }
       />
 
-      <SidebarMenuItem
+      {/* <SidebarMenuItem
         menuItem={ menu[2] }
-      />
+      /> */}
 
       {/* Divider */}
       <hr className="sidebar-divider d-none d-md-block" />
@@ -50,8 +53,7 @@ export const Sidebar = () => {
       {/* Sidebar Toggler (Sidebar) */}
       <div className="text-center d-none d-md-inline">
         <button 
-          id="sidebarToggle"
-          className="rounded-circle border-0" 
+          className="rounded-circle border-0 sidebarToggle" 
           onClick={ onCollapseSidebar }
         ></button>
       </div>

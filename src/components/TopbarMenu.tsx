@@ -75,7 +75,7 @@ export const TopbarMenu = ({ picture, title, items, redirectAll }: Props) => {
               className="dropdown-item d-flex align-items-center"
               onClick={ () => redirect( redirectAll ) }
             >
-              { TopbarMenuItem( item ) }
+              <TopbarMenuItem item={ item } />
             </span>
           ))
         }

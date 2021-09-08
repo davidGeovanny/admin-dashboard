@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
 import { SidebarReducer } from '../reducer/SidebarReducer';
 import { SidebarState } from '../interfaces/SidebarInterface';
 import { menu } from '../data/menu';
@@ -6,7 +7,7 @@ import { menu } from '../data/menu';
 interface ContextProps {
   menuState         : SidebarState;
   onCollapseSidebar : () => void;
-  onClickMenu       : ( id: string, subId?: string ) => void;
+  onClickMenu       : ( id: string, redirectTo: string ) => void;
   onCollapseSubmenu : ( id: string, isOpen: boolean ) => void;
 }
 
@@ -18,6 +19,7 @@ const initSidebarState: SidebarState = {
 export const SidebarContext = createContext( {} as ContextProps );
 
 export const SidebarProvider: React.FC = ({ children }) => {
+  const history = useHistory();
 
   const [ sidebarState, dispatch ] = useReducer( SidebarReducer, initSidebarState );
 
@@ -32,17 +34,13 @@ export const SidebarProvider: React.FC = ({ children }) => {
     });
   }
 
-  const onClickMenu = ( id: string, subId?: string ) => {
+  const onClickMenu = ( id: string, redirectTo: string ) => {
     dispatch({
       type: 'select-option-menu',
       payload: id
     });
 
-    if( subId ) {
-      // TODO: Redireccionar a una opción del submneú
-    } else {
-      // TODO: Redireccionar a una opción del menú
-    }
+    history.push( redirectTo );
   }
 
   return (

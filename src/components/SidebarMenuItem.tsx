@@ -1,6 +1,7 @@
 import React from 'react';
 import { SidebarMenu } from '../interfaces/SidebarInterface';
 import { useSidebarMenuItem } from '../hooks/useSidebarMenuItem';
+import { NavLink, Link } from 'react-router-dom';
 
 interface Props {
   menuItem: SidebarMenu;
@@ -23,7 +24,7 @@ export const SidebarMenuItem = ({ menuItem }: Props) => {
         <span
           className={`nav-link ${ menuItemStatus === 'hide' ? 'collapsed' : '' }`}
           data-toggle={ menuItem.subitem ? 'collapse' : '' }
-          onClick={ () => handleClickMenu( menuItem.item.id ) }
+          onClick={ () => handleClickMenu( menuItem.item.id, menuItem.item.redirection ) }
         >
           <i className={`fas fa-fw ${ menuItem.icon }`}></i>
           <span> { menuItem.item.name } </span>
@@ -48,20 +49,21 @@ export const SidebarMenuItem = ({ menuItem }: Props) => {
 
                 {
                   menuItem.subitem.items.map( ( item, index ) => (
-                    <span
+                    <NavLink
                       className={`collapse-item ${ item.active ? 'active' : '' }`} 
-                      onClick={ () => handleClickSubmenu( menuItem.item.id, item.id ) }
+                      onClick={ () => handleClickSubmenu( menuItem.item.id, item.redirection ) }
                       key={ index }
+                      to={ item.redirection }
+                      activeClassName="active"
                     >
                       { item.name }
-                    </span>
+                    </NavLink>
                   ))
                 }
               </div>
             </div>
           )
         }
-
       </li>
     </>
   );

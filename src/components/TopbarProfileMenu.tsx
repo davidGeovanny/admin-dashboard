@@ -1,13 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useTopbarMenuItem } from '../hooks/useTopbarMenuItem';
 
 export const TopbarProfileMenu = () => {
+  const history = useHistory();
 
   const { isMenuVisible, handleClick, handleBlur, handleMouseEvent } = useTopbarMenuItem([]);
 
   const redirect = ( url: string ) => {
-    /** TODO: Redirect to other page */
-    console.log( 'url' );
+    history.push( url );
   }
 
   return (
@@ -33,14 +34,14 @@ export const TopbarProfileMenu = () => {
         onMouseEnter={ () => handleMouseEvent( true ) }
         onMouseLeave={ () => handleMouseEvent( false ) }
       >
-        <span className="dropdown-item" onClick={ () => console.log('') }>
+        <span className="dropdown-item" onClick={ () => redirect('/profile') }>
           <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
           Profile
         </span>
 
         <div className="dropdown-divider"></div>
 
-        <span className="dropdown-item" onClick={ () => redirect('') }>
+        <span className="dropdown-item" onClick={ () => redirect('/login') }>
           <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
           Logout
         </span>

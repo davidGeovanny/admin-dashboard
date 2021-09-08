@@ -1,7 +1,11 @@
 import React from 'react'
 import { TopbarItem } from '../interfaces/TopbarInterface';
 
-export const TopbarMenuItem = ( item: TopbarItem ) => {
+interface Props {
+  item: TopbarItem
+}
+
+export const TopbarMenuItem = ({ item }: Props) => {
 
   const renderItemWithIcon = () => {
     if( item.picture.type === 'image' ) return;
@@ -65,5 +69,9 @@ export const TopbarMenuItem = ( item: TopbarItem ) => {
     );
   }
 
-  return item.picture.type === 'icon' ? renderItemWithIcon() : renderItemWithImage();
+  return (
+    <>
+      { item.picture.type === 'icon' ? renderItemWithIcon() : renderItemWithImage() }
+    </>
+  );
 }
