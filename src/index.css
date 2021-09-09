@@ -3,3 +3,12 @@
 span.dropdown-item {
   cursor: pointer;
 }
+
+.form-group {
+  text-align: center;
+}
+
+.error-input-label {
+  font-size: 0.72rem;
+  color: #e74a3b;
+}

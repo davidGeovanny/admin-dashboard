@@ -73,11 +73,11 @@ export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
   }, [ isPathMatch ]);
 
   return {
-    customStyle, 
-    menuItemStatus, 
-    submenuIsCollapsing, 
+    customStyle,
+    menuItemStatus,
+    submenuIsCollapsing,
     isPathMatch,
-    handleClickMenu, 
-    handleClickSubmenu, 
+    handleClickMenu,
+    handleClickSubmenu,
   };
 }
