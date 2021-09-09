@@ -7,8 +7,8 @@ import { menu } from '../data/menu';
 interface ContextProps {
   menuState         : SidebarState;
   onCollapseSidebar : () => void;
-  onClickMenu       : ( id: string, redirectTo: string ) => void;
   onCollapseSubmenu : ( id: string, isOpen: boolean ) => void;
+  redirectTo        : ( url: string ) => void;
 }
 
 const initSidebarState: SidebarState = {
@@ -34,22 +34,17 @@ export const SidebarProvider: React.FC = ({ children }) => {
     });
   }
 
-  const onClickMenu = ( id: string, redirectTo: string ) => {
-    dispatch({
-      type: 'select-option-menu',
-      payload: id
-    });
-
-    history.push( redirectTo );
+  const redirectTo = ( url: string ) => {
+    history.push( url );
   }
-
+  
   return (
     <SidebarContext.Provider
       value={{
         menuState: sidebarState,
         onCollapseSidebar,
         onCollapseSubmenu,
-        onClickMenu,
+        redirectTo,
       }}
     >
       { children }

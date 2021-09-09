@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useTopbarMenuItem } from '../hooks/useTopbarMenuItem';
 
 export const TopbarProfileMenu = () => {
@@ -17,7 +17,7 @@ export const TopbarProfileMenu = () => {
       onClick={() => handleClick()}
       onBlur={() => handleBlur()}
     >
-      <a className="nav-link dropdown-toggle" href="#">
+      <Link className="nav-link dropdown-toggle" to="#">
         <span className="mr-2 d-none d-lg-inline text-gray-600 small">
           Ingeniero Geovanny
         </span>
@@ -27,7 +27,7 @@ export const TopbarProfileMenu = () => {
           src="https://logos-marcas.com/wp-content/uploads/2020/11/Razer-Logo.png"
           alt='Profile'
         />
-      </a>
+      </Link>
 
       <div 
         className={`dropdown-menu dropdown-menu-right shadow animated--grow-in ${ isMenuVisible ? 'show' : '' }`}

@@ -10709,11 +10709,19 @@ a:focus {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.sidebar-dark .nav-item.active .nav-link {
+/* .sidebar-dark .nav-item.active .nav-link {
   color: #fff;
 }
 
 .sidebar-dark .nav-item.active .nav-link i {
+  color: #fff;
+} */
+
+.sidebar-dark .nav-item .nav-link.active {
+  color: #fff;
+}
+
+.sidebar-dark .nav-item .nav-link.active i {
   color: #fff;
 }
 

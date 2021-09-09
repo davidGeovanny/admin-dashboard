@@ -20,33 +20,33 @@ export const menu: SidebarMenu[] = [
     },
     icon: 'fa-heart',
   },
-  // {
-  //   item: {
-  //     id: v4(),
-  //     name: 'Components',
-  //     active: false,
-  //     redirection: '#'
-  //   },
-  //   icon: 'fa-cog',
-  //   subitem: {
-  //     isOpen: false,
-  //     header: 'Custom header',
-  //     items: [
-  //       {
-  //         id: v4(),
-  //         name: 'Buttons',
-  //         active: false,
-  //         redirection: '#'
-  //       },
-  //       {
-  //         id: v4(),
-  //         name: 'Cards',
-  //         active: false,
-  //         redirection: '#'
-  //       },
-  //     ]
-  //   }
-  // },
+  {
+    item: {
+      id: v4(),
+      name: 'Components',
+      active: false,
+      redirection: 'asd'
+    },
+    icon: 'fa-bell',
+    subitem: {
+      isOpen: false,
+      header: 'Custom header',
+      items: [
+        {
+          id: v4(),
+          name: 'Notifications',
+          active: false,
+          redirection: '/notification-center'
+        },
+        {
+          id: v4(),
+          name: 'Messages',
+          active: false,
+          redirection: '/message-center'
+        },
+      ]
+    }
+  },
   // {
   //   item: {
   //     id: v4(),

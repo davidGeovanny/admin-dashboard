@@ -10,6 +10,8 @@ import { DashboardPage } from '../pages/DashboardPage';
 import { ProfilePage } from '../pages/ProfilePage';
 import { Sidebar } from '../components/Sidebar';
 import { Topbar } from '../components/Topbar';
+import { NotificationCenterPage } from '../pages/NotificationCenterPage';
+import { MessageCenterPage } from '../pages/MessageCenterPage';
 
 export const DashboardRouter = () => {
   return (
@@ -41,6 +43,18 @@ export const DashboardRouter = () => {
                 exact
                 path='/profile'
                 component={ ProfilePage }
+              />
+
+              <Route
+                exact
+                path='/notification-center'
+                component={ NotificationCenterPage }
+              />
+
+              <Route
+                exact
+                path='/message-center'
+                component={ MessageCenterPage }
               />
 
               <Redirect to='/dashboard' />

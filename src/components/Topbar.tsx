@@ -15,7 +15,7 @@ export const Topbar = () => {
           }}
           title='Centro de notificaciones'
           items={ topbarNotifications }
-          redirectAll='#'
+          url='/notification-center'
         />
 
         <TopbarMenu
@@ -25,7 +25,7 @@ export const Topbar = () => {
           }}
           title='Centro de mensajes'
           items={ topbarMessages }
-          redirectAll='#'
+          url='/message-center'
         />
 
         <div className="topbar-divider d-none d-sm-block"></div>

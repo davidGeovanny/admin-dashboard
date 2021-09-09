@@ -1,24 +1,23 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { SidebarContext } from '../context/SidebarContext';
 import { SidebarMenu } from '../interfaces/SidebarInterface';
 
 type MenuItemAction = 'show' | 'hide';
 
 export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
-  const { onCollapseSubmenu, onClickMenu } = useContext( SidebarContext );
+  const location = useLocation();
+
+  const { onCollapseSubmenu, menuState, redirectTo } = useContext( SidebarContext );
 
   const [ submenuIsCollapsing, setSubmenuIsCollapsing ] = useState<boolean>( false );
   const [ menuItemStatus, setMenuItemStatus ] = useState<MenuItemAction>('hide');
   const [ customStyle, setCustomStyle ] = useState<React.CSSProperties>();
+  const [ isPathMatch, setIsPathMatch ] = useState<boolean>( false );
 
-  const handleClickMenu = ( id: string, redirectTo: string ) => {
-    if( menuItem.subitem ) {
-      setCollapsingSubmenu();
-      
-      onCollapseSubmenu( id, ( menuItemStatus === 'show' ? false : true ) );
-    } else {
-      onClickMenu( id, redirectTo );
-    }
+  const handleClickMenu = ( id: string ) => {
+    setCollapsingSubmenu();
+    onCollapseSubmenu( id, ( menuItemStatus === 'show' ? false : true ) );
   }
 
   const setCollapsingSubmenu = useCallback(() => {
@@ -30,8 +29,8 @@ export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
     }, 150);
   }, [ menuItemStatus ] );
   
-  const handleClickSubmenu = ( id: string, redirectTo: string ) => {
-    onClickMenu( id, redirectTo );
+  const handleClickSubmenu = ( url: string ) => {
+    redirectTo( url );
   }
 
   useEffect(() => {
@@ -60,10 +59,24 @@ export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
     }
   }, [ menuItem ]);
 
+  useEffect(() => {
+    if( !menuItem.subitem ) return;
+    setIsPathMatch( menuItem.subitem.items.findIndex( item => item.redirection === location.pathname ) > -1 ? true : false );
+  }, [ location ]);
+
+  useEffect(() => {
+    if( isPathMatch && menuItemStatus === 'hide' && !menuState.isSidebarCollapsed ) {
+      handleClickMenu( menuItem.item.id );
+    } else if( !isPathMatch && menuItemStatus === 'show' ) {
+      handleClickMenu( menuItem.item.id );
+    }
+  }, [ isPathMatch ]);
+
   return {
     customStyle, 
     menuItemStatus, 
     submenuIsCollapsing, 
+    isPathMatch,
     handleClickMenu, 
     handleClickSubmenu, 
   };

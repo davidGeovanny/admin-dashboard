@@ -43,9 +43,9 @@ export const Sidebar = () => {
         menuItem={ menu[1] }
       />
 
-      {/* <SidebarMenuItem
+      <SidebarMenuItem
         menuItem={ menu[2] }
-      /> */}
+      />
 
       {/* Divider */}
       <hr className="sidebar-divider d-none d-md-block" />
@@ -59,5 +59,5 @@ export const Sidebar = () => {
       </div>
 
     </ul>
-  )
+  );
 }

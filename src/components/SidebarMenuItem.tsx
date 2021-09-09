@@ -1,7 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { SidebarMenu } from '../interfaces/SidebarInterface';
 import { useSidebarMenuItem } from '../hooks/useSidebarMenuItem';
-import { NavLink, Link } from 'react-router-dom';
 
 interface Props {
   menuItem: SidebarMenu;
@@ -13,22 +13,40 @@ export const SidebarMenuItem = ({ menuItem }: Props) => {
     customStyle, 
     menuItemStatus, 
     submenuIsCollapsing, 
+    isPathMatch,
     handleClickMenu, 
     handleClickSubmenu, 
   } = useSidebarMenuItem( menuItem );
-
+  
   return (
     <>
       {/* Nav Item - Pages Collapse Menu */}
-      <li className={`nav-item ${ menuItem.item.active ? 'active' : '' }`}>
-        <span
-          className={`nav-link ${ menuItemStatus === 'hide' ? 'collapsed' : '' }`}
-          data-toggle={ menuItem.subitem ? 'collapse' : '' }
-          onClick={ () => handleClickMenu( menuItem.item.id, menuItem.item.redirection ) }
-        >
-          <i className={`fas fa-fw ${ menuItem.icon }`}></i>
-          <span> { menuItem.item.name } </span>
-        </span>
+      <li className={`nav-item`}>
+
+        {
+          menuItem.subitem
+            ? (
+              <span
+                className={`nav-link ${ menuItemStatus === 'hide' ? 'collapsed' : '' } ${ isPathMatch ? 'active' : '' }`}
+                data-toggle={ menuItem.subitem ? 'collapse' : '' }
+                onClick={ () => handleClickMenu( menuItem.item.id ) }
+              >
+                <i className={`fas fa-fw ${ menuItem.icon }`}></i>
+                <span> { menuItem.item.name } </span>
+              </span>
+            )
+            : (
+              <NavLink
+                className={`nav-link`}
+                data-toggle={ menuItem.subitem ? 'collapse' : '' }
+                to={ menuItem.item.redirection }
+                activeClassName='active'
+              >
+                <i className={`fas fa-fw ${ menuItem.icon }`}></i>
+                <span> { menuItem.item.name } </span>
+              </NavLink>
+            )
+        }
 
         {
           ( menuItem.subitem ) && (
@@ -51,7 +69,7 @@ export const SidebarMenuItem = ({ menuItem }: Props) => {
                   menuItem.subitem.items.map( ( item, index ) => (
                     <NavLink
                       className={`collapse-item ${ item.active ? 'active' : '' }`} 
-                      onClick={ () => handleClickSubmenu( menuItem.item.id, item.redirection ) }
+                      onClick={ () => handleClickSubmenu( item.redirection ) }
                       key={ index }
                       to={ item.redirection }
                       activeClassName="active"

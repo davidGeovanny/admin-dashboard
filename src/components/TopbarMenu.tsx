@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { TopbarMenuItem } from './TopbarMenuItem';
 import { useTopbarMenuItem } from '../hooks/useTopbarMenuItem';
 import { Picture, TopbarItem } from '../interfaces/TopbarInterface';
+import { SidebarContext } from '../context/SidebarContext';
 
 interface Props {
-  picture     : Picture;
-  items       : TopbarItem[];
-  title      ?: string;
-  redirectAll : string;
+  picture : Picture;
+  items   : TopbarItem[];
+  title  ?: string;
+  url     : string;
 }
 
-export const TopbarMenu = ({ picture, title, items, redirectAll }: Props) => {
+export const TopbarMenu = ({ picture, title, items, url }: Props) => {
+  const { redirectTo } = useContext( SidebarContext );
 
   const { type } = picture;
 
@@ -45,20 +48,15 @@ export const TopbarMenu = ({ picture, title, items, redirectAll }: Props) => {
     }
   }
 
-  const redirect = ( url: string ) => {
-    /** TODO: Redirect to other page */
-    console.log( url );
-  }
-
   return (
     <li 
       className={`nav-item dropdown no-arrow mx-1 ${ isMenuVisible ? 'show' : '' }`}
       onClick={ () => handleClick() }
       onBlur={ () => handleBlur() }
     >
-      <a className="nav-link dropdown-toggle" href='#'>
+      <Link className="nav-link dropdown-toggle" to='#'>
         { renderPicture() }
-      </a>
+      </Link>
 
       <div 
         className={`dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in ${ isMenuVisible ? 'show' : '' }`}
@@ -73,7 +71,7 @@ export const TopbarMenu = ({ picture, title, items, redirectAll }: Props) => {
             <span 
               key={ item.id } 
               className="dropdown-item d-flex align-items-center"
-              onClick={ () => redirect( redirectAll ) }
+              onClick={ () => redirectTo( url ) }
             >
               <TopbarMenuItem item={ item } />
             </span>
@@ -82,7 +80,7 @@ export const TopbarMenu = ({ picture, title, items, redirectAll }: Props) => {
 
         <span 
           className="dropdown-item text-center small text-gray-500"
-          onClick={ () => redirect( redirectAll ) }
+          onClick={ () => redirectTo( url ) }
         >
           Show All
         </span>
