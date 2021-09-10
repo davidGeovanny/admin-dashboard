@@ -10876,9 +10876,12 @@ a:focus {
 }
 
 .bg-register-image {
-  background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
+  background: url("https://pbs.twimg.com/profile_images/492376220697247744/jV4gAOU3.png");
   background-position: center;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: 90%;
+  /* background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800"); */
+  /* background-size: cover; */
 }
 
 .bg-password-image {

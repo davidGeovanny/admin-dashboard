@@ -1,13 +1,24 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from '../hooks/useForm';
+import { InputAttr } from '../interfaces/InputInterface';
+import { InputForm } from '../components/InputForm';
 
 export const LoginPage = () => {
+  const initState: InputAttr[] = [
+    { name: 'user',     value: '', isValid: null },
+    { name: 'password', value: '', isValid: null },
+  ];
 
-  const { email, password, handleInputChange } = useForm({
-    email: '',
-    password: '',
-  });
+  const { form, setForm, formIsValid, errorMessage, handleSubmit, reset } = useForm( initState );
+  const [ user, password ] = form;
+
+  useEffect(() => {
+    if( formIsValid ) {
+      /** TODO: Call endpoint to login */
+      reset();
+    }
+  }, [ formIsValid, reset ]);
 
   useEffect(() => {
     const body = document.querySelector('body');
@@ -19,74 +30,46 @@ export const LoginPage = () => {
   }, []);
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-xl-10 col-lg-12 col-md-9">
-          <div className="card o-hidden border-0 shadow-lg my-5">
-            <div className="card-body p-0">
-              <div className="row">
-                <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                <div className="col-lg-6">
-                  <div className="p-5">
-                    <div className="text-center">
-                      <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
+    <div className='container'>
+      <div className='row justify-content-center'>
+        <div className='col-xl-10 col-lg-12 col-md-9'>
+          <div className='card o-hidden border-0 shadow-lg my-5'>
+            <div className='card-body p-0'>
+              <div className='row'>
+                <div className='col-lg-6 d-none d-lg-block bg-login-image'></div>
+                <div className='col-lg-6'>
+                  <div className='p-5'>
+                    <div className='text-center'>
+                      <h1 className='h4 text-gray-900 mb-4'>Welcome Back!</h1>
                     </div>
 
-                    <form className="user">
-                      <div className="form-group">
-                        <input
-                          type="email"
-                          className="form-control form-control-user"
-                          placeholder="Enter Email Address..."
-                          name='email'
-                          onChange={ handleInputChange }
-                          value={ email }
-                        />
-                        <label className="error-input-label">
-                          <em>Remember Me</em>
-                        </label>
-                      </div>
+                    <form className='user' onSubmit={ handleSubmit }>
 
-                      <div className="form-group">
-                        <input
-                          type="password"
-                          className="form-control form-control-user"
-                          placeholder="Password"
-                          name='password'
-                          onChange={ handleInputChange }
-                          value={ password }
-                        />
-                      </div>
+                      <InputForm
+                        state={ user }
+                        setState={ setForm }
+                        placeholder='Enter username...'
+                        type='text'
+                      />
 
-                      {/* <div className="form-group">
-                        <div className="custom-control custom-checkbox small">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                          />
-                          <label className="custom-control-label">
-                            Remember Me
-                          </label>
-                        </div>
-                      </div> */}
+                      <InputForm
+                        state={ password }
+                        setState={ setForm }
+                        placeholder='********'
+                        type='password'
+                      />
+
+                      { formIsValid === false && <div className='alert alert-danger'>{ errorMessage }</div> }
                       
-                      <button
-                        // href="index.html"
-                        className="btn btn-primary btn-user btn-block"
-                      >
+                      <button className='btn btn-primary btn-user btn-block'>
                         Login
                       </button>
                     </form>
 
                     <hr />
 
-                    <div className="text-center">
-                      <Link className="small" to="/login">
-                        Forgot Password?
-                      </Link>
-                    </div>
-                    <div className="text-center">
-                      <Link className="small" to="/register">
+                    <div className='text-center'>
+                      <Link className='small' to='/register'>
                         Create an Account!
                       </Link>
                     </div>

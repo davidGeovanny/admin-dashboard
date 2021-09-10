@@ -4,11 +4,7 @@ span.dropdown-item {
   cursor: pointer;
 }
 
-.form-group {
+form.user div.alert {
+  margin-top: 1rem;
   text-align: center;
-}
-
-.error-input-label {
-  font-size: 0.72rem;
-  color: #e74a3b;
 }
