@@ -1,51 +1,27 @@
 import React, { useEffect } from 'react';
-import { useForm } from '../hooks/useForm';
-import { InputAttr } from '../interfaces/InputInterface';
-import { InputForm } from '../components/InputForm';
+import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { regularExpressions } from '../data/regExp';
+
+interface FormValues {
+  name          : string;
+  firstLastName : string;
+  secondLastName: string;
+  email         : string;
+  password      : string;
+  repeatPassword: string;
+}
 
 export const RegisterPage = () => {
-  const initState: InputAttr[] = [
-    { name: 'name',            value: '', isValid: null },
-    { name: 'first-lastname',  value: '', isValid: null },
-    { name: 'second-lastname', value: '', isValid: null },
-    { name: 'email',           value: '', isValid: null },
-    { name: 'password',        value: '', isValid: null },
-    { name: 'repeat-password', value: '', isValid: null },
-  ];
 
-  const { form, setForm, formIsValid, errorMessage, handleSubmit, reset } = useForm( initState );
-  const [ name, firstLastname, secondLastname, email, password, repeatPassword ] = form;
+  const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm<FormValues>();
+  const { password } = getValues();
 
-  const checkPasswords = () => {
-    if( password.value.trim().length > 0 ) {
-      if( password.value.trim() !== repeatPassword.value.trim() ) {
-        setForm(( form => {
-          return form.map( input => {
-            if( input.name === 'repeat-password' ) {
-              input.isValid = false;
-            }
-            return input;
-          })
-        }));
-      } else {
-        setForm(( form => {
-          return form.map( input => {
-            if( input.name === 'repeat-password' ) {
-              input.isValid = true;
-            }
-            return input;
-          })
-        }));
-      }
-    }
+  const onSubmit = ( data: FormValues ) => {
+    // TODO: Set data to login
+    console.log( data );
+    reset();
   }
-
-  useEffect(() => {
-    if( formIsValid ) {
-      /** TODO: Call endpoint to login */
-      reset();
-    }
-  }, [ formIsValid, reset ]);
 
   useEffect(() => {
     const body = document.querySelector('body');
@@ -57,103 +33,161 @@ export const RegisterPage = () => {
   }, []);
 
   return (
-    <div className="container">
-      <div className="card o-hidden border-0 shadow-lg my-5">
-        <div className="card-body p-0">
-          <div className="row">
+    <div className='container'>
+      <div className='card o-hidden border-0 shadow-lg my-5'>
+        <div className='card-body p-0'>
+          <div className='row'>
 
-            <div className="col-lg-7">
-              <div className="p-5">
-                <div className="text-center">
-                  <h1 className="h4 text-gray-900 mb-4">Create an Account!</h1>
+            <div className='col-lg-7'>
+              <div className='p-5'>
+                <div className='text-center'>
+                  <h1 className='h4 text-gray-900 mb-4'>Create an Account!</h1>
                 </div>
-                {/* <form className="user">
-                  <div className="form-group">
-                    <InputForm
-                      state={ name }
-                      setState={ setForm }
-                      placeholder='Enter your name(s)...'
-                      type='text'
-                      validation='name'
-                      errorMessage='Please provide a valid name'
+
+                <form 
+                  className='user'
+                  onSubmit={ handleSubmit( onSubmit ) }
+                >
+                  <div className='form-group'>
+                    <input 
+                      type='text' 
+                      placeholder='Enter your name'
+                      className={`form-control form-control-user ${ errors.name ? 'is-invalid' : '' }`}
+                      autoComplete='off'
+                      { 
+                        ...register('name', { 
+                          required  : { value: true, message: 'Name is required' },
+                          pattern   : { value: regularExpressions.name, message: 'Provide a valid name' },
+                          minLength : { value: 1, message: 'Name is required' },
+                          maxLength : { value: 40, message: 'Name is too long' },
+                        })
+                      }
                     />
+
+                    { errors.name && (
+                      <div className='invalid-feedback'>{ errors.name.message }</div>
+                    )}
                   </div>
 
-                  <div className="form-group row">
-                    <div className="col-sm-6">
-                      <InputForm
-                        state={ firstLastname }
-                        setState={ setForm }
-                        placeholder='Enter your first surname...'
-                        type='text'
-                        validation='name'
-                        errorMessage='Please provide a valid surnname'
+                  <div className='form-group row'>
+                    <div className='col-sm-6 mb-3 mb-sm-0'>
+                      <input 
+                        type='text' 
+                        placeholder='Enter your first lastname'
+                        className={`form-control form-control-user ${ errors.firstLastName ? 'is-invalid' : '' }`}
+                        autoComplete='off'
+                        { 
+                          ...register('firstLastName', { 
+                            required  : { value: true, message: 'First lastname is required' },
+                            pattern   : { value: regularExpressions.name, message: 'Provide a valid first lastname' },
+                            minLength : { value: 3, message: 'First lastname is too short' },
+                            maxLength : { value: 40, message: 'First lastname is too long' },
+                          }) 
+                        }
                       />
+
+                      { errors.firstLastName && (
+                        <div className='invalid-feedback'>{ errors.firstLastName.message }</div>
+                      )}
                     </div>
-                    <div className="col-sm-6">
-                    <InputForm
-                        state={ secondLastname }
-                        setState={ setForm }
-                        placeholder='Enter your second surname...'
-                        type='password'
-                        validation='name'
-                        errorMessage='Please provide a valid surnname'
+
+                    <div className='col-sm-6'>
+                      <input 
+                        type='text' 
+                        placeholder='Enter your second lastname'
+                        className={`form-control form-control-user ${ errors.secondLastName ? 'is-invalid' : '' }`}
+                        autoComplete='off'
+                        { 
+                          ...register('secondLastName', { 
+                            required  : { value: true, message: 'Second lastname is required' },
+                            pattern   : { value: regularExpressions.name, message: 'Provide a valid second lastname' },
+                            minLength : { value: 3, message: 'Second lastname is too short' },
+                            maxLength : { value: 40, message: 'Second lastname is too long' },
+                          }) 
+                        }
                       />
+
+                      { errors.secondLastName && (
+                        <div className='invalid-feedback'>{ errors.secondLastName.message }</div>
+                      )}
                     </div>
                   </div>
 
-                  <div className="form-group">
-                    <InputForm
-                      state={ email }
-                      setState={ setForm }
-                      placeholder='Enter your email address...'
-                      type='text'
-                      validation='email'
-                      errorMessage='Please provide a valid email'
+                  <div className='form-group'>
+                    <input 
+                      type='text' 
+                      placeholder='Enter your email'
+                      className={`form-control form-control-user ${ errors.email ? 'is-invalid' : '' }`}
+                      autoComplete='off'
+                      { 
+                        ...register('email', { 
+                          required: { value: true, message: 'Email is required' },
+                          pattern : { value: regularExpressions.email, message: 'Provide a valid email' },
+                        }) 
+                      }
                     />
+
+                    { errors.email && (
+                      <div className='invalid-feedback'>{ errors.email.message }</div>
+                    )}
                   </div>
 
-                  <div className="form-group row">
-                    <div className="col-sm-6">
-                      <InputForm
-                        state={ password }
-                        setState={ setForm }
-                        placeholder='********'
-                        type='password'
-                        validation='password'
-                        errorMessage='Password must be 4 to 12 characters long'
+                  <div className='form-group row'>
+                    <div className='col-sm-6 mb-3 mb-sm-0'>
+                      <input 
+                        type='password' 
+                        placeholder='Enter your password'
+                        className={`form-control form-control-user ${ errors.password ? 'is-invalid' : '' }`}
+                        { 
+                          ...register('password', { 
+                            required  : { value: true, message: 'Password is required' },
+                            pattern   : { value: regularExpressions.password, message: 'Password provided is not valid' },
+                            minLength : { value: 4, message: 'Password is too short' },
+                          }) 
+                        }
                       />
+
+                      { errors.password && (
+                        <div className='invalid-feedback'>{ errors.password.message }</div>
+                      )}
                     </div>
-                    <div className="col-sm-6">
-                    <InputForm
-                        state={ repeatPassword }
-                        setState={ setForm }
-                        placeholder='********'
-                        type='password'
-                        callback={ checkPasswords }
-                        errorMessage='Passwords must match'
+                    
+                    <div className='col-sm-6'>
+                      <input 
+                        type='password' 
+                        placeholder='Repeat password'
+                        className={`form-control form-control-user ${ errors.repeatPassword ? 'is-invalid' : '' }`}
+                        { 
+                          ...register('repeatPassword', {
+                            required: { value: true, message: 'Need match the passwords' },
+                            validate: value => value === password || 'The passwords do not match'
+                          }) 
+                        }
                       />
+
+                      { errors.repeatPassword && (
+                        <div className='invalid-feedback'>{ errors.repeatPassword.message }</div>
+                      )}
                     </div>
                   </div>
-                  <a
-                    href="login.html"
-                    className="btn btn-primary btn-user btn-block"
-                  >
+
+                  <button className='btn btn-primary btn-user btn-block'>
                     Register Account
-                  </a>
-                  <hr />
+                  </button>
                   
-                </form> */}
+                </form>
+
                 <hr />
-                <div className="text-center">
-                  <a className="small" href="login.html">
+
+                <div className='text-center'>
+                  <Link className='small' to='/login'>
                     Already have an account? Login!
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
             
-            <div className="col-lg-5 d-none d-lg-block bg-register-image"></div>
+            <div className='col-lg-5 d-none d-lg-block bg-register-image'></div>
           </div>
         </div>
       </div>
