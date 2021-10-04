@@ -1,40 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
 } from 'react-router-dom';
-import { DashboardRouter } from './DashboardRouter';
-import { RegisterPage } from '../pages/RegisterPage';
-import { LoginPage } from '../pages/LoginPage';
+import { PublicRoutes } from './PublicRoutes';
+import { PrivateRoutes } from './PrivateRoutes';
+import { AuthContext } from '../context/AuthContext';
 
 export const AppRouter = () => {
+
+  const { status } = useContext( AuthContext );
+
+  if( status === 'checking' ) {
+    return (
+      <h1>Checando autenticación</h1>
+    );
+  }
+
   return (
-    // <AppState>
-      <Router>
+    <Router>
 
-        <Switch>
-          <Route
-            exact
-            path='/login'
-            component={ LoginPage }
-          />
+      <Switch>
+        {
+          status === 'authenticated'
+            ? <PrivateRoutes />
+            : <PublicRoutes />
+        }
+      </Switch>
 
-          <Route
-            exact
-            path='/register'
-            component={ RegisterPage }
-          />
-
-          <Route
-            path='/'
-            component={ DashboardRouter }
-          />
-        </Switch>
-
-      </Router>
-    // </AppState>
+    </Router>
   );
 }
-
-/** TODO: Colocar el provider para el login, para saber si está autenticado o no */

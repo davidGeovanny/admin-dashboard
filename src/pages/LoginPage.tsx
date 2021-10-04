@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../context/AuthContext';
 
 interface FormValues {
   user    : string;
@@ -8,13 +9,13 @@ interface FormValues {
 }
 
 export const LoginPage = () => {
+
+  const { signIn } = useContext( AuthContext );
   
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
 
   const onSubmit = ( data: FormValues ) => {
-    // TODO: Set data to login
-    console.log( data );
-    reset();
+    signIn({ username: data.user, password: data.password });
   }
 
   useEffect(() => {
