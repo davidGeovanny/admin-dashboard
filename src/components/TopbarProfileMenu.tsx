@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useTopbarMenuItem } from '../hooks/useTopbarMenuItem';
+import { AuthContext } from '../context/AuthContext';
 
 export const TopbarProfileMenu = () => {
+  const { logOut } = useContext( AuthContext );
   const history = useHistory();
 
   const { isMenuVisible, handleClick, handleBlur, handleMouseEvent } = useTopbarMenuItem([]);
 
   const redirect = ( url: string ) => {
     history.push( url );
+  }
+
+  const handleLogout = () => {
+    logOut();
   }
 
   return (
@@ -41,7 +47,7 @@ export const TopbarProfileMenu = () => {
 
         <div className="dropdown-divider"></div>
 
-        <span className="dropdown-item" onClick={ () => redirect('/login') }>
+        <span className="dropdown-item" onClick={ handleLogout }>
           <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
           Logout
         </span>

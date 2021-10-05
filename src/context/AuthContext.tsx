@@ -1,15 +1,19 @@
 import React, { createContext, useEffect, useReducer } from 'react';
-import { LoginResponse, LoginData, User } from '../interfaces/LoginInterface';
+import { LoginResponse, LoginData, UserLogin } from '../interfaces/LoginInterface';
 import { AuthReducer } from '../reducer/AuthReducer';
 import { AuthState } from '../interfaces/AuthState';
+import { useToastNotification } from '../hooks/useToastNotification';
 import adminApi from '../helpers/adminApi';
+import { RegisterData, RegisterResponse } from '../interfaces/RegisterInterface';
 
 interface ContextProps {
   errorMessage:   string;
+  withError:      boolean;
   token:          string | null;
-  user:           User | null;
-  status:         'checking' | 'authenticated' | 'not-authenticated'
-  signUp:         () => void;
+  user:           UserLogin | null;
+  status:         'checking' | 'authenticated' | 'not-authenticated';
+  loading:        boolean;
+  signUp:         ( registerData: RegisterData ) => Promise<boolean>;
   signIn:         ( loginData: LoginData ) => void;
   logOut:         () => void;
   removeError:    () => void;
@@ -17,9 +21,11 @@ interface ContextProps {
 
 const authInitState: AuthState = {
   status:       'checking',
+  loading:      false,
   token:        null,
   user:         null,
-  errorMessage: ''
+  errorMessage: '',
+  withError:    false,
 };
 
 export const AuthContext = createContext( {} as ContextProps );
@@ -27,6 +33,8 @@ export const AuthContext = createContext( {} as ContextProps );
 export const AuthProvider: React.FC = ({ children }) => {
 
   const [ state, dispatch ] = useReducer( AuthReducer , authInitState );
+
+  const { displayToast } = useToastNotification();
 
   useEffect(() => {
     checkToken();
@@ -54,12 +62,11 @@ export const AuthProvider: React.FC = ({ children }) => {
       }
     });
   }
-
-  const signUp = () =>  {
-  }
   
   const signIn = async({ username, password }: LoginData ) => {
     try {
+      dispatch({ type: 'setLoading' });
+
       const { data } = await adminApi.post<LoginResponse>('/auth/login', { username, password });
 
       localStorage.setItem( 'token', data.token );
@@ -72,21 +79,46 @@ export const AuthProvider: React.FC = ({ children }) => {
         }
       });
     } catch ( error: any ) {
+      displayToast( error.response?.data.msg || 'Incorrect data', { appearance: 'error', autoDismiss: false, type: 'Login' });
+      
       dispatch({
         type: 'addError',
-        payload: error.response.data.msg || 'Incorrect data'
+        payload: error.response?.data.msg || 'Incorrect data'
       });
     }
   };
+  
+  const signUp = async ( registerData: RegisterData ): Promise<boolean> =>  {
+    try {
+      dispatch({ type: 'setLoading' });
+
+      const resp = await adminApi.post<RegisterResponse>('/auth/register', registerData);
+
+      if( resp.status === 201 ) {
+        return true;
+      } 
+      return false;
+    } catch ( error: any ) {
+      displayToast( error.response?.data.msg || 'Incorrect data', { appearance: 'error', autoDismiss: true, type: 'Login' });
+    
+      dispatch({
+        type: 'addError',
+        payload: error.response?.data.msg || 'Incorrect data'
+      });
+
+      return false;
+    }
+  }
 
   const logOut = () =>  {
+    localStorage.removeItem('token');
 
+    dispatch({ type: 'logout' });
   }
 
   const removeError = () =>  {
-
+    dispatch({ type: 'removeError' });
   }
-
 
   return (
     <AuthContext.Provider

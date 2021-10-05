@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import { RegisterPage } from '../pages/RegisterPage';
 import { LoginPage } from '../pages/LoginPage';
+// import { RegisterPage } from '../pages/RegisterPage';
 
 export const PublicRoutes = () => {
   return (
@@ -12,11 +12,11 @@ export const PublicRoutes = () => {
         component={ LoginPage }
       />
 
-      <Route
+      {/* <Route
         exact
         path='/register'
         component={ RegisterPage }
-      />
+      /> */}
 
       <Redirect to='/login' />
     </Switch>

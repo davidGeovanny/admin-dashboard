@@ -1,26 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { regularExpressions } from '../data/regExp';
-
-interface FormValues {
-  name          : string;
-  firstLastName : string;
-  secondLastName: string;
-  email         : string;
-  password      : string;
-  repeatPassword: string;
-}
+import { RegisterData } from '../interfaces/RegisterInterface';
+import { AuthContext } from '../context/AuthContext';
 
 export const RegisterPage = () => {
 
-  const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm<FormValues>();
+  const { signUp } = useContext( AuthContext );
+
+  const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm<RegisterData>();
   const { password } = getValues();
 
-  const onSubmit = ( data: FormValues ) => {
-    // TODO: Set data to login
-    console.log( data );
-    reset();
+  const onSubmit = async ( data: RegisterData ) => {
+    if( await signUp( data ) ) {
+      reset();
+    }
   }
 
   useEffect(() => {

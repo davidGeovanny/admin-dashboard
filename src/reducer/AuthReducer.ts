@@ -1,12 +1,13 @@
 import { AuthState } from '../interfaces/AuthState';
-import { User } from '../interfaces/LoginInterface';
+import { UserLogin } from '../interfaces/LoginInterface';
 
 type AuthAction =
-  | { type: 'signUp', payload: { token: string, user: User } }
+  | { type: 'signUp', payload: { token: string, user: UserLogin } }
   | { type: 'addError', payload: string }
   | { type: 'removeError' }
   | { type: 'notAuthenticated' }
   | { type: 'logout' }
+  | { type: 'setLoading' }
 
 export const AuthReducer = ( state: AuthState, action: AuthAction ): AuthState => {
   switch ( action.type ) {
@@ -17,21 +18,27 @@ export const AuthReducer = ( state: AuthState, action: AuthAction ): AuthState =
         token: null,
         user: null,
         errorMessage: action.payload,
+        withError: true,
+        loading: false,
       };
 
     case 'removeError':
       return {
         ...state,
         errorMessage: '',
+        withError: false,
+        loading: false,
       };
 
     case 'signUp': 
       return {
         ...state,
         errorMessage: '',
+        withError: false,
         status: 'authenticated',
         token: action.payload.token,
-        user: action.payload.user
+        user: action.payload.user,
+        loading: false,
       };
 
     case 'logout':
@@ -41,7 +48,14 @@ export const AuthReducer = ( state: AuthState, action: AuthAction ): AuthState =
         status: 'not-authenticated',
         token: null,
         user: null,
+        loading: false,
       };
+
+    case 'setLoading':
+        return {
+          ...state,
+          loading: true,
+        };
   
     default:
       return state;

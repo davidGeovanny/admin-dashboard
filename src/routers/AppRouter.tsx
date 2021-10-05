@@ -6,6 +6,7 @@ import {
 import { PublicRoutes } from './PublicRoutes';
 import { PrivateRoutes } from './PrivateRoutes';
 import { AuthContext } from '../context/AuthContext';
+import { Loading } from '../components/Loading';
 
 export const AppRouter = () => {
 
@@ -13,13 +14,12 @@ export const AppRouter = () => {
 
   if( status === 'checking' ) {
     return (
-      <h1>Checando autenticación</h1>
+      <Loading />
     );
   }
 
   return (
     <Router>
-
       <Switch>
         {
           status === 'authenticated'
@@ -27,7 +27,6 @@ export const AppRouter = () => {
             : <PublicRoutes />
         }
       </Switch>
-
     </Router>
   );
 }
