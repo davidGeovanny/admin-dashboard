@@ -72,7 +72,7 @@ export const SidebarMenuItem = ({ menuItem }: Props) => {
                       onClick={ () => handleClickSubmenu( item.redirection ) }
                       key={ index }
                       to={ item.redirection }
-                      activeClassName="active"
+                      activeClassName='active'
                     >
                       { item.name }
                     </NavLink>

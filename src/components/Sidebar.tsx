@@ -11,19 +11,19 @@ export const Sidebar = () => {
   return (
     <ul className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${ isSidebarCollapsed && 'toggled' }`}>
       <Link 
-        className="sidebar-brand d-flex align-items-center justify-content-center"
+        className='sidebar-brand d-flex align-items-center justify-content-center'
         to='/'
       >
         {/* Sidebar - Brand */}
-        <div className="sidebar-brand-icon rotate-n-15">
-          <i className="fas fa-laugh-wink"></i>
+        <div className='sidebar-brand-icon rotate-n-15'>
+          <i className='fas fa-laugh-wink'></i>
         </div>
 
-        <div className="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div className='sidebar-brand-text mx-3'>SB Admin <sup>2</sup></div>
       </Link>
 
       {/* Divider */}
-      <hr className="sidebar-divider my-0" />
+      <hr className='sidebar-divider my-0' />
 
       {/* Nav Item - Dashboard */}
       <SidebarMenuItem
@@ -31,10 +31,10 @@ export const Sidebar = () => {
       />
 
       {/* Divider */}
-      <hr className="sidebar-divider" />
+      <hr className='sidebar-divider' />
       
       {/* Heading */}
-      <div className="sidebar-heading">
+      <div className='sidebar-heading'>
         Interface
       </div>
 
@@ -48,12 +48,12 @@ export const Sidebar = () => {
       />
 
       {/* Divider */}
-      <hr className="sidebar-divider d-none d-md-block" />
+      <hr className='sidebar-divider d-none d-md-block' />
 
       {/* Sidebar Toggler (Sidebar) */}
-      <div className="text-center d-none d-md-inline">
+      <div className='text-center d-none d-md-inline'>
         <button 
-          className="rounded-circle border-0 sidebarToggle" 
+          className='rounded-circle border-0 sidebarToggle' 
           onClick={ onCollapseSidebar }
         ></button>
       </div>

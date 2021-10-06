@@ -5,8 +5,8 @@ import { TopbarProfileMenu } from './TopbarProfileMenu';
 
 export const Topbar = () => {
   return (
-    <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-      <ul className="navbar-nav ml-auto">
+    <nav className='navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow'>
+      <ul className='navbar-nav ml-auto'>
 
         <TopbarMenu
           picture={{
@@ -28,7 +28,7 @@ export const Topbar = () => {
           url='/message-center'
         />
 
-        <div className="topbar-divider d-none d-sm-block"></div>
+        <div className='topbar-divider d-none d-sm-block'></div>
 
         <TopbarProfileMenu />
       </ul>

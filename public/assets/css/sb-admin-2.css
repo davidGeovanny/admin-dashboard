@@ -5046,17 +5046,17 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-primary {
-  color: #293c74;
-  background-color: #dce3f9;
-  border-color: #cdd8f6;
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff
 }
 
 .alert-primary hr {
-  border-top-color: #b7c7f2;
+  border-top-color: #9fcdff
 }
 
 .alert-primary .alert-link {
-  color: #1c294e;
+  color: #002752
 }
 
 .alert-secondary {
@@ -5074,87 +5074,87 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-success {
-  color: #0f6848;
-  background-color: #d2f4e8;
-  border-color: #bff0de;
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb
 }
 
 .alert-success hr {
-  border-top-color: #aaebd3;
+  border-top-color: #b1dfbb
 }
 
 .alert-success .alert-link {
-  color: #093b29;
+  color: #0b2e13
 }
 
 .alert-info {
-  color: #1c606a;
-  background-color: #d7f1f5;
-  border-color: #c7ebf1;
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb
 }
 
 .alert-info hr {
-  border-top-color: #b3e4ec;
+  border-top-color: #abdde5
 }
 
 .alert-info .alert-link {
-  color: #113b42;
+  color: #062c33
 }
 
 .alert-warning {
-  color: #806520;
-  background-color: #fdf3d8;
-  border-color: #fceec9;
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba
 }
 
 .alert-warning hr {
-  border-top-color: #fbe6b1;
+  border-top-color: #ffe8a1
 }
 
 .alert-warning .alert-link {
-  color: #574516;
+  color: #533f03
 }
 
 .alert-danger {
-  color: #78261f;
-  background-color: #fadbd8;
-  border-color: #f8ccc8;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb
 }
 
 .alert-danger hr {
-  border-top-color: #f5b7b1;
+  border-top-color: #f1b0b7
 }
 
 .alert-danger .alert-link {
-  color: #4f1915;
+  color: #491217
 }
 
 .alert-light {
-  color: #818183;
+  color: #818182;
   background-color: #fefefe;
-  border-color: #fdfdfe;
+  border-color: #fdfdfe
 }
 
 .alert-light hr {
-  border-top-color: #ececf6;
+  border-top-color: #ececf6
 }
 
 .alert-light .alert-link {
-  color: #686869;
+  color: #686868
 }
 
 .alert-dark {
-  color: #2f3037;
-  background-color: #dedee1;
-  border-color: #d1d1d5;
+  color: #1b1e21;
+  background-color: #d6d8d9;
+  border-color: #c6c8ca
 }
 
 .alert-dark hr {
-  border-top-color: #c4c4c9;
+  border-top-color: #b9bbbe
 }
 
 .alert-dark .alert-link {
-  color: #18181c;
+  color: #040505
 }
 
 @-webkit-keyframes progress-bar-stripes {

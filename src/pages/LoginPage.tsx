@@ -7,10 +7,10 @@ import { LoginData } from '../interfaces/LoginInterface';
 
 export const LoginPage = () => {
 
-  const { signIn, loading, removeError } = useContext( AuthContext );
+  const { signIn, loading } = useContext( AuthContext );
   
   const { register, handleSubmit, formState: { errors } } = useForm<LoginData>();
-
+  
   const onSubmit = ( data: LoginData ) => {
     signIn({ username: data.username, password: data.password });
   }
@@ -52,6 +52,7 @@ export const LoginPage = () => {
                           { 
                             ...register('username', { 
                               required: { value: true, message: 'User is required' },
+                              value: 'carodavid'
                             }) 
                           }
                         />
@@ -71,6 +72,7 @@ export const LoginPage = () => {
                           { 
                             ...register('password', { 
                               required: { value: true, message: 'Password is required' },
+                              value: '123456'
                             })
                           }
                         />

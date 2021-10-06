@@ -1,10 +1,10 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import { LoginResponse, LoginData, UserLogin } from '../interfaces/LoginInterface';
-import { AuthReducer } from '../reducer/AuthReducer';
+import { RegisterData, RegisterResponse } from '../interfaces/RegisterInterface';
 import { AuthState } from '../interfaces/AuthState';
+import { AuthReducer } from '../reducer/AuthReducer';
 import { useToastNotification } from '../hooks/useToastNotification';
 import adminApi from '../helpers/adminApi';
-import { RegisterData, RegisterResponse } from '../interfaces/RegisterInterface';
 
 interface ContextProps {
   errorMessage:   string;
@@ -34,7 +34,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const [ state, dispatch ] = useReducer( AuthReducer , authInitState );
 
-  const { displayToast } = useToastNotification();
+  const { displayToast, deleteAllToasts } = useToastNotification();
 
   useEffect(() => {
     checkToken();
@@ -54,6 +54,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     localStorage.setItem('token', resp.data.token);
 
+    deleteAllToasts();
+
     dispatch({
       type: 'signUp',
       payload: {
@@ -70,6 +72,14 @@ export const AuthProvider: React.FC = ({ children }) => {
       const { data } = await adminApi.post<LoginResponse>('/auth/login', { username, password });
 
       localStorage.setItem( 'token', data.token );
+
+      displayToast({
+        customIcon: (<i className="fas fa-handshake"></i>),
+        position: 'bottom-center',
+        message: 'Welcome back!',
+        duration: 8000,
+        type: 'light'
+      });
       
       dispatch({
         type: 'signUp',
@@ -79,8 +89,12 @@ export const AuthProvider: React.FC = ({ children }) => {
         }
       });
     } catch ( error: any ) {
-      displayToast( error.response?.data.msg || 'Incorrect data', { appearance: 'error', autoDismiss: false, type: 'Login' });
-      
+      displayToast({
+        message: error.response?.data.msg || 'Incorrect data',
+        type: 'danger',
+        duration: Infinity
+      });
+            
       dispatch({
         type: 'addError',
         payload: error.response?.data.msg || 'Incorrect data'
@@ -99,8 +113,12 @@ export const AuthProvider: React.FC = ({ children }) => {
       } 
       return false;
     } catch ( error: any ) {
-      displayToast( error.response?.data.msg || 'Incorrect data', { appearance: 'error', autoDismiss: true, type: 'Login' });
-    
+      displayToast({
+        message: error.response?.data.msg || 'Incorrect data',
+        type: 'danger',
+        duration: Infinity
+      });  
+
       dispatch({
         type: 'addError',
         payload: error.response?.data.msg || 'Incorrect data'
