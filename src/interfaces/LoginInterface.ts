@@ -7,11 +7,11 @@ export interface LoginData {
 
 export interface LoginResponse {
   ok:    boolean;
-  user:  User;
+  user:  UserLogin;
   token: string;
 }
 
-export interface User {
+export interface UserLogin {
   id:       number;
   username: string;
 }

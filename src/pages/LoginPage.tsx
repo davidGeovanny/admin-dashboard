@@ -1,21 +1,18 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../context/AuthContext';
+import { LoginData } from '../interfaces/LoginInterface';
 
-interface FormValues {
-  user    : string;
-  password: string;
-}
 
 export const LoginPage = () => {
 
-  const { signIn } = useContext( AuthContext );
+  const { signIn, loading } = useContext( AuthContext );
   
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
-
-  const onSubmit = ( data: FormValues ) => {
-    signIn({ username: data.user, password: data.password });
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginData>();
+  
+  const onSubmit = ( data: LoginData ) => {
+    signIn({ username: data.username, password: data.password });
   }
 
   useEffect(() => {
@@ -50,18 +47,19 @@ export const LoginPage = () => {
                         <input 
                           type='text' 
                           placeholder='Enter your username'
-                          className={`form-control form-control-user ${ errors.user ? 'is-invalid' : '' }`}
+                          className={`form-control form-control-user ${ errors.username ? 'is-invalid' : '' }`}
                           autoComplete='off'
                           { 
-                            ...register('user', { 
+                            ...register('username', { 
                               required: { value: true, message: 'User is required' },
+                              value: 'carodavid'
                             }) 
                           }
                         />
 
-                        { errors.user && (
+                        { errors.username && (
                           <div className='invalid-feedback'>
-                            { errors.user && errors.user.message }
+                            { errors.username && errors.username.message }
                           </div>
                         )}
                       </div>
@@ -74,6 +72,7 @@ export const LoginPage = () => {
                           { 
                             ...register('password', { 
                               required: { value: true, message: 'Password is required' },
+                              value: '123456'
                             })
                           }
                         />
@@ -85,18 +84,25 @@ export const LoginPage = () => {
                         )}
                       </div>
 
-                      <button className='btn btn-primary btn-user btn-block'>
-                        Login
+                      <button 
+                        className='btn btn-primary btn-user btn-block'
+                        disabled={ loading }
+                      >
+                        { 
+                          loading 
+                            ? <> <i className='fas fa-spinner fa-pulse'></i> Loading, please wait... </>
+                            : 'Login' 
+                        }
                       </button>
+                      
+                      <hr />
                     </form>
 
-                    <hr />
-
-                    <div className='text-center'>
+                    {/* <div className='text-center'>
                       <Link className='small' to='/register'>
                         Create an Account!
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

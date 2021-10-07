@@ -2,6 +2,8 @@ import React from 'react';
 import { AppRouter } from './routers/AppRouter';
 import { AuthProvider } from './context/AuthContext';
 import { SidebarProvider } from './context/SidebarContext';
+import { Toaster } from 'react-hot-toast';
+import { ConfirmationProvider } from './context/ConfirmationContext';
 
 const App = () => {
   return (
@@ -15,7 +17,10 @@ const AppState: React.FC = ({ children }) => {
   return (
     <AuthProvider>
       <SidebarProvider>
-        { children }
+        <ConfirmationProvider>
+          { children }
+        </ConfirmationProvider>
+        <Toaster />
       </SidebarProvider>
     </AuthProvider>
   );
