@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import ReactDatePicker from 'react-datepicker';
+import { useForm } from 'react-hook-form';
 import { AuthContext } from '../context/AuthContext';
 import { LoginData } from '../interfaces/LoginInterface';
 
@@ -9,16 +8,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 export const LoginPage = () => {
   const defaultValues: LoginData = {
     username: 'carodavid',
-    password: '123456',
-    date    : null
+    password: '123456'
   };
 
   const { signIn, loading } = useContext( AuthContext );
   
-  const { register, handleSubmit, formState: { errors }, control } = useForm<LoginData>({ defaultValues });
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginData>({ defaultValues });
   
   const onSubmit = ( data: LoginData ) => {
-    signIn({ username: data.username, password: data.password, date: data.date });
+    signIn({ username: data.username, password: data.password });
   }
 
   useEffect(() => {
@@ -48,32 +46,6 @@ export const LoginPage = () => {
                       className='user'
                       onSubmit={ handleSubmit( onSubmit ) }
                     >
-                      <div className='form-group'>
-                        <div className={`${ errors.date ? 'is-invalid' : '' }`}>
-                          <Controller
-                            control={ control }
-                            name='date'
-                            render={ ({ field }) => (
-                              <ReactDatePicker
-                                className={`form-control form-control-user ${ errors.date ? 'is-invalid' : '' }`}
-                                placeholderText='Select date'
-                                onChange={ ( date ) => field.onChange( date ) }
-                                selected={ field.value }
-                              />
-                            )}
-                            rules={{
-                              required: { value: true, message: 'Date is required' },
-                            }}
-                          />
-                        </div>
-
-                        { errors.date && (
-                          <div className='invalid-feedback'>
-                            { errors.date.message }
-                          </div>
-                        )}
-                      </div>
-
                       <div className='form-group'>
                         <input 
                           type='text' 

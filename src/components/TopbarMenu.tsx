@@ -68,13 +68,13 @@ export const TopbarMenu = ({ picture, title, items, url }: Props) => {
 
         {
           items.map( item => (
-            <span 
+            <Link to={ `${ url }` } 
               key={ item.id } 
               className='dropdown-item d-flex align-items-center'
-              onClick={ () => redirectTo( url ) }
+              // onClick={ () => redirectTo( url ) }
             >
               <TopbarMenuItem item={ item } />
-            </span>
+            </Link>
           ))
         }
 

@@ -41,26 +41,30 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const checkToken = async () => {
-    const token = localStorage.getItem('token');
-
-    if( !token ) {
-      return dispatch({ type: 'notAuthenticated' });
-    }
-    
-    const resp = await adminApi.get('/auth');
-    if( resp.status !== 200 ) {
-      return dispatch({ type: 'notAuthenticated' });
-    }
-
-    localStorage.setItem('token', resp.data.token);
-
-    dispatch({
-      type: 'signUp',
-      payload: {
-        token: resp.data.token,
-        user: resp.data.user
+    try {
+      const token = localStorage.getItem('token');
+  
+      if( !token ) {
+        return dispatch({ type: 'notAuthenticated' });
       }
-    });
+      
+      const resp = await adminApi.get('/auth');
+      if( resp.status !== 200 ) {
+        return dispatch({ type: 'notAuthenticated' });
+      }
+  
+      localStorage.setItem('token', resp.data.token);
+  
+      dispatch({
+        type: 'signUp',
+        payload: {
+          token: resp.data.token,
+          user: resp.data.user
+        }
+      });
+    } catch ( error:  any ) {
+      dispatch({ type: 'notAuthenticated' });
+    }
   }
   
   const signIn = async({ username, password }: LoginData ) => {

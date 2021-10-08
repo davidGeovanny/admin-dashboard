@@ -3,7 +3,6 @@
 export interface LoginData {
   username: string;
   password: string;
-  date:     Date | null | undefined;
 }
 
 export interface LoginResponse {

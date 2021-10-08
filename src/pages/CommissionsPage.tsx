@@ -4,6 +4,7 @@ import ReactDatePicker from 'react-datepicker';
 import { CommissionFormData } from '../interfaces/SaleInterface';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import { CommissionsTable } from './Commissions/CommissionsTable';
 
 export const CommissionsPage = () => {
 
@@ -97,6 +98,12 @@ export const CommissionsPage = () => {
 
             <hr />
           </form>
+        </div>
+      </div>
+    
+      <div className="row">
+        <div className="col-12">
+          <CommissionsTable />
         </div>
       </div>
     </div>
