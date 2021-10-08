@@ -8,7 +8,7 @@ type MenuItemAction = 'show' | 'hide';
 export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
   const location = useLocation();
 
-  const { onCollapseSubmenu, menuState, redirectTo } = useContext( SidebarContext );
+  const { onCollapseSubmenu, menuState } = useContext( SidebarContext );
 
   const [ submenuIsCollapsing, setSubmenuIsCollapsing ] = useState<boolean>( false );
   const [ menuItemStatus, setMenuItemStatus ] = useState<MenuItemAction>('hide');
@@ -28,10 +28,6 @@ export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
       setSubmenuIsCollapsing( false );
     }, 150);
   }, [ menuItemStatus ] );
-  
-  const handleClickSubmenu = ( url: string ) => {
-    redirectTo( url );
-  }
 
   useEffect(() => {
     if( submenuIsCollapsing ) {
@@ -78,6 +74,6 @@ export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
     submenuIsCollapsing,
     isPathMatch,
     handleClickMenu,
-    handleClickSubmenu,
+    // handleClickSubmenu,
   };
 }

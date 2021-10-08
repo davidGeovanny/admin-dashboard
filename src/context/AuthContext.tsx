@@ -54,8 +54,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     localStorage.setItem('token', resp.data.token);
 
-    deleteAllToasts();
-
     dispatch({
       type: 'signUp',
       payload: {
@@ -72,6 +70,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       const { data } = await adminApi.post<LoginResponse>('/auth/login', { username, password });
 
       localStorage.setItem( 'token', data.token );
+
+      deleteAllToasts();
 
       displayToast({
         customIcon: (<i className="fas fa-handshake"></i>),

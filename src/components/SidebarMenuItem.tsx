@@ -15,7 +15,6 @@ export const SidebarMenuItem = ({ menuItem }: Props) => {
     submenuIsCollapsing, 
     isPathMatch,
     handleClickMenu, 
-    handleClickSubmenu, 
   } = useSidebarMenuItem( menuItem );
   
   return (
@@ -69,7 +68,6 @@ export const SidebarMenuItem = ({ menuItem }: Props) => {
                   menuItem.subitem.items.map( ( item, index ) => (
                     <NavLink
                       className={`collapse-item ${ item.active ? 'active' : '' }`} 
-                      onClick={ () => handleClickSubmenu( item.redirection ) }
                       key={ index }
                       to={ item.redirection }
                       activeClassName='active'

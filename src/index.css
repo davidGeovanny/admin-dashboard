@@ -80,10 +80,6 @@ div.loading i {
   max-width: 350px;
 }
 
-.modal {
-  display: none;
-}
-
-.modal.is-open {
-  display: block;
-}
+/* .max-w-40 {
+  max-width: 40% !important;
+} */

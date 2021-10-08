@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { SidebarContext } from '../context/SidebarContext';
 import { TopbarMenu } from './TopbarMenu';
-import { topbarNotifications, topbarMessages } from '../data/topbar';
 import { TopbarProfileMenu } from './TopbarProfileMenu';
+import { topbarNotifications, topbarMessages } from '../data/topbar';
 
 export const Topbar = () => {
+  const { onCollapseSidebar } = useContext( SidebarContext );
+
   return (
     <nav className='navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow'>
+      <div className='text-center d-none d-md-inline'>
+        <button 
+          className='rounded-circle border-0 sidebarToggle bg-transparent' 
+          onClick={ onCollapseSidebar }
+        ></button>
+      </div>
+
       <ul className='navbar-nav ml-auto'>
 
         <TopbarMenu

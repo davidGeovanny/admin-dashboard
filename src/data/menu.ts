@@ -14,6 +14,27 @@ export const menu: SidebarMenu[] = [
   {
     item: {
       id: v4(),
+      name: 'Sales',
+      active: false,
+      redirection: '/',
+    },
+    icon: 'fa-hand-holding-usd',
+    subitem: {
+      isOpen: false,
+      header: 'Information',
+      items: [
+        {
+          id: v4(),
+          name: 'Commissions',
+          redirection: '/commissions',
+          active: false,
+        }
+      ]
+    }
+  },
+  {
+    item: {
+      id: v4(),
       name: 'Profile',
       active: false,
       redirection: '/profile'

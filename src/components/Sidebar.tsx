@@ -5,7 +5,7 @@ import { SidebarContext } from '../context/SidebarContext';
 
 export const Sidebar = () => {
 
-  const { menuState, onCollapseSidebar } = useContext( SidebarContext );
+  const { menuState } = useContext( SidebarContext );
   const { isSidebarCollapsed, menu } = menuState;
 
   return (
@@ -39,25 +39,12 @@ export const Sidebar = () => {
       </div>
 
       {/* Nav Item - Pages Collapse Menu */}
-      <SidebarMenuItem
-        menuItem={ menu[1] }
-      />
-
-      <SidebarMenuItem
-        menuItem={ menu[2] }
-      />
-
-      {/* Divider */}
-      <hr className='sidebar-divider d-none d-md-block' />
-
-      {/* Sidebar Toggler (Sidebar) */}
-      <div className='text-center d-none d-md-inline'>
-        <button 
-          className='rounded-circle border-0 sidebarToggle' 
-          onClick={ onCollapseSidebar }
-        ></button>
-      </div>
-
+      { menu.map( ( item, index ) => {
+        if( index > 0 ) {
+          return <SidebarMenuItem key={ item.item.id } menuItem={ item } />
+        }
+        return null;
+      } ) }
     </ul>
   );
 }

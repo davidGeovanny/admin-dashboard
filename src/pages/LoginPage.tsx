@@ -1,18 +1,24 @@
 import React, { useContext, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import ReactDatePicker from 'react-datepicker';
 import { AuthContext } from '../context/AuthContext';
 import { LoginData } from '../interfaces/LoginInterface';
 
+import 'react-datepicker/dist/react-datepicker.css';
 
 export const LoginPage = () => {
+  const defaultValues: LoginData = {
+    username: 'carodavid',
+    password: '123456',
+    date    : null
+  };
 
   const { signIn, loading } = useContext( AuthContext );
   
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginData>();
+  const { register, handleSubmit, formState: { errors }, control } = useForm<LoginData>({ defaultValues });
   
   const onSubmit = ( data: LoginData ) => {
-    signIn({ username: data.username, password: data.password });
+    signIn({ username: data.username, password: data.password, date: data.date });
   }
 
   useEffect(() => {
@@ -42,6 +48,31 @@ export const LoginPage = () => {
                       className='user'
                       onSubmit={ handleSubmit( onSubmit ) }
                     >
+                      <div className='form-group'>
+                        <div className={`${ errors.date ? 'is-invalid' : '' }`}>
+                          <Controller
+                            control={ control }
+                            name='date'
+                            render={ ({ field }) => (
+                              <ReactDatePicker
+                                className={`form-control form-control-user ${ errors.date ? 'is-invalid' : '' }`}
+                                placeholderText='Select date'
+                                onChange={ ( date ) => field.onChange( date ) }
+                                selected={ field.value }
+                              />
+                            )}
+                            rules={{
+                              required: { value: true, message: 'Date is required' },
+                            }}
+                          />
+                        </div>
+
+                        { errors.date && (
+                          <div className='invalid-feedback'>
+                            { errors.date.message }
+                          </div>
+                        )}
+                      </div>
 
                       <div className='form-group'>
                         <input 
@@ -52,14 +83,13 @@ export const LoginPage = () => {
                           { 
                             ...register('username', { 
                               required: { value: true, message: 'User is required' },
-                              value: 'carodavid'
                             }) 
                           }
                         />
 
                         { errors.username && (
                           <div className='invalid-feedback'>
-                            { errors.username && errors.username.message }
+                            { errors.username.message }
                           </div>
                         )}
                       </div>
@@ -72,14 +102,13 @@ export const LoginPage = () => {
                           { 
                             ...register('password', { 
                               required: { value: true, message: 'Password is required' },
-                              value: '123456'
                             })
                           }
                         />
 
                         { errors.password && (
                           <div className='invalid-feedback'>
-                            { errors.password && errors.password.message }
+                            { errors.password.message }
                           </div>
                         )}
                       </div>
@@ -97,12 +126,6 @@ export const LoginPage = () => {
                       
                       <hr />
                     </form>
-
-                    {/* <div className='text-center'>
-                      <Link className='small' to='/register'>
-                        Create an Account!
-                      </Link>
-                    </div> */}
                   </div>
                 </div>
               </div>

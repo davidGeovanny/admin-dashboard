@@ -35,6 +35,7 @@ export const SidebarProvider: React.FC = ({ children }) => {
   }
 
   const redirectTo = ( url: string ) => {
+    console.log( url );
     history.push( url );
   }
   

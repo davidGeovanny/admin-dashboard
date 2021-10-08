@@ -3363,6 +3363,7 @@ input[type="button"].btn-block {
 }
 
 .input-group > .form-control,
+.input-group > .react-datepicker-wrapper,
 .input-group > .form-control-plaintext,
 .input-group > .custom-select,
 .input-group > .custom-file {
@@ -3374,6 +3375,7 @@ input[type="button"].btn-block {
 }
 
 .input-group > .form-control + .form-control,
+.input-group > .react-datepicker-wrapper + .form-control,
 .input-group > .form-control + .custom-select,
 .input-group > .form-control + .custom-file,
 .input-group > .form-control-plaintext + .form-control,
@@ -3389,6 +3391,7 @@ input[type="button"].btn-block {
 }
 
 .input-group > .form-control:focus,
+.input-group > .react-datepicker-wrapper:focus,
 .input-group > .custom-select:focus,
 .input-group > .custom-file .custom-file-input:focus ~ .custom-file-label {
   z-index: 3;
@@ -3399,6 +3402,7 @@ input[type="button"].btn-block {
 }
 
 .input-group > .form-control:not(:first-child),
+.input-group > .react-datepicker-wrapper:not(:first-child),
 .input-group > .custom-select:not(:first-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -10430,6 +10434,29 @@ a:focus {
 }
 
 .sidebar .sidebarToggle:focus {
+  outline: none;
+}
+
+.topbar .sidebarToggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.topbar .sidebarToggle::after {
+  font-weight: 900;
+  content: '\f0c9';
+  font-family: 'Font Awesome 5 Free';
+  margin-right: 0.1rem;
+}
+
+.topbar .sidebarToggle:hover {
+  text-decoration: none;
+}
+
+.topbar .sidebarToggle:focus {
   outline: none;
 }
 
