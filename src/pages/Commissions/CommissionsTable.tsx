@@ -1,166 +1,92 @@
-import React, { useEffect } from 'react';
-import DataTable, { TableColumn } from 'react-data-table-component';
-import { v4 } from 'uuid';
+import React, { useContext } from 'react';
+import { SalesContext } from '../../context/SalesContex';
+import { formatCurrency } from '../../helpers/format';
 
-interface TableDataColumn {
-  id: string;
-  title: string;
-  year: string;
+type Section = 'water' | 'icebar' | 'icecube';
+
+interface Props {
+  show:    boolean;
+  section: Section;
+  setShow: ( value: boolean, section: Section ) => void;
 }
 
-const columns: TableColumn<TableDataColumn>[] = [
-  {
-    name: 'Title',
-    selector: row => row.title,
-    // cell: () => <button className='btn btn-primary' onClick={() => console.log('hola')}>+</button>
-  },
-  {
-    name: 'Year',
-    selector: row => row.year,
-  },
-];
+export const CommissionsTable = ({ show, setShow, section }: Props) => {
 
-const data: TableDataColumn[] = [
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-  {
-    id: v4(),
-    title: 'Beetlejuice',
-    year: '1988',
-  },
-  {
-    id: v4(),
-    title: 'Ghostbusters',
-    year: '1984',
-  },
-]
+  const { waterCommissions, loadingCommissions } = useContext( SalesContext );
 
-export const CommissionsTable = () => {
+  const header = [
+    {
+      name : 'Branch',
+      value: 'branch_company'
+    },
+    {
+      name : 'Employee',
+      value: 'employee'
+    },
+    {
+      name : 'Commission',
+      value: 'commission'
+    },
+  ];
 
   return (
     <div>
       <div className='card'>
         <div className='card-body'>
 
-          <h3>Water commissions</h3>
+          <h3 style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            cursor: 'pointer'
+          }}>
+            Water commissions
+            <span
+              onClick={ () => setShow( !show, section ) }
+            >
+              <i className={`fas ${ show ? 'fa-eye' : 'fa-eye-slash' }`}></i>
+            </span>
+          </h3>
 
-          <table className='table table-hover-custom table-striped'>
+          
+
+          <table className={`table table-hover-custom table-striped ${ !show ? 'd-none' : '' }`}>
             <thead>
-              <tr>
-                <th>Branch</th>
-                <th>Employee</th>
-                <th>Commission</th>
+              <tr className='text-center'>
+                {
+                  header.map( ( item, index ) => (
+                    <th key={ index }>
+                      { item.name }
+                    </th>
+                  ))
+                }
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>05 May 2013</td>
-                <td>05 May 2013</td>
-                <td>Credit Account</td>
-              </tr>
-              <tr>
-                <td>05 May 2013</td>
-                <td>05 May 2013</td>
-                <td>Credit Account</td>
-              </tr>
+              {
+                loadingCommissions
+                  ? (
+                    <tr>
+                      <td colSpan={ header.length } className='text-center'>
+                        <i className='fas fa-spinner fa-pulse'></i> Loading...
+                      </td>
+                    </tr>
+                  )
+                  : waterCommissions.length === 0
+                    ? (
+                      <tr>
+                        <td colSpan={ header.length } className='text-center'>
+                          No results available
+                        </td>
+                      </tr>
+                    )
+                    : waterCommissions.map( ( commission, index ) => (
+                      <tr key={ index }>
+                        <td className='text-center'> { commission.branch } </td>
+                        <td className='text-center'> { commission.employee } </td>
+                        <td className='text-right'> { formatCurrency( commission.commission ) } </td>
+                      </tr>
+                    ))
+              }
             </tbody>
           </table>
 

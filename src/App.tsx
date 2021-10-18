@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { SidebarProvider } from './context/SidebarContext';
 import { Toaster } from 'react-hot-toast';
 import { ConfirmationProvider } from './context/ConfirmationContext';
+import { SalesProvider } from './context/SalesContex';
 
 const App = () => {
   return (
@@ -18,7 +19,9 @@ const AppState: React.FC = ({ children }) => {
     <AuthProvider>
       <SidebarProvider>
         <ConfirmationProvider>
-          { children }
+          <SalesProvider>
+            { children }
+          </SalesProvider>
         </ConfirmationProvider>
         <Toaster />
       </SidebarProvider>

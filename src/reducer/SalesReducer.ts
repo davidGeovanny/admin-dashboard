@@ -1,14 +1,26 @@
-import { SalesState } from '../interfaces/SaleInterface';
+import { SalesState, WaterCommission, IceBarCommission, IceCubeCommission } from '../interfaces/SaleInterface';
 
 type SalesAction = 
+	| { type: 'setLoadingCommission' }
+	| { type: 'setCommissions', payload: { water: WaterCommission[], icebar: IceBarCommission[], icecube: IceCubeCommission[] } }
 	| { type: '' }
 
 export const SalesReducer =  ( state: SalesState, action: SalesAction ): SalesState => {
 	switch ( action.type ) {
-		case '':
+		case 'setLoadingCommission':
 			return {
 				...state,
-			}
+				loadingCommissions: true,
+			};
+
+		case 'setCommissions':
+			return {
+				...state,
+				loadingCommissions: false,
+				waterCommissions: action.payload.water,
+				icebarCommissions: action.payload.icebar,
+				icecubeCommissions: action.payload.icecube,
+			};
 	
 		default:
 			return state;

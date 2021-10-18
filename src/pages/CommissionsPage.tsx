@@ -1,18 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import ReactDatePicker from 'react-datepicker';
 import { CommissionFormData } from '../interfaces/SaleInterface';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import { CommissionsTable } from './Commissions/CommissionsTable';
+import { SalesContext } from '../context/SalesContex';
 
 export const CommissionsPage = () => {
+
+  const { getCommissions, loadingCommissions } = useContext( SalesContext );
+
+  const [ showCommissions, setShowCommissions ] = useState({
+    water: true,
+    icebar: true,
+    icecube: true,
+  });
+
+  const changeSetShowCommission = ( value: boolean, section: 'water' | 'icebar' | 'icecube' ) => {
+    setShowCommissions({
+      ...showCommissions,
+      [ section ]: value
+    });
+  }
 
   const isMounted = useRef<boolean>( true );
 
   const { handleSubmit, formState: { errors }, control } = useForm<CommissionFormData>();
 
   const onSubmit = ( data: CommissionFormData ) => {
+    getCommissions({ initDate: data.initDate, finalDate: data.finalDate });
   }
 
   useEffect(() => {
@@ -90,8 +107,13 @@ export const CommissionsPage = () => {
               <div className='col'>
                 <button
                   className='btn btn-primary btn-user btn-block'
+                  disabled={ loadingCommissions }
                 >
-                  Get commissions
+                  {
+                    loadingCommissions
+                      ? <> <i className='fas fa-spinner fa-pulse'></i> Loading... </>
+                      : 'Get commissions' 
+                  }
                 </button>
               </div>
             </div>
@@ -103,7 +125,11 @@ export const CommissionsPage = () => {
     
       <div className="row">
         <div className="col-12">
-          <CommissionsTable />
+          <CommissionsTable 
+            show={ showCommissions.water }
+            setShow={ changeSetShowCommission }
+            section='water'
+          />
         </div>
       </div>
     </div>

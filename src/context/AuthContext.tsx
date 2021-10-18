@@ -7,16 +7,16 @@ import { useToastNotification } from '../hooks/useToastNotification';
 import adminApi from '../helpers/adminApi';
 
 interface ContextProps {
-  errorMessage:   string;
-  withError:      boolean;
-  token:          string | null;
-  user:           UserLogin | null;
-  status:         'checking' | 'authenticated' | 'not-authenticated';
-  loading:        boolean;
-  signUp:         ( registerData: RegisterData ) => Promise<boolean>;
-  signIn:         ( loginData: LoginData ) => void;
-  logOut:         () => void;
-  removeError:    () => void;
+  errorMessage: string;
+  withError:    boolean;
+  token:        string | null;
+  user:         UserLogin | null;
+  status:       'checking' | 'authenticated' | 'not-authenticated';
+  loading:      boolean;
+  signUp:       ( registerData: RegisterData ) => Promise<boolean>;
+  signIn:       ( loginData: LoginData ) => void;
+  logOut:       () => void;
+  removeError:  () => void;
 }
 
 const authInitState: AuthState = {
@@ -48,7 +48,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         return dispatch({ type: 'notAuthenticated' });
       }
       
-      const resp = await adminApi.get('/auth');
+      const resp = await adminApi.get<LoginResponse>('/auth');
       if( resp.status !== 200 ) {
         return dispatch({ type: 'notAuthenticated' });
       }
@@ -78,7 +78,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       deleteAllToasts();
 
       displayToast({
-        customIcon: (<i className="fas fa-handshake"></i>),
+        customIcon: (<i className='fas fa-handshake'></i>),
         position: 'bottom-center',
         message: 'Welcome back!',
         duration: 8000,
