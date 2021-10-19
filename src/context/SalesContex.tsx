@@ -2,9 +2,10 @@ import React, { createContext, useReducer } from 'react';
 import { 
   SalesState, 
   CommissionResponse, 
-  WaterCommission, 
-  IceBarCommission, 
-  IceCubeCommission, 
+  // WaterCommission, 
+  // IceBarCommission, 
+  // IceCubeCommission, 
+  Commission,
   CommissionFormData
 } from '../interfaces/SaleInterface';
 import { SalesReducer } from '../reducer/SalesReducer';
@@ -14,9 +15,9 @@ import { formatDate } from '../helpers/format';
 
 interface ContextProps {
   loadingCommissions: boolean;
-  waterCommissions:   WaterCommission[];
-  icebarCommissions:  IceBarCommission[];
-  icecubeCommissions: IceCubeCommission[];
+  waterCommissions:   Commission[];
+  icebarCommissions:  Commission[];
+  icecubeCommissions: Commission[];
   getCommissions:     ( dates: CommissionFormData) => void;
 }
 
@@ -64,6 +65,12 @@ export const SalesProvider: React.FC = ({ children }) => {
           icebar: data.icebar_commissions,
           icecube: data.icecube_commissions,
         }
+      });
+
+      displayToast({
+        message: 'Commissions from ' + formatDate( initDate ) + ' to ' + formatDate( finalDate ) + ' loaded',
+        type: 'success',
+        duration: 5000
       });
     } catch ( error: any ) {
       displayToast({

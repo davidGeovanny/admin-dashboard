@@ -1,15 +1,37 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import ReactDatePicker from 'react-datepicker';
-import { CommissionFormData } from '../interfaces/SaleInterface';
-
-import 'react-datepicker/dist/react-datepicker.css';
 import { CommissionsTable } from './Commissions/CommissionsTable';
 import { SalesContext } from '../context/SalesContex';
+import { CommissionFormData, Commission } from '../interfaces/SaleInterface';
+import 'react-datepicker/dist/react-datepicker.css';
+import { CommissionsSection } from '../types/SalesType';
+import { ColumnDefinitionType } from '../types/SimpleTable';
+
+const columns: ColumnDefinitionType<Commission, keyof Commission>[] = [
+  {
+    key: 'branch',
+    header: 'Branch company',
+  },
+  {
+    key: 'employee',
+    header: 'Name employee',
+  },
+  {
+    key: 'commission',
+    header: 'Commission'
+  }
+]
 
 export const CommissionsPage = () => {
 
-  const { getCommissions, loadingCommissions } = useContext( SalesContext );
+  const { 
+    getCommissions, 
+    loadingCommissions, 
+    waterCommissions, 
+    icebarCommissions, 
+    icecubeCommissions 
+  } = useContext( SalesContext );
 
   const [ showCommissions, setShowCommissions ] = useState({
     water: true,
@@ -17,7 +39,10 @@ export const CommissionsPage = () => {
     icecube: true,
   });
 
-  const changeSetShowCommission = ( value: boolean, section: 'water' | 'icebar' | 'icecube' ) => {
+  const changeSetShowCommission = ( value: boolean, section: CommissionsSection ) => {
+    console.log({
+      value, section
+    });
     setShowCommissions({
       ...showCommissions,
       [ section ]: value
@@ -26,7 +51,8 @@ export const CommissionsPage = () => {
 
   const isMounted = useRef<boolean>( true );
 
-  const { handleSubmit, formState: { errors }, control } = useForm<CommissionFormData>();
+  const { handleSubmit, formState: { errors }, control, getValues } = useForm<CommissionFormData>();
+  const { initDate } = getValues();
 
   const onSubmit = ( data: CommissionFormData ) => {
     getCommissions({ initDate: data.initDate, finalDate: data.finalDate });
@@ -62,6 +88,7 @@ export const CommissionsPage = () => {
                         placeholderText='Select initial date'
                         onChange={ ( date ) => field.onChange( date ) }
                         selected={ field.value }
+                        dateFormat='MMMM d, yyyy'
                       />
                     )}
                     rules={{
@@ -89,10 +116,12 @@ export const CommissionsPage = () => {
                         placeholderText='Select final date'
                         onChange={ ( date ) => field.onChange( date ) }
                         selected={ field.value }
+                        dateFormat='MMMM d, yyyy'
                       />
                     )}
                     rules={{
                       required: { value: true, message: 'Final date is required' },
+                      validate: finalDate => ( ( finalDate && initDate ) && finalDate >= initDate ) || "Final date can't be less than the init date"
                     }}
                   />
                 </div>
@@ -123,13 +152,30 @@ export const CommissionsPage = () => {
         </div>
       </div>
     
-      <div className="row">
-        <div className="col-12">
+      <div className='row'>
+        <div className='col-12'>
           <CommissionsTable 
             show={ showCommissions.water }
             setShow={ changeSetShowCommission }
             section='water'
+            data={ waterCommissions }
+            columns={ columns }
+            title='Water Commissions'
           />
+        </div>
+        <div className='col-12'>
+          {/* <CommissionsTable 
+            show={ showCommissions.icebar }
+            setShow={ changeSetShowCommission }
+            section='icebar'
+          /> */}
+        </div>
+        <div className='col-12'>
+          {/* <CommissionsTable 
+            show={ showCommissions.icecube }
+            setShow={ changeSetShowCommission }
+            section='icecube'
+          /> */}
         </div>
       </div>
     </div>

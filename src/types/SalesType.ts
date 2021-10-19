@@ -1,0 +1,1 @@
+export type CommissionsSection = 'water' | 'icebar' | 'icecube';
