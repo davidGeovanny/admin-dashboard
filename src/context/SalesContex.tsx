@@ -2,23 +2,20 @@ import React, { createContext, useReducer } from 'react';
 import { 
   SalesState, 
   CommissionResponse, 
-  // WaterCommission, 
-  // IceBarCommission, 
-  // IceCubeCommission, 
   Commission,
   CommissionFormData
 } from '../interfaces/SaleInterface';
 import { SalesReducer } from '../reducer/SalesReducer';
-import adminApi from '../helpers/adminApi';
 import { useToastNotification } from '../hooks/useToastNotification';
 import { formatDate } from '../helpers/format';
+import adminApi from '../helpers/adminApi';
 
 interface ContextProps {
   loadingCommissions: boolean;
   waterCommissions:   Commission[];
   icebarCommissions:  Commission[];
   icecubeCommissions: Commission[];
-  getCommissions:     ( dates: CommissionFormData) => void;
+  getCommissions:     ( dates: CommissionFormData ) => void;
 }
 
 const salesInitState: SalesState = {
@@ -88,10 +85,6 @@ export const SalesProvider: React.FC = ({ children }) => {
         }
       });
     }
-  }
-
-  const prueba = () => {
-
   }
 
   return (

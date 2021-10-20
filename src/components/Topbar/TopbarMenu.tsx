@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { TopbarMenuItem } from './TopbarMenuItem';
-import { useTopbarMenuItem } from '../hooks/useTopbarMenuItem';
-import { Picture, TopbarItem } from '../interfaces/TopbarInterface';
-import { SidebarContext } from '../context/SidebarContext';
+import { useTopbarMenuItem } from '../../hooks/useTopbarMenuItem';
+import { Picture, TopbarItem } from '../../interfaces/TopbarInterface';
+import { SidebarContext } from '../../context/SidebarContext';
 
 interface Props {
   picture : Picture;

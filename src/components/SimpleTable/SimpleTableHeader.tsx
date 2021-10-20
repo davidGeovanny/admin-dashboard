@@ -1,20 +1,20 @@
-import { TableHeaderProps } from '../../types/SimpleTable';
+import { TableHeaderProps } from '../../types/SimpleTableType';
 
-export const SimpleTableHeader = <T, K extends keyof T>({ columns, }: TableHeaderProps<T, K>): JSX.Element => {
-  const headers = columns.map((column, index) => {
+export const SimpleTableHeader = <T, K extends keyof T>({ columns }: TableHeaderProps<T, K>): JSX.Element => {
+  const headers = columns.map( ( column, index ) => {
     return (
-      <th
-        key={`headCell-${index}`}
-        // style={style}
+      <th 
+        key={`headCell-${ index }`}
+        className='text-center'
       >
-        {column.header}
+        { column.header }
       </th>
     );
   });
 
   return (
     <thead>
-      <tr>{headers}</tr>
+      <tr>{ headers }</tr>
     </thead>
   );
 };

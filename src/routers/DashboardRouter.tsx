@@ -4,13 +4,13 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import { CommissionsPage } from '../pages/CommissionsPage';
+import { CommissionsPage } from '../pages/Commissions/CommissionsPage';
 import { DashboardPage } from '../pages/DashboardPage';
 import { ProfilePage } from '../pages/ProfilePage';
 import { NotificationCenterPage } from '../pages/NotificationCenterPage';
 import { MessageCenterPage } from '../pages/MessageCenterPage';
-import { Sidebar } from '../components/Sidebar';
-import { Topbar } from '../components/Topbar';
+import { Sidebar } from '../components/Sidebar/Sidebar';
+import { Topbar } from '../components/Topbar/Topbar';
 
 export const DashboardRouter = () => {
   return (

@@ -1,6 +1,3 @@
-import { ColumnDefinitionType } from '../types/SimpleTable';
-import { CommissionsSection } from '../types/SalesType';
-
 export interface CommissionFormData {
 	initDate : Date | null | undefined;
 	finalDate: Date | null | undefined;
@@ -25,13 +22,4 @@ export interface Commission {
 	employee:   string;
 	commission: number;
 	branch:     string;
-}
-
-export type TableCommissionsProps<T, K extends keyof T> = {
-	section: 	CommissionsSection;
-	title?: 	string;
-  data: 		Array<T>;
-  columns: 	Array<ColumnDefinitionType<T, K>>;
-	show: 		boolean;
-	setShow: 	( value: boolean, section: CommissionsSection ) => void;
 }
