@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { SidebarMenuItem } from './SidebarMenuItem';
-import { SidebarContext } from '../context/SidebarContext';
+import { SidebarContext } from '../../context/SidebarContext';
 
 export const Sidebar = () => {
 

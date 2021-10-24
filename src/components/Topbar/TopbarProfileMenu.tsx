@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { useTopbarMenuItem } from '../hooks/useTopbarMenuItem';
-import { AuthContext } from '../context/AuthContext';
-import { ConfirmationContext } from '../context/ConfirmationContext';
+import { useTopbarMenuItem } from '../../hooks/useTopbarMenuItem';
+import { AuthContext } from '../../context/AuthContext';
+import { ConfirmationContext } from '../../context/ConfirmationContext';
 
 export const TopbarProfileMenu = () => {
   const { logOut } = useContext( AuthContext );

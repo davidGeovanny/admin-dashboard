@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { SidebarMenu } from '../interfaces/SidebarInterface';
-import { useSidebarMenuItem } from '../hooks/useSidebarMenuItem';
+import { SidebarMenu } from '../../interfaces/SidebarInterface';
+import { useSidebarMenuItem } from '../../hooks/useSidebarMenuItem';
 
 interface Props {
   menuItem: SidebarMenu;

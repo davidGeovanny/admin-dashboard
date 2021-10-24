@@ -1,5 +1,5 @@
 import React from 'react'
-import { TopbarItem } from '../interfaces/TopbarInterface';
+import { TopbarItem } from '../../interfaces/TopbarInterface';
 
 interface Props {
   item: TopbarItem

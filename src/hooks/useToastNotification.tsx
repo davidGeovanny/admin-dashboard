@@ -20,9 +20,7 @@ export const useToastNotification = () => {
           color: '#155724',
           backgroundColor: '#d4edda',
           borderColor: '#c3e6cb',
-          borderLeftColor: '#155724',
-          borderLeftWidth: 3,
-          borderLeftStyle: 'solid'
+          borderLeftColor: '#155724'
         };
 
       case 'danger':
@@ -30,9 +28,7 @@ export const useToastNotification = () => {
           color: '#721c24',
           backgroundColor: '#f8d7da',
           borderColor: '#f5c6cb',
-          borderLeftColor: '#721c24',
-          borderLeftWidth: 3,
-          borderLeftStyle: 'solid'
+          borderLeftColor: '#721c24'
         };
 
       case 'info':
@@ -40,9 +36,7 @@ export const useToastNotification = () => {
           color: '#0c5460',
           backgroundColor: '#d1ecf1',
           borderColor: '#bee5eb',
-          borderLeftColor: '#0c5460',
-          borderLeftWidth: 3,
-          borderLeftStyle: 'solid'
+          borderLeftColor: '#0c5460'
         };
 
       case 'warning':
@@ -50,9 +44,7 @@ export const useToastNotification = () => {
           color: '#856404',
           backgroundColor: '#fff3cd',
           borderColor: '#ffeeba',
-          borderLeftColor: '#856404',
-          borderLeftWidth: 3,
-          borderLeftStyle: 'solid'
+          borderLeftColor: '#856404'
         };
 
       case 'primary':
@@ -60,9 +52,7 @@ export const useToastNotification = () => {
           color: '#0b3d91',
           backgroundColor: '#d0e0fc',
           borderColor: '#b8d1fb',
-          borderLeftColor: '#0b3d91',
-          borderLeftWidth: 3,
-          borderLeftStyle: 'solid'
+          borderLeftColor: '#0b3d91'
         };
 
       case 'light':
@@ -70,9 +60,7 @@ export const useToastNotification = () => {
           color: '#818182',
           backgroundColor: '#fefefe',
           borderColor: '#fdfdfe',
-          borderLeftColor: '#818182',
-          borderLeftWidth: 3,
-          borderLeftStyle: 'solid'
+          borderLeftColor: '#818182'
         };
 
       case 'dark':
@@ -80,9 +68,7 @@ export const useToastNotification = () => {
           color: '#171717',
           backgroundColor: '#d4d4d4',
           borderColor: '#bebebe',
-          borderLeftColor: '#171717',
-          borderLeftWidth: 3,
-          borderLeftStyle: 'solid'
+          borderLeftColor: '#171717'
         };
     
       default:
@@ -127,7 +113,7 @@ export const useToastNotification = () => {
     
     toast.success(
       (
-        <div className={`alert-dismissible`}>
+        <div className='alert-dismissible'>
           { message }
           <button 
             type='button' 
@@ -141,7 +127,11 @@ export const useToastNotification = () => {
       {
         id,
         icon,
-        style,
+        style: {
+          ...style,
+          borderLeftWidth: 3,
+          borderLeftStyle: 'solid'
+        },
         duration,
         position,
       }

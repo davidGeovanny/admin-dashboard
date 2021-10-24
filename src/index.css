@@ -80,6 +80,94 @@ div.loading i {
   max-width: 350px;
 }
 
-/* .max-w-40 {
-  max-width: 40% !important;
-} */
+.hiddenRow {
+  padding: 0 !important;
+}
+
+.fadeIn {
+  animation: fadein 1s;
+  -moz-animation: fadein 1s; /* Firefox */
+  -webkit-animation: fadein 1s; /* Safari and Chrome */
+  -o-animation: fadein 1s; /* Opera */
+}
+@keyframes fadein {
+  from {
+      opacity:0;
+  }
+  to {
+      opacity:1;
+  }
+}
+@-moz-keyframes fadein { /* Firefox */
+  from {
+      opacity:0;
+  }
+  to {
+      opacity:1;
+  }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+  from {
+      opacity:0;
+  }
+  to {
+      opacity:1;
+  }
+}
+@-o-keyframes fadein { /* Opera */
+  from {
+      opacity:0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut 1s;
+  -moz-animation: fadeOut 1s; /* Firefox */
+  -webkit-animation: fadeOut 1s; /* Safari and Chrome */
+  -o-animation: fadeOut 1s; /* Opera */
+}
+@keyframes fadeOut {
+  from {
+      opacity:1;
+  }
+  to {
+      opacity:0;
+  }
+}
+@-moz-keyframes fadeOut { /* Firefox */
+  from {
+      opacity:1;
+  }
+  to {
+      opacity:0;
+  }
+}
+@-webkit-keyframes fadeOut { /* Safari and Chrome */
+  from {
+      opacity:1;
+  }
+  to {
+      opacity:0;
+  }
+}
+@-o-keyframes fadeOut { /* Opera */
+  from {
+      opacity:1;
+  }
+  to {
+      opacity:0;
+  }
+}
+
+.table-hover-custom tbody tr:hover {
+  background-color: #e3f2fd;
+  border-bottom-color: #FFFFFF;
+  outline: 1px solid #FFFFFF;
+}
+
+.pointer {
+  cursor: pointer;
+}
