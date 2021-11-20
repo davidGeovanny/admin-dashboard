@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-const baseURL = 'http://172.16.12.10:8080/api';
+const baseURL = 'http://200.52.220.238:72/api';
+// const baseURL = 'http://172.16.12.10:8080/api';
 // const baseURL = 'http://192.168.0.8:8080/api';
 
 const adminApi = axios.create({ baseURL });
