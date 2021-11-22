@@ -11,6 +11,10 @@ export const ChartComponent = ({ chartname }: Props) => {
 
   const myChart = useRef<Chart<'bar', number[]>>();
 
+  const createChart = () => {
+    
+  }
+
   return (
     <canvas id={ chartname }></canvas>
   );
