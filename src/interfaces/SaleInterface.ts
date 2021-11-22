@@ -23,3 +23,15 @@ export interface Commission {
 	commission: number;
 	branch:     string;
 }
+
+export interface TopProductsResponse {
+	ok:           boolean;
+	by_frequency: TopProduct[];
+	by_money:     TopProduct[];
+}
+
+interface TopProduct {
+	frequency: number;
+	money:     number;
+	product:   string;
+}

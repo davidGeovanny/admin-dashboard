@@ -78,22 +78,34 @@ export const DashboardPage = () => {
   }, []);
 
   return (
-    <div className='container'>
-      <div className='row justify-content-center'>
-        <div className='col-12'>
-          <div className='card o-hidden border-0 shadow-lg'>
-            <div className='card-body p-0'>
-              <div className='row'>
-                <div className="progress mb-4">
-                  <div 
-                    className="progress-bar bg-danger" 
-                    role="progressbar" 
-                    style={{ width: '20%' }}
-                    aria-valuenow={20}
-                    aria-valuemin={0} 
-                    aria-valuemax={100}
-                  >
-                  </div>
+    <div className="container">
+      <div className="row">
+        {/* Chart-content */}
+        <div className="col-xl-8 col-lg-7">
+          <div className="card shadow mb-4">
+            <div className='card-header py-3 d-flex flex-row align-items-center justify-content-between'>
+              <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+
+              {/* Chart */}
+              <div className="card-body">
+                <div className="chart-area">
+                  <canvas id="myAreaChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Chart-content */}
+        <div className="col-xl-4 col-lg-5">
+          <div className="card shadow mb-4">
+            <div className='card-header py-3 d-flex flex-row align-items-center justify-content-between'>
+              <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+
+              {/* Chart */}
+              <div className="card-body">
+                <div className="chart-area">
+                  <canvas id="myAreaChart"></canvas>
                 </div>
               </div>
             </div>
@@ -101,5 +113,41 @@ export const DashboardPage = () => {
         </div>
       </div>
     </div>
+    // <div className='container'>
+    //   <div className='row justify-content-center'>
+    //     <div className='col-12'>
+    //       <div className='card o-hidden border-0 shadow-lg'>
+    //         <div className='card-body p-0'>
+    //           <div className='row'>
+                
+                
+    //             <div className="col">
+    //                 <div className="progress progress-sm mr-2">
+    //                     <div className="progress-bar bg-info" role="progressbar"
+    //                         style={{ width: '50%' }} aria-valuenow={50} aria-valuemin={0}
+    //                         aria-valuemax={100}></div>
+    //                 </div>
+    //             </div>
+
+    //             <div className="col">
+    //               <div className="progress mb-4">
+    //                 <div 
+    //                   className="progress-bar bg-danger" 
+    //                   role="progressbar" 
+    //                   style={{ width: '20%' }}
+    //                   aria-valuenow={20}
+    //                   aria-valuemin={0} 
+    //                   aria-valuemax={100}
+    //                 >
+    //                 </div>
+    //               </div>
+
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
