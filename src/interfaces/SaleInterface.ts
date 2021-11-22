@@ -24,14 +24,43 @@ export interface Commission {
 	branch:     string;
 }
 
+// Top products response
 export interface TopProductsResponse {
 	ok:           boolean;
 	by_frequency: TopProduct[];
 	by_money:     TopProduct[];
 }
 
-interface TopProduct {
+export interface TopProduct {
 	frequency: number;
 	money:     number;
 	product:   string;
+}
+
+// Top clients response
+
+export interface TopClientsResponse {
+	ok:           boolean;
+	by_frequency: TopClient[];
+	by_money:     TopClient[];
+}
+
+export interface TopClient {
+	frequency: number;
+	money:     number;
+	client:    string;
+}
+
+// Top type products response
+
+export interface TopTypeProductsResponse {
+	ok:           boolean;
+	by_frequency: TopTypeProduct[];
+	by_money:     TopTypeProduct[];
+}
+
+export interface TopTypeProduct {
+	frequency:    number;
+	money:        number;
+	type_product: string;
 }

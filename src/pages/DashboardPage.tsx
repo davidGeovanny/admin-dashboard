@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useToastNotification } from '../hooks/useToastNotification';
 import { formatDate } from '../helpers/format';
 import adminApi from '../helpers/adminApi';
+import { ChartComponent } from '../components/Chart/ChartComponent';
 
 export const DashboardPage = () => {
 
@@ -64,6 +65,33 @@ export const DashboardPage = () => {
     }
   }
 
+  const getSalesPerProduct = async () => {
+    try {
+      const currentDate = new Date();
+
+      if( loading ) {
+        return displayToast({
+          message: 'Waiting for response',
+          type: 'info',
+          duration: 5000
+        });
+      }
+      
+      const { data } = await adminApi.get<any>('/sales/sales-product/', {
+        params: {
+          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
+          finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
+        },
+      });
+
+      console.log({ data });
+      
+      setSales( data.by_frequency );
+    } catch ( error ) {
+      console.log( error );
+    }
+  }
+
   useEffect(() => {
     isMounted.current = true;
 
@@ -73,44 +101,90 @@ export const DashboardPage = () => {
   }, []);
 
   useEffect(() => {
-    getTopClients();
-    getTopProducts();
+    // getTopClients();
+    // getTopProducts();
+    getSalesPerProduct();
   }, []);
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
-        {/* Chart-content */}
-        <div className="col-xl-8 col-lg-7">
+        <div className="col-xl-8 col-lg-7" 
+                  >
           <div className="card shadow mb-4">
-            <div className='card-header py-3 d-flex flex-row align-items-center justify-content-between'>
-              <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+              
+            <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 className="m-0 font-weight-bold text-primary">10 productos más vendidos</h6>
+            </div>
+              
+            <div className="card-body" style={{
+                    width:'100%',
+                    height:'100%',
+                    float:'left',
+                    position:'relative',
+                    overflow:'hidden',
+                  }}>
+              <div className="chart-area" 
+                // style={{
+                //   width: '100%',
+                //   height: '100%',
+                //   position: 'relative',
+                //   overflow: 'hidden',
+                // }}
+              >
+                <div 
+                  
+              >
+                  <ChartComponent chartname='monthly-sales' data={ sales.slice(0, 10) } typeChart='bar' />
 
-              {/* Chart */}
-              <div className="card-body">
-                <div className="chart-area">
-                  <canvas id="myAreaChart"></canvas>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Chart-content */}
+
         <div className="col-xl-4 col-lg-5">
-          <div className="card shadow mb-4">
-            <div className='card-header py-3 d-flex flex-row align-items-center justify-content-between'>
-              <h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-
-              {/* Chart */}
-              <div className="card-body">
-                <div className="chart-area">
-                  <canvas id="myAreaChart"></canvas>
+            <div className="card shadow mb-4">
+                
+                <div
+                    className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 className="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                    <div className="dropdown no-arrow">
+                        <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div className="dropdown-header">Dropdown Header:</div>
+                            <a className="dropdown-item" href="#">Action</a>
+                            <a className="dropdown-item" href="#">Another action</a>
+                            <div className="dropdown-divider"></div>
+                            <a className="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                
+                <div className="card-body">
+                    <div className="chart-pie pt-4 pb-2">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                    <div className="mt-4 text-center small">
+                        <span className="mr-2">
+                            <i className="fas fa-circle text-primary"></i> Direct
+                        </span>
+                        <span className="mr-2">
+                            <i className="fas fa-circle text-success"></i> Social
+                        </span>
+                        <span className="mr-2">
+                            <i className="fas fa-circle text-info"></i> Referral
+                        </span>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
+
       </div>
     </div>
     // <div className='container'>
