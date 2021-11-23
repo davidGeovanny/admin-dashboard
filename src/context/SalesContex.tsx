@@ -48,7 +48,7 @@ export const SalesProvider: React.FC = ({ children }) => {
       dispatch({ type: 'setLoadingCommission' });
       const { data } = await adminApi.get<CommissionResponse>('/sales/commissions/', {
         params: {
-          initDate: formatDate( initDate ),
+          initDate:  formatDate( initDate ),
           finalDate: formatDate( finalDate ),
         },
       });

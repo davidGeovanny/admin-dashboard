@@ -1,19 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import { Chart, ChartTypeRegistry, registerables } from 'chart.js';
-import { TopProduct } from '../../interfaces/SaleInterface';
+import { Chart, registerables } from 'chart.js';
+import { ChartProps } from '../../types/ChartType';
 
 Chart.register( ...registerables );
 
-interface Props {
-  chartname: string;
-  data: TopProduct[];
-  typeChart: keyof ChartTypeRegistry;
-};
-
-export const ChartComponent = ({ chartname, data, typeChart }: Props) => {
+export const ChartComponent = <T, K extends keyof T>({ 
+  loading, title, chartName, typeChart, data, columnName, columnValue, legendPosition = 'top'
+}: ChartProps<T, K>) => {
 
   const isMounted = useRef( true );
-  const myChart = useRef<Chart<typeof typeChart, number[]>>();
+  const myChart = useRef<Chart<typeof typeChart, T[K][], T[K]>>();
 
   useEffect(() => {
     if( !isMounted.current ) return;
@@ -34,19 +30,19 @@ export const ChartComponent = ({ chartname, data, typeChart }: Props) => {
   }, []);
 
   const createChart = () => {
-    const ctx = document.querySelector(`#${ chartname }`) as HTMLCanvasElement;
+    const ctx = document.querySelector(`#${ chartName }`) as HTMLCanvasElement;
 
     myChart.current?.destroy();
 
     myChart.current = new Chart( ctx, {
       type: typeChart,
       data: {
-        labels: data.map( item => item.product ),
+        labels: data.map( item => item[ columnName ] ),
         
         datasets: [
           {
             label: '$MXN$',
-            data: data.map( item => item.money ),
+            data: data.map( item => item[ columnValue ] ),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -76,10 +72,10 @@ export const ChartComponent = ({ chartname, data, typeChart }: Props) => {
             borderWidth: 2,
           },
         },
-        // responsive: true,
+        responsive: true,
         plugins: {
           legend: {
-            position: 'right',
+            position: legendPosition,
           },
           // title: {
           //   display: true,
@@ -91,7 +87,7 @@ export const ChartComponent = ({ chartname, data, typeChart }: Props) => {
   }
 
   return (
-      <canvas id={ chartname } style={{
+      <canvas id={ chartName } style={{
       position: 'absolute',
       top: '0',
       left: '0',
