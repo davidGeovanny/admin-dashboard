@@ -267,8 +267,8 @@ export const DashboardPage = () => {
             chartName='top-branch-month'
             typeChart='pie'
             data={ branches }
-            columnName='client'
-            columnShortName='client'
+            columnName='branch'
+            columnShortName='branch'
             columnValue='money'
             maintainRatio={ false }
           />
