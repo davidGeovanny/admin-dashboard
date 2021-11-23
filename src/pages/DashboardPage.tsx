@@ -215,7 +215,7 @@ export const DashboardPage = () => {
                    .slice(0, 10) 
             }
             columnName='product'
-            columnShortName='shortName'
+            columnShortName='product'
             columnValue='money'
             maintainRatio={ false }
           />
@@ -232,6 +232,7 @@ export const DashboardPage = () => {
             columnName='type_product'
             columnShortName='type_product'
             columnValue='money'
+            maintainRatio={ false }
           />
         </div>
 
@@ -269,6 +270,7 @@ export const DashboardPage = () => {
             columnName='client'
             columnShortName='client'
             columnValue='money'
+            maintainRatio={ false }
           />
         </div>
 

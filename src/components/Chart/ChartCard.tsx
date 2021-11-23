@@ -19,19 +19,17 @@ export const ChartCard = <T, K extends keyof T>({
               overflow:'hidden',
             }}>
         <div className="chart-area" >
-          <div>
-            <ChartComponent
-              loading={ loading }
-              maintainRatio={ maintainRatio }
-              title={ title }
-              chartName={ chartName }
-              typeChart={ typeChart }
-              data={ data }
-              columnName={ columnName }
-              columnShortName={ columnShortName }
-              columnValue={ columnValue }
-            />
-          </div>
+          <ChartComponent
+            loading={ loading }
+            maintainRatio={ maintainRatio }
+            title={ title }
+            chartName={ chartName }
+            typeChart={ typeChart }
+            data={ data }
+            columnName={ columnName }
+            columnShortName={ columnShortName }
+            columnValue={ columnValue }
+          />
         </div>
       </div>
     </div>
