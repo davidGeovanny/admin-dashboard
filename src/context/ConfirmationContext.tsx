@@ -16,8 +16,8 @@ export const ConfirmationContext = createContext({} as ContextProps);
 
 export const ConfirmationProvider: React.FC = ({ children }) => {
   const [ callback, setCallback ]     = useState<Function>( () => () => {} );
-  const [ btnMessage, setBtnMessage ] = useState<string>('Continue');
-  const [ textBody, setTextBody ] = useState<string | JSX.Element>('Are you sure you want to continue?');
+  const [ btnMessage, setBtnMessage ] = useState<string>('Continuar');
+  const [ textBody, setTextBody ] = useState<string | JSX.Element>('¿Está seguro que desea continuar?');
 
   const changeCallback = ( newCallback: Function ) => {
     setCallback( () => () => newCallback() );

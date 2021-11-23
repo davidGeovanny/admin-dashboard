@@ -3,12 +3,12 @@ import { ChartComponent } from './ChartComponent';
 import { ChartProps } from '../../types/ChartType';
 
 export const ChartCard = <T, K extends keyof T>({ 
-  loading, title, chartName, typeChart, data, columnName, columnValue, legendPosition = 'top'
+  loading, maintainRatio = true, title, chartName, typeChart, data, columnName, columnShortName, columnValue, legendPosition = 'top'
 }: ChartProps<T, K>) => {
   return (
     <div className="card shadow mb-4">
       <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 className="m-0 font-weight-bold text-primary">10 productos más vendidos</h6>
+          <h6 className="m-0 font-weight-bold text-primary"> { title } </h6>
       </div>
         
       <div className="card-body" style={{
@@ -18,15 +18,17 @@ export const ChartCard = <T, K extends keyof T>({
               position:'relative',
               overflow:'hidden',
             }}>
-        <div className="chart-area">
+        <div className="chart-area" >
           <div>
             <ChartComponent
               loading={ loading }
+              maintainRatio={ maintainRatio }
               title={ title }
               chartName={ chartName }
               typeChart={ typeChart }
               data={ data }
               columnName={ columnName }
+              columnShortName={ columnShortName }
               columnValue={ columnValue }
             />
           </div>

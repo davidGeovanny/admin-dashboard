@@ -14,60 +14,60 @@ export const menu: SidebarMenu[] = [
   {
     item: {
       id: v4(),
-      name: 'Sales',
+      name: 'Ventas',
       active: false,
       redirection: '/',
     },
     icon: 'fa-hand-holding-usd',
     subitem: {
       isOpen: false,
-      header: 'Information',
+      header: 'Información',
       items: [
         {
           id: v4(),
-          name: 'Commissions',
+          name: 'Comisiones',
           redirection: '/commissions',
           active: false,
         }
       ]
     }
   },
-  {
-    item: {
-      id: v4(),
-      name: 'Profile',
-      active: false,
-      redirection: '/profile'
-    },
-    icon: 'fa-heart',
-  },
-  {
-    item: {
-      id: v4(),
-      name: 'Components',
-      active: false,
-      redirection: 'asd'
-    },
-    icon: 'fa-bell',
-    subitem: {
-      isOpen: false,
-      header: 'Custom header',
-      items: [
-        {
-          id: v4(),
-          name: 'Notifications',
-          active: false,
-          redirection: '/notification-center'
-        },
-        {
-          id: v4(),
-          name: 'Messages',
-          active: false,
-          redirection: '/message-center'
-        },
-      ]
-    }
-  },
+  // {
+  //   item: {
+  //     id: v4(),
+  //     name: 'Profile',
+  //     active: false,
+  //     redirection: '/profile'
+  //   },
+  //   icon: 'fa-heart',
+  // },
+  // {
+  //   item: {
+  //     id: v4(),
+  //     name: 'Components',
+  //     active: false,
+  //     redirection: 'asd'
+  //   },
+  //   icon: 'fa-bell',
+  //   subitem: {
+  //     isOpen: false,
+  //     header: 'Custom header',
+  //     items: [
+  //       {
+  //         id: v4(),
+  //         name: 'Notifications',
+  //         active: false,
+  //         redirection: '/notification-center'
+  //       },
+  //       {
+  //         id: v4(),
+  //         name: 'Messages',
+  //         active: false,
+  //         redirection: '/message-center'
+  //       },
+  //     ]
+  //   }
+  // },
   // {
   //   item: {
   //     id: v4(),

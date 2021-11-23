@@ -18,7 +18,7 @@ export const Topbar = () => {
 
       <ul className='navbar-nav ml-auto'>
 
-        <TopbarMenu
+        {/* <TopbarMenu
           picture={{
             type: 'icon',
             icon: 'fa-bell'
@@ -36,7 +36,7 @@ export const Topbar = () => {
           title='Centro de mensajes'
           items={ topbarMessages }
           url='/message-center'
-        />
+        /> */}
 
         <div className='topbar-divider d-none d-sm-block'></div>
 

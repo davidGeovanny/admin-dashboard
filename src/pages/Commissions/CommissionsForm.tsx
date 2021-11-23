@@ -15,15 +15,15 @@ export const CommissionsForm = ({ loading }: Props) => {
 
   const onSubmit = ( data: CommissionFormData ) => {
     if( !data.initDate ) {
-      return setError('initDate', { message: 'Need to provide an init date' });
+      return setError('initDate', { message: 'La fecha inicial es obligatoria' });
     }
 
     if( !data.finalDate ) {
-      return setError('finalDate', { message: 'Need to provide a final date' });
+      return setError('finalDate', { message: 'La fecha final es obligatoria' });
     }
 
     if( data.finalDate < data.initDate ) {
-      return setError('finalDate', { message: 'Final date cannot be less than init date' });
+      return setError('finalDate', { message: 'La fecha final no puede ser menor que la fecha inicial' });
     }
 
     getCommissions({ initDate: data.initDate, finalDate: data.finalDate });
@@ -39,14 +39,14 @@ export const CommissionsForm = ({ loading }: Props) => {
           <div className='row'>
             <div className='col-lg-5 col-md-6 col-12 mb-lg-0 mb-md-0 mb-2'>
               <div className={`input-group ${ errors.initDate ? 'is-invalid' : '' }`}>
-                <span className='input-group-text max-w-40 '>Initial date</span>
+                <span className='input-group-text max-w-40 '>Fecha inicial</span>
                 <Controller
                   control={ control }
                   name='initDate'
                   render={ ({ field }) => (
                     <ReactDatePicker
                       className={`form-control ${ errors.initDate ? 'is-invalid' : '' }`}
-                      placeholderText='Select initial date'
+                      placeholderText='Seleccionar fecha inicial'
                       onChange={ ( date ) => {
                         field.onChange( date );
                         clearErrors('initDate');
@@ -56,7 +56,7 @@ export const CommissionsForm = ({ loading }: Props) => {
                     />
                   )}
                   rules={{
-                    required: { value: true, message: 'Initial date is required' },
+                    required: { value: true, message: 'La fecha inicial es requerida' },
                   }}
                 />
               </div>
@@ -70,14 +70,14 @@ export const CommissionsForm = ({ loading }: Props) => {
 
             <div className='col-lg-5 col-md-6 col-12 mb-lg-0 mb-md-0 mb-2'>
               <div className={`input-group ${ errors.finalDate ? 'is-invalid' : '' }`}>
-                <span className='input-group-text max-w-40 '>Final date</span>
+                <span className='input-group-text max-w-40 '>Fecha final</span>
                 <Controller
                   control={ control }
                   name='finalDate'
                   render={ ({ field }) => (
                     <ReactDatePicker
                       className={`form-control ${ errors.finalDate ? 'is-invalid' : '' }`}
-                      placeholderText='Select final date'
+                      placeholderText='Seleccionar fecha final'
                       onChange={ ( date ) => {
                         field.onChange( date );
                         clearErrors('finalDate');
@@ -87,7 +87,7 @@ export const CommissionsForm = ({ loading }: Props) => {
                     />
                   )}
                   rules={{
-                    required: { value: true, message: 'Final date is required' },
+                    required: { value: true, message: 'La fecha final es requerida' },
                   }}
                 />
               </div>
@@ -106,7 +106,7 @@ export const CommissionsForm = ({ loading }: Props) => {
               >
                 { loading
                     ? <> <i className='fas fa-spinner fa-pulse'></i> Loading... </>
-                    : 'Get commissions' 
+                    : 'Obtener comisiones' 
                 }
               </button>
             </div>

@@ -10,17 +10,17 @@ import { formatCurrency } from '../../helpers/format';
 const columns: ColumnDefinitionType<Commission, keyof Commission>[] = [
   {
     key:    'branch',
-    header: 'Branch company',
+    header: 'Sucursal',
     align:  'center',
   },
   {
     key:    'employee',
-    header: 'Name employee',
+    header: 'Nombre del empleado',
     align:  'center',
   },
   {
     key:    'commission',
-    header: 'Commission',
+    header: 'Comisión',
     align:  'right',
     cell:   ( value ) => (
       <>{ formatCurrency( value.commission ) }</>
@@ -63,7 +63,7 @@ export const CommissionsPage = () => {
             section='water'
             data={ waterCommissions }
             columns={ columns }
-            title='Water Commissions'
+            title='Comisiones de agua'
             loading={ loadingCommissions }
           />
         </div>
@@ -74,7 +74,7 @@ export const CommissionsPage = () => {
             section='icebar'
             data={ icebarCommissions }
             columns={ columns }
-            title='Icebar Commissions'
+            title='Comisiones de barra'
             loading={ loadingCommissions }
           />
         </div>
@@ -85,7 +85,7 @@ export const CommissionsPage = () => {
             section='icecube'
             data={ icecubeCommissions }
             columns={ columns }
-            title='Icecube Commissions'
+            title='Comisiones de cubo'
             loading={ loadingCommissions }
           />
         </div>

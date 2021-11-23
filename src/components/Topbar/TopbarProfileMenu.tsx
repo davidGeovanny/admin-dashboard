@@ -3,9 +3,10 @@ import { useHistory, Link } from 'react-router-dom';
 import { useTopbarMenuItem } from '../../hooks/useTopbarMenuItem';
 import { AuthContext } from '../../context/AuthContext';
 import { ConfirmationContext } from '../../context/ConfirmationContext';
+import { randomColor } from '../../helpers/color';
 
 export const TopbarProfileMenu = () => {
-  const { logOut } = useContext( AuthContext );
+  const { logOut, user } = useContext( AuthContext );
   const { openModal, changeCallback } = useContext( ConfirmationContext );
   const history = useHistory();
 
@@ -28,14 +29,25 @@ export const TopbarProfileMenu = () => {
     >
       <Link className='nav-link dropdown-toggle' to='#'>
         <span className='mr-2 d-none d-lg-inline text-gray-600 small'>
-          Ingeniero Geovanny
+          { user?.username }
         </span>
 
-        <img
+        <div 
+          style={{
+            backgroundColor: randomColor( 1 ),
+            borderRadius: '100%',
+            width: 25,
+            height: 25,
+            textAlign: 'center'
+          }}
+          
+        > { user?.username.slice(0, 1) } </div>
+
+        {/* <img
           className='img-profile rounded-circle'
           src='https://logos-marcas.com/wp-content/uploads/2020/11/Razer-Logo.png'
           alt='Profile'
-        />
+        /> */}
       </Link>
 
       <div 
@@ -43,16 +55,16 @@ export const TopbarProfileMenu = () => {
         onMouseEnter={ () => handleMouseEvent( true ) }
         onMouseLeave={ () => handleMouseEvent( false ) }
       >
-        <span className='dropdown-item' onClick={ () => redirect('/profile') }>
+        {/* <span className='dropdown-item' onClick={ () => redirect('/profile') }>
           <i className='fas fa-user fa-sm fa-fw mr-2 text-gray-400'></i>
           Profile
-        </span>
+        </span> */}
 
         <div className='dropdown-divider'></div>
 
         <span className='dropdown-item' onClick={ handleLogout }>
           <i className='fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400'></i>
-          Logout
+          Cerrar sesión
         </span>
       </div>
     </li>

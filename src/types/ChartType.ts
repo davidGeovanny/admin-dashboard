@@ -3,11 +3,13 @@ import { _DeepPartialObject } from 'chart.js/types/utils';
 
 export type ChartProps<T, K extends keyof T> = {
   loading:         boolean;
+  maintainRatio?:  boolean;
   title:           string;
   chartName:       string;
   typeChart:       keyof ChartTypeRegistry;
   data:            Array<T>;
   columnName:      K;
+  columnShortName: K;
   columnValue:     K;
   legendPosition?: LegendPosition;
 }

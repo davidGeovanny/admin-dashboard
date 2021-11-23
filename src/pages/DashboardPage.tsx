@@ -5,19 +5,76 @@ import {
   TopProduct, 
   TopProductsResponse, 
   TopTypeProductsResponse, 
-  TopTypeProduct 
+  TopTypeProduct,
+  TopClient, TopClientsResponse, TopBranchesResponse, TopBranches
 } from '../interfaces/SaleInterface';
-import { formatDate } from '../helpers/format';
+import { formatDate, formatCurrency } from '../helpers/format';
 import adminApi from '../helpers/adminApi';
 import { ChartCard } from '../components/Chart/ChartCard';
+import { ColumnDefinitionType } from '../types/SimpleTableType';
+import { SimpleTable } from '../components/SimpleTable/SimpleTable';
+import { randomColor } from '../helpers/color';
+
+const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
+  {
+    key:    'image',
+    header: '',
+    align:  'center',
+    cell:   ( value ) => (
+      <>
+        <div 
+          style={{
+            backgroundColor: randomColor( 0.2 ),
+            borderRadius: '100%',
+            width: 25,
+            height: 25,
+            textAlign: 'center'
+          }}
+          
+        > { value.client.slice(0, 1) } </div>
+      </>
+    )
+  },
+  {
+    key:    'client',
+    header: 'Nombre',
+    align:  'center',
+  },
+  {
+    key:    'money',
+    header: 'Ingresos',
+    align:  'center',
+    cell:   ( value ) => ( <>{ formatCurrency( value.money ) }</> )
+  }
+];
+
+const productColumns: ColumnDefinitionType<TopProduct, keyof TopProduct>[] = [
+  {
+    key:    'product',
+    header: 'Producto',
+    align:  'center',
+  },
+  {
+    key:    'frequency',
+    header: 'Ventas',
+    align:  'center',
+  },
+  {
+    key:    'money',
+    header: 'Ingresos',
+    align:  'center',
+    cell:   ( value ) => ( <>{ formatCurrency( value.money ) }</> )
+  }
+];
 
 export const DashboardPage = () => {
 
   const [ loading, setLoading ]           = useState<boolean>( false );
   const [ sales, setSales ]               = useState<TopProduct[]>([]);
-  const [ clients, setClients ]           = useState<any[]>([]);
-  const [ products, setProducts ]         = useState<any[]>([]);
+  const [ clients, setClients ]           = useState<TopClient[]>([]);
+  const [ products, setProducts ]         = useState<TopProduct[]>([]);
   const [ typeProducts, setTypeProducts ] = useState<TopTypeProduct[]>([]);
+  const [ branches, setBranches ]         = useState<TopBranches[]>([]);
 
   const isMounted = useRef( true );
 
@@ -35,14 +92,15 @@ export const DashboardPage = () => {
         });
       }
       
-      const { data } = await adminApi.get<any>('/sales/top-clients/', {
+      const { data } = await adminApi.get<TopClientsResponse>('/sales/top-clients/', {
         params: {
           initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
           finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
         },
       });
 
-      console.log({ data });
+      setClients( data.by_money );
+      if( sales.length > 0 && clients.length > 0 && products.length > 0 && typeProducts.length > 0 && branches.length > 0 ) setLoading( false );
     } catch ( error ) {
       console.log( error );
     }
@@ -60,14 +118,42 @@ export const DashboardPage = () => {
         });
       }
       
-      const { data } = await adminApi.get<any>('/sales/top-products/', {
+      const { data } = await adminApi.get<TopProductsResponse>('/sales/top-products/', {
         params: {
           initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
           finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
         },
       });
 
-      console.log({ data });
+      setSales( data.by_frequency );
+      setProducts( data.by_money );
+      if( sales.length > 0 && clients.length > 0 && products.length > 0 && typeProducts.length > 0 && branches.length > 0 ) setLoading( false );
+    } catch ( error ) {
+      console.log( error );
+    }
+  }
+
+  const getTopBranches = async () => {
+    try {
+      const currentDate = new Date();
+
+      if( loading ) {
+        return displayToast({
+          message: 'Waiting for response',
+          type: 'info',
+          duration: 5000
+        });
+      }
+      
+      const { data } = await adminApi.get<TopBranchesResponse>('/sales/top-branches/', {
+        params: {
+          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
+          finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
+        },
+      });
+
+      setBranches( data.by_money );
+      if( sales.length > 0 && clients.length > 0 && products.length > 0 && typeProducts.length > 0 && branches.length > 0 ) setLoading( false );
     } catch ( error ) {
       console.log( error );
     }
@@ -93,33 +179,7 @@ export const DashboardPage = () => {
       });
 
       setTypeProducts( data.by_frequency );
-    } catch ( error ) {
-      console.log( error );
-    }
-  }
-
-  const getSalesPerProduct = async () => {
-    try {
-      const currentDate = new Date();
-
-      if( loading ) {
-        return displayToast({
-          message: 'Waiting for response',
-          type: 'info',
-          duration: 5000
-        });
-      }
-      
-      const { data } = await adminApi.get<TopProductsResponse>('/sales/sales-product/', {
-        params: {
-          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
-          finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
-        },
-      });
-
-      console.log({ data });
-      
-      setSales( data.by_frequency );
+      if( sales.length > 0 && clients.length > 0 && products.length > 0 && typeProducts.length > 0 && branches.length > 0 ) setLoading( false );
     } catch ( error ) {
       console.log( error );
     }
@@ -134,24 +194,30 @@ export const DashboardPage = () => {
   }, []);
 
   useEffect(() => {
-    // getTopClients();
-    // getTopProducts();
+    getTopClients();
+    getTopProducts();
     getTopTypeProduct();
-    getSalesPerProduct();
+    getTopBranches();
   }, []);
 
   return (
     <div className="container-fluid">
+      <h2>Información mensual</h2>
       <div className="row">
         <div className="col-xl-8 col-lg-7">
           <ChartCard
             loading={ true }
-            title='Ingresos de los 10 productos más frecuentes'
+            title='Ingresos de los 10 productos más vendidos'
             chartName='monthly-sales'
             typeChart='bar'
-            data={ sales }
+            data={ 
+              sales.map( sale => ({ ...sale, shortName: `${ sale.product.slice(0, 25).trim() }...` }) )
+                   .slice(0, 10) 
+            }
             columnName='product'
+            columnShortName='shortName'
             columnValue='money'
+            maintainRatio={ false }
           />
         </div>
 
@@ -159,52 +225,72 @@ export const DashboardPage = () => {
         <div className="col-xl-4 col-lg-5">
           <ChartCard
             loading={ true }
-            title='Ingresos de los 10 productos más frecuentes'
+            title='Ingresos por tipo de productos'
             chartName='top-type-product'
             typeChart='doughnut'
             data={ typeProducts }
             columnName='type_product'
+            columnShortName='type_product'
             columnValue='money'
           />
         </div>
 
       </div>
+
+      <div className="row justify-content-center mb-4">
+        <div className="col-xl-10 col-lg-10">
+          <div className='card'>
+            <div className='card-body'>
+              <h5 className='wrapper justify-content-between'>
+                <span> Productos con mayor ingreso </span>
+              </h5>
+
+              <div className={`row table-responsive`}>
+                <SimpleTable
+                  data={ products.slice(0, 5) } 
+                  columns={ productColumns } 
+                  loading={ loading } 
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="row mb-4">
+        <div className="col-xl-4 col-lg-6">
+          <ChartCard
+            loading={ true }
+            title='Ventas de sucursales'
+            chartName='top-branch-month'
+            typeChart='pie'
+            data={ branches }
+            columnName='client'
+            columnShortName='client'
+            columnValue='money'
+          />
+        </div>
+
+        <div className="col-xl-8 col-lg-6">
+          <div className='card'>
+            <div className='card-body'>
+              <h5 className='wrapper justify-content-between'>
+                <span> Clientes con mayor ingreso </span>
+              </h5>
+
+              <div className={`row table-responsive`}>
+                <SimpleTable
+                  data={ clients } 
+                  columns={ clientColumns } 
+                  loading={ loading } 
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    // <div className='container'>
-    //   <div className='row justify-content-center'>
-    //     <div className='col-12'>
-    //       <div className='card o-hidden border-0 shadow-lg'>
-    //         <div className='card-body p-0'>
-    //           <div className='row'>
-                
-                
-    //             <div className="col">
-    //                 <div className="progress progress-sm mr-2">
-    //                     <div className="progress-bar bg-info" role="progressbar"
-    //                         style={{ width: '50%' }} aria-valuenow={50} aria-valuemin={0}
-    //                         aria-valuemax={100}></div>
-    //                 </div>
-    //             </div>
-
-    //             <div className="col">
-    //               <div className="progress mb-4">
-    //                 <div 
-    //                   className="progress-bar bg-danger" 
-    //                   role="progressbar" 
-    //                   style={{ width: '20%' }}
-    //                   aria-valuenow={20}
-    //                   aria-valuemin={0} 
-    //                   aria-valuemax={100}
-    //                 >
-    //                 </div>
-    //               </div>
-
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }

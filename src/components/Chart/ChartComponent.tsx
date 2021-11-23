@@ -1,19 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { ChartProps } from '../../types/ChartType';
+import { randomColor } from '../../helpers/color';
 
 Chart.register( ...registerables );
 
+interface ChartColor {
+  background: string;
+  border:     string,
+}
+
 export const ChartComponent = <T, K extends keyof T>({ 
-  loading, title, chartName, typeChart, data, columnName, columnValue, legendPosition = 'top'
+  loading, maintainRatio, title, chartName, typeChart, data, columnName, columnShortName, columnValue, legendPosition = 'top'
 }: ChartProps<T, K>) => {
 
   const isMounted = useRef( true );
   const myChart = useRef<Chart<typeof typeChart, T[K][], T[K]>>();
-
   useEffect(() => {
     if( !isMounted.current ) return;
-    console.log(data);
 
     if( data.length > 0 ) {
       createChart();
@@ -37,7 +41,8 @@ export const ChartComponent = <T, K extends keyof T>({
     myChart.current = new Chart( ctx, {
       type: typeChart,
       data: {
-        labels: data.map( item => item[ columnName ] ),
+        labels: data.map( item => item[ columnShortName ] ),
+        // labels: data.map( item => item[ columnShortName ] ),
         
         datasets: [
           {
@@ -60,11 +65,13 @@ export const ChartComponent = <T, K extends keyof T>({
               'rgba(255, 159, 64, 1)',
             ],
             borderWidth: 1,
+            fill: 'start',
           }
         ]
       },
       options: {
-        indexAxis: 'y',
+        // indexAxis: 'y',
+        maintainAspectRatio: maintainRatio,
         // Elements options apply to all of the options unless overridden in a dataset
         // In this case, we are setting the border of each horizontal bar to be 2px wide
         elements: {
@@ -77,6 +84,22 @@ export const ChartComponent = <T, K extends keyof T>({
           legend: {
             position: legendPosition,
           },
+          tooltip: {
+            callbacks: {
+              // afterTitle: () => {
+              //   return `${ columnShortName }`
+              // },
+              // title: (this, tooltipItems) => {
+              //   return data.map( item => `${ item[ columnShortName ] }` )
+              // }
+              // title: function(this, tooltipItems) {
+              //   console.log({esto: this});
+              //   console.log({tooltipItems});
+              //   // return data.map( item => `${ item[ columnShortName ] }` )
+              //   return data.filter( item => `${ item[ columnShortName ] }` === tooltipItems[0].label ).map( item => `${ item[ columnName ] }` )
+              // },
+            },
+          }
           // title: {
           //   display: true,
           //   text: 'Chart.js Horizontal Bar Chart'
@@ -90,6 +113,7 @@ export const ChartComponent = <T, K extends keyof T>({
       <canvas id={ chartName } style={{
       position: 'absolute',
       top: '0',
+      bottom: '0',
       left: '0',
       height: '100%',
       width: '100%',

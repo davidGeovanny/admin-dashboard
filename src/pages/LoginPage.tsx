@@ -7,8 +7,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export const LoginPage = () => {
   const defaultValues: LoginData = {
-    username: 'carodavid',
-    password: '123456'
+    username: '',
+    password: ''
+    // username: 'carodavid',
+    // password: '123456'
   };
 
   const { signIn, loading } = useContext( AuthContext );
@@ -39,7 +41,7 @@ export const LoginPage = () => {
                 <div className='col-lg-6'>
                   <div className='p-5'>
                     <div className='text-center'>
-                      <h1 className='h4 text-gray-900 mb-4'>Welcome Back!</h1>
+                      <h1 className='h4 text-gray-900 mb-4'>¡Bienvenido de vuelta!</h1>
                     </div>
 
                     <form 
@@ -92,7 +94,7 @@ export const LoginPage = () => {
                         { 
                           loading 
                             ? <> <i className='fas fa-spinner fa-pulse'></i> Loading, please wait... </>
-                            : 'Login' 
+                            : 'Iniciar sesión' 
                         }
                       </button>
                       

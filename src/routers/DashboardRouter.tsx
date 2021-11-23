@@ -37,7 +37,7 @@ export const DashboardRouter = () => {
               component={ CommissionsPage }
             />
 
-            <Route
+            {/* <Route
               exact
               path='/profile'
               component={ ProfilePage }
@@ -53,7 +53,7 @@ export const DashboardRouter = () => {
               exact
               path='/message-center'
               component={ MessageCenterPage }
-            />
+            /> */}
 
             <Redirect to='/dashboard' />
           </Switch>

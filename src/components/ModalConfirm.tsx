@@ -24,13 +24,13 @@ export const ModalConfirm = () => {
         <div className='modal__container'>
           <header className='modal__header'>
             <h2 className='modal__title' id='modal-confirmation-title'>
-              Confirm
+              Confirmación
             </h2>
             <button className='modal__close' data-micromodal-close />
           </header>
 
           <main className='modal__content' id='modal-confirmation-content'>
-            <p>{textBody}</p>
+            <p>{ textBody }</p>
           </main>
 
           <footer className='modal__footer'>
@@ -38,11 +38,11 @@ export const ModalConfirm = () => {
               className='btn btn-primary' 
               onClick={ handleClick }
             >
-              {btnMessage}
+              { btnMessage }
             </button>
 
             <button className='btn btn-secondary' data-micromodal-close>
-              Cancel
+              Cancelar
             </button>
           </footer>
         </div>
