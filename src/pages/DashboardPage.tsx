@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChartComponent } from '../components/Chart/ChartComponent';
 import { useToastNotification } from '../hooks/useToastNotification';
 import { 
   TopProduct, 
@@ -122,6 +121,7 @@ export const DashboardPage = () => {
         params: {
           initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
           finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
+          limit: 10,
         },
       });
 
@@ -267,8 +267,8 @@ export const DashboardPage = () => {
             chartName='top-branch-month'
             typeChart='pie'
             data={ branches }
-            columnName='branch'
-            columnShortName='branch'
+            columnName='branch_company'
+            columnShortName='branch_company'
             columnValue='money'
             maintainRatio={ false }
           />

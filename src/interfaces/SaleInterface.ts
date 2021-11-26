@@ -74,6 +74,6 @@ export interface TopBranchesResponse {
 }
 
 export interface TopBranches {
-	money:  number;
-	branch: string;
+	money:  				number;
+	branch_company: string;
 }
