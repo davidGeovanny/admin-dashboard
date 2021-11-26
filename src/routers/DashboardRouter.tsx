@@ -37,13 +37,13 @@ export const DashboardRouter = () => {
               component={ CommissionsPage }
             />
 
-            {/* <Route
+            <Route
               exact
               path='/profile'
               component={ ProfilePage }
             />
 
-            <Route
+            {/* <Route
               exact
               path='/notification-center'
               component={ NotificationCenterPage }

@@ -32,15 +32,15 @@ export const menu: SidebarMenu[] = [
       ]
     }
   },
-  // {
-  //   item: {
-  //     id: v4(),
-  //     name: 'Profile',
-  //     active: false,
-  //     redirection: '/profile'
-  //   },
-  //   icon: 'fa-heart',
-  // },
+  {
+    item: {
+      id: v4(),
+      name: 'Profile',
+      active: false,
+      redirection: '/profile'
+    },
+    icon: 'fa-user',
+  },
   // {
   //   item: {
   //     id: v4(),
