@@ -7,7 +7,7 @@ import {
   TopTypeProduct,
   TopClient, TopClientsResponse, TopBranchesResponse, TopBranches
 } from '../interfaces/SaleInterface';
-import { formatDate, formatCurrency } from '../helpers/format';
+import { formatDate, formatCurrency, formatNumberWithCommas } from '../helpers/format';
 import adminApi from '../helpers/adminApi';
 import { ChartCard } from '../components/Chart/ChartCard';
 import { ColumnDefinitionType } from '../types/SimpleTableType';
@@ -57,6 +57,7 @@ const productColumns: ColumnDefinitionType<TopProduct, keyof TopProduct>[] = [
     key:    'frequency',
     header: 'Ventas',
     align:  'center',
+    cell:   ( value ) => ( <> { formatNumberWithCommas( value.frequency ) } </> )
   },
   {
     key:    'money',

@@ -26,3 +26,7 @@ export const formatCurrency = ( currency: number ): string => {
 
   return formatMX.format( currency );
 }
+
+export const formatNumberWithCommas = ( x: number ): string => {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+}
