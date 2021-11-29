@@ -94,7 +94,7 @@ export const DashboardPage = () => {
       
       const { data } = await adminApi.get<TopClientsResponse>('/sales/top-clients/', {
         params: {
-          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
+          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ) ),
           finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
         },
       });
@@ -120,7 +120,7 @@ export const DashboardPage = () => {
       
       const { data } = await adminApi.get<TopProductsResponse>('/sales/top-products/', {
         params: {
-          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
+          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ) ),
           finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
           limit: 10,
         },
@@ -148,7 +148,7 @@ export const DashboardPage = () => {
       
       const { data } = await adminApi.get<TopBranchesResponse>('/sales/top-branches/', {
         params: {
-          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
+          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ) ),
           finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
         },
       });
@@ -174,7 +174,7 @@ export const DashboardPage = () => {
       
       const { data } = await adminApi.get<TopTypeProductsResponse>('/sales/top-type-product/', {
         params: {
-          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 0 ) ),
+          initDate:  formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ) ),
           finalDate: formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ),
         },
       });

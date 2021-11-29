@@ -1,29 +1,19 @@
 import React from 'react';
 import { SimpleTable } from '../../components/SimpleTable/SimpleTable';
+import { ExcelLocalExport } from '../../components/Export/Excel/ExcelLocalExport';
 import { TableCommissionsProps } from '../../types/SalesType';
-import { CSVLink } from 'react-csv';
+import { formatDate } from '../../helpers/format';
 
-const headers = [
-  { label: "First Name", key: "firstname" },
-  { label: "Last Name", key: "lastname" },
-  { label: "Email", key: "email" }
-];
- 
-const datas = [
-  { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-  { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-  { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
-];
-
-export const CommissionsTable = <T, K extends keyof T>({
+export const CommissionsTable = <T, K extends keyof T, Y>({
   data,
+  dataExport,
   columns,
   show,
   setShow,
   section,
   title,
   loading,
-}: TableCommissionsProps<T, K>): JSX.Element => {
+}: TableCommissionsProps<T, K, Y>): JSX.Element => {
   return (
     <div className='card'>
       <div className='card-body'>
@@ -37,15 +27,13 @@ export const CommissionsTable = <T, K extends keyof T>({
         <div className={`row table-responsive ${ !show ? 'd-none' : 'fadeIn' }`}>
           <div className='col-12'>
             <div className='row justify-content-end'>
-              {/* <button
-                className='btn btn-success my-1'
-                type='button'
-              >
-                Descargar
-              </button> */}
-              <CSVLink data={datas} headers={headers}>
-                Download me
-              </CSVLink>;
+              {
+                ( dataExport ) && 
+                  <ExcelLocalExport
+                    fileName={`${ section }-${ formatDate( new Date() ) }`}
+                    data={ dataExport }
+                  />
+              }
             </div>
           </div>
 
