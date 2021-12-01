@@ -37,8 +37,8 @@ export const SalesProvider: React.FC = ({ children }) => {
 
       if( state.loadingCommissions ) {
         displayToast({
-          message: 'Waiting for response',
-          type: 'info',
+          message:  'Waiting for response',
+          type:     'info',
           duration: 5000
         });
 
@@ -58,29 +58,29 @@ export const SalesProvider: React.FC = ({ children }) => {
       dispatch({ 
         type: 'setCommissions', 
         payload: {
-          water: data.water_commissions,
-          icebar: data.icebar_commissions,
+          water:   data.water_commissions,
+          icebar:  data.icebar_commissions,
           icecube: data.icecube_commissions,
         }
       });
 
       displayToast({
-        message: 'Commissions from ' + formatDate( initDate ) + ' to ' + formatDate( finalDate ) + ' loaded',
-        type: 'success',
+        message:  'Commissions from ' + formatDate( initDate ) + ' to ' + formatDate( finalDate ) + ' loaded',
+        type:     'success',
         duration: 5000
       });
     } catch ( error: any ) {
       displayToast({
-        message: error.response?.data.msg || 'Incorrect data',
-        type: 'danger',
+        message:  error.response?.data.msg || 'Incorrect data',
+        type:     'danger',
         duration: Infinity
       });
 
       dispatch({ 
         type: 'setCommissions', 
         payload: {
-          water: [],
-          icebar: [],
+          water:   [],
+          icebar:  [],
           icecube: [],
         }
       });

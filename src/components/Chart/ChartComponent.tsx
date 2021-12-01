@@ -22,7 +22,6 @@ export const ChartComponent = <T, K extends keyof T>({
     if( data.length > 0 ) {
       createChart();
     }
-
   }, [ data ]);
 
   useEffect(() => {

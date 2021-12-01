@@ -27,13 +27,15 @@ export const CommissionsTable = <T, K extends keyof T, Y>({
         <div className={`row table-responsive ${ !show ? 'd-none' : 'fadeIn' }`}>
           <div className='col-12'>
             <div className='row justify-content-end'>
-              {
-                ( dataExport ) && 
-                  <ExcelLocalExport
-                    fileName={`${ section }-${ formatDate( new Date() ) }`}
-                    data={ dataExport }
-                  />
-              }
+              <div className='my-1'>
+                {
+                  ( dataExport ) && 
+                    <ExcelLocalExport
+                      fileName={`${ section }-${ formatDate( new Date() ) }`}
+                      data={ dataExport }
+                    />
+                }
+              </div>
             </div>
           </div>
 

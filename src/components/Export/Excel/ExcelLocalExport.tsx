@@ -15,29 +15,31 @@ export const ExcelLocalExport = <T,>({ data, fileName }: Props<T>): JSX.Element 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet( data );
     
     autofitColumn( data, ws );
-    setStyle( ws );
+    setStyleToSheet( ws );
 
     /* Generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet( wb, ws, 'Sheet1' );
 
-    /* Save to file */  
+    /* Save to file */
     XLSX.writeFile( wb, fileName );
   }
 
-  const setStyle = ( worksheet: XLSX.WorkSheet ) => {
+  const setStyleToSheet = ( worksheet: XLSX.WorkSheet ) => {
     if( !worksheet['!ref'] ) return;
 
     const range = XLSX.utils.decode_range( worksheet['!ref'] );
 
     for( let row = range.s.r; row <= range.e.r; ++row ) {
-      for( let cell = range.s.c; cell <= range.e.c; ++cell ) {
-        const cell_address = { c: cell, r: row };
+      for( let column = range.s.c; column <= range.e.c; ++column ) {
+        const cell_address = { c: column, r: row };
+        /* if a cell address is needed, encode the address */
         const cell_ref = XLSX.utils.encode_cell( cell_address );
 
         let style: any;
 
         if( row === 0 ) {
+          // Header style
           style = {
             font: {
               name:  'Arial',
@@ -67,7 +69,6 @@ export const ExcelLocalExport = <T,>({ data, fileName }: Props<T>): JSX.Element 
           };
         }
 
-        /* if an A1-style address is needed, encode the address */
         worksheet[ cell_ref ].s = style;
       }
     }
@@ -76,8 +77,8 @@ export const ExcelLocalExport = <T,>({ data, fileName }: Props<T>): JSX.Element 
   const autofitColumn = ( json: T[], worksheet: XLSX.WorkSheet ) => {
     let objectMaxLength: number[] = [];
 
-    json.map( ( jsonData ) => {
-      Object.entries( jsonData ).map( ( [ k , v ], idx ) => {
+    json.forEach( ( jsonData ) => {
+      Object.entries( jsonData ).forEach( ( [ k , v ], idx ) => {
         let columnValue: string;
 
         if( typeof v === 'number' ) {

@@ -3,9 +3,9 @@ import { useHistory, Link } from 'react-router-dom';
 import { useTopbarMenuItem } from '../../hooks/useTopbarMenuItem';
 import { AuthContext } from '../../context/AuthContext';
 import { ConfirmationContext } from '../../context/ConfirmationContext';
-import { randomColor } from '../../helpers/color';
+import { ProfileImage } from '../Image/ProfileImage';
 
-export const TopbarProfileMenu = () => {
+export const TopbarProfileMenu = React.memo(() => {
   const { logOut, user } = useContext( AuthContext );
   const { openModal, changeCallback } = useContext( ConfirmationContext );
   const history = useHistory();
@@ -23,31 +23,21 @@ export const TopbarProfileMenu = () => {
 
   return (
     <li
-      className={`nav-item dropdown no-arrow ${isMenuVisible ? 'show' : ''}`}
-      onClick={() => handleClick()}
-      onBlur={() => handleBlur()}
+      className={`nav-item dropdown no-arrow ${ isMenuVisible ? 'show' : '' }`}
+      onClick={ () => handleClick() }
+      onBlur={ () => handleBlur() }
     >
       <Link className='nav-link dropdown-toggle' to='#'>
         <span className='mr-2 d-none d-lg-inline text-gray-600 small'>
           { user?.username }
         </span>
 
-        <div 
-          style={{
-            backgroundColor: randomColor( 1 ),
-            borderRadius: '100%',
-            width: 25,
-            height: 25,
-            textAlign: 'center'
-          }}
-          
-        > { user?.username.slice(0, 1) } </div>
-
-        {/* <img
-          className='img-profile rounded-circle'
-          src='https://logos-marcas.com/wp-content/uploads/2020/11/Razer-Logo.png'
-          alt='Profile'
-        /> */}
+        <ProfileImage
+          figure='circle'
+          text={ user?.username.slice(0, 1) }
+          height={ 25 }
+          width={ 25 }
+        />
       </Link>
 
       <div 
@@ -69,4 +59,4 @@ export const TopbarProfileMenu = () => {
       </div>
     </li>
   );
-}
+})

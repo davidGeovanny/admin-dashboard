@@ -17,8 +17,8 @@ export const SalesReducer =  ( state: SalesState, action: SalesAction ): SalesSt
 			return {
 				...state,
 				loadingCommissions: false,
-				waterCommissions: action.payload.water,
-				icebarCommissions: action.payload.icebar,
+				waterCommissions: 	action.payload.water,
+				icebarCommissions: 	action.payload.icebar,
 				icecubeCommissions: action.payload.icecube,
 			};
 	

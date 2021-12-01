@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { SidebarMenuItem } from './SidebarMenuItem';
 import { SidebarContext } from '../../context/SidebarContext';
+import brissa_logo from '../../assets/img/brissa_logo.png';
 
 export const Sidebar = () => {
 
@@ -15,8 +16,8 @@ export const Sidebar = () => {
         to='/'
       >
         {/* Sidebar - Brand */}
-        <div className='sidebar-brand-icon rotate-n-15'>
-          <i className='fas fa-tint'></i>
+        <div className='sidebar-brand-icon'>
+          <img src={ brissa_logo } alt='logo brissa' className='sidebar-logo' />
         </div>
 
         <div className='sidebar-brand-text mx-3'><div>Brissa</div><sup>Agua Hielo</sup></div>

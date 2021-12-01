@@ -105,7 +105,7 @@ export const CommissionsForm = ({ loading }: Props) => {
                 disabled={ loading }
               >
                 { loading
-                    ? <> <i className='fas fa-spinner fa-pulse'></i> Loading... </>
+                    ? <> <i className='fas fa-spinner fa-pulse'></i> Cargando... </>
                     : 'Obtener comisiones' 
                 }
               </button>

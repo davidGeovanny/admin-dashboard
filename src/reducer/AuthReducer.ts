@@ -14,40 +14,40 @@ export const AuthReducer = ( state: AuthState, action: AuthAction ): AuthState =
     case 'addError':
       return {
         ...state,
-        status: 'not-authenticated',
-        token: null,
-        user: null,
+        status:       'not-authenticated',
+        token:        null,
+        user:         null,
         errorMessage: action.payload,
-        withError: true,
-        loading: false,
+        withError:    true,
+        loading:      false,
       };
 
     case 'removeError':
       return {
         ...state,
         errorMessage: '',
-        withError: false,
-        loading: false,
+        withError:    false,
+        loading:      false,
       };
 
     case 'signUp': 
       return {
         ...state,
         errorMessage: '',
-        withError: false,
-        status: 'authenticated',
-        token: action.payload.token,
-        user: action.payload.user,
-        loading: false,
+        withError:    false,
+        status:       'authenticated',
+        token:        action.payload.token,
+        user:         action.payload.user,
+        loading:      false,
       };
 
     case 'logout':
     case 'notAuthenticated': 
       return {
         ...state,
-        status: 'not-authenticated',
-        token: null,
-        user: null,
+        status:  'not-authenticated',
+        token:   null,
+        user:    null,
         loading: false,
       };
 

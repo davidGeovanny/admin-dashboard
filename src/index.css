@@ -171,3 +171,8 @@ div.loading i {
 .pointer {
   cursor: pointer;
 }
+
+.sidebar-logo {
+  max-width: 50px;
+  max-height: 50px;
+}

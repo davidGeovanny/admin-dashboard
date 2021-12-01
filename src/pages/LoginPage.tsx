@@ -56,7 +56,7 @@ export const LoginPage = () => {
                           autoComplete='off'
                           { 
                             ...register('username', { 
-                              required: { value: true, message: 'User is required' },
+                              required: { value: true, message: 'El usuario es obligatorio' },
                             }) 
                           }
                         />
@@ -75,7 +75,7 @@ export const LoginPage = () => {
                           className={`form-control form-control-user ${ errors.password ? 'is-invalid' : '' }`}
                           { 
                             ...register('password', { 
-                              required: { value: true, message: 'Password is required' },
+                              required: { value: true, message: 'Debe ingresar la contraseña' },
                             })
                           }
                         />
@@ -93,7 +93,7 @@ export const LoginPage = () => {
                       >
                         { 
                           loading 
-                            ? <> <i className='fas fa-spinner fa-pulse'></i> Loading, please wait... </>
+                            ? <> <i className='fas fa-spinner fa-pulse'></i> Cargando, espere... </>
                             : 'Iniciar sesión' 
                         }
                       </button>

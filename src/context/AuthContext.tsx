@@ -59,7 +59,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         type: 'signUp',
         payload: {
           token: resp.data.token,
-          user: resp.data.user
+          user:  resp.data.user
         }
       });
     } catch ( error:  any ) {
@@ -79,28 +79,28 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       displayToast({
         customIcon: (<i className='fas fa-handshake'></i>),
-        position: 'bottom-center',
-        message: 'Welcome back!',
-        duration: 8000,
-        type: 'light'
+        position:   'bottom-center',
+        message:    'Welcome back!',
+        duration:   8000,
+        type:       'light',
       });
       
       dispatch({
         type: 'signUp',
         payload: {
           token: data.token,
-          user: data.user,
+          user:  data.user,
         }
       });
     } catch ( error: any ) {
       displayToast({
-        message: error.response?.data.msg || 'Incorrect data',
-        type: 'danger',
+        message:  error.response?.data.msg || 'Incorrect data',
+        type:     'danger',
         duration: Infinity
       });
             
       dispatch({
-        type: 'addError',
+        type:    'addError',
         payload: error.response?.data.msg || 'Incorrect data'
       });
     }
@@ -118,13 +118,13 @@ export const AuthProvider: React.FC = ({ children }) => {
       return false;
     } catch ( error: any ) {
       displayToast({
-        message: error.response?.data.msg || 'Incorrect data',
-        type: 'danger',
+        message:  error.response?.data.msg || 'Incorrect data',
+        type:     'danger',
         duration: Infinity
       });  
 
       dispatch({
-        type: 'addError',
+        type:    'addError',
         payload: error.response?.data.msg || 'Incorrect data'
       });
 
