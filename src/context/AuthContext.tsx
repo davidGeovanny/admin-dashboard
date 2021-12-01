@@ -80,7 +80,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       displayToast({
         customIcon: (<i className='fas fa-handshake'></i>),
         position:   'bottom-center',
-        message:    'Welcome back!',
+        message:    '¡Bienvenido de vuelta!',
         duration:   8000,
         type:       'light',
       });
@@ -94,14 +94,14 @@ export const AuthProvider: React.FC = ({ children }) => {
       });
     } catch ( error: any ) {
       displayToast({
-        message:  error.response?.data.msg || 'Incorrect data',
+        message:  error.response?.data.msg || 'Datos incorrectos',
         type:     'danger',
         duration: Infinity
       });
             
       dispatch({
         type:    'addError',
-        payload: error.response?.data.msg || 'Incorrect data'
+        payload: error.response?.data.msg || 'Datos incorrectos'
       });
     }
   };
@@ -118,14 +118,14 @@ export const AuthProvider: React.FC = ({ children }) => {
       return false;
     } catch ( error: any ) {
       displayToast({
-        message:  error.response?.data.msg || 'Incorrect data',
+        message:  error.response?.data.msg || 'Datos incorrectos',
         type:     'danger',
         duration: Infinity
       });  
 
       dispatch({
         type:    'addError',
-        payload: error.response?.data.msg || 'Incorrect data'
+        payload: error.response?.data.msg || 'Datos incorrectos'
       });
 
       return false;

@@ -71,7 +71,7 @@ export const DashboardPage = () => {
   const [ products, setProducts ]         = useState<TopProduct[]>([]);
   const [ typeProducts, setTypeProducts ] = useState<TopTypeProduct[]>([]);
   const [ branches, setBranches ]         = useState<TopBranches[]>([]);
-  const [ initDate, setInitDate ] =   useState<string>('');
+  const [ initDate, setInitDate ]   = useState<string>('');
   const [ finalDate, setFinalDate ] = useState<string>('');
 
   const isMounted = useRef( true );
@@ -162,12 +162,9 @@ export const DashboardPage = () => {
             title='Ingresos de los 10 productos más vendidos'
             chartName='monthly-sales'
             typeChart='bar'
-            data={ 
-              sales.map( sale => ({ ...sale, shortName: `${ sale.product.slice(0, 25).trim() }...` }) )
-                   .slice(0, 10) 
-            }
+            data={ sales.slice(0, 10) }
             columnName='product'
-            columnShortName='product'
+            columnShortName='short_product'
             columnValue='money'
             maintainRatio={ false }
           />

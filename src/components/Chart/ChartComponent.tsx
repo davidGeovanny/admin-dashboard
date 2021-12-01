@@ -41,7 +41,6 @@ export const ChartComponent = <T, K extends keyof T>({
       type: typeChart,
       data: {
         labels: data.map( item => item[ columnShortName ] ),
-        // labels: data.map( item => item[ columnShortName ] ),
         
         datasets: [
           {
@@ -88,21 +87,15 @@ export const ChartComponent = <T, K extends keyof T>({
               // afterTitle: () => {
               //   return `${ columnShortName }`
               // },
-              // title: (this, tooltipItems) => {
-              //   return data.map( item => `${ item[ columnShortName ] }` )
-              // }
-              // title: function(this, tooltipItems) {
-              //   console.log({esto: this});
-              //   console.log({tooltipItems});
-              //   // return data.map( item => `${ item[ columnShortName ] }` )
-              //   return data.filter( item => `${ item[ columnShortName ] }` === tooltipItems[0].label ).map( item => `${ item[ columnName ] }` )
-              // },
+              title: function( this, tooltipItems ) {
+                return data.filter( item => `${ item[ columnShortName ] }` === tooltipItems[0].label ).map( item => `${ item[ columnName ] }` )
+              },
             },
+          },
+          title: {
+            display: false, // change true if want to display the title
+            text: 'Chart.js Horizontal Bar Chart'
           }
-          // title: {
-          //   display: true,
-          //   text: 'Chart.js Horizontal Bar Chart'
-          // }
         }
       },
     });

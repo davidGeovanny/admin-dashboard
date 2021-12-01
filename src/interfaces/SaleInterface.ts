@@ -32,9 +32,10 @@ export interface TopProductsResponse {
 }
 
 export interface TopProduct {
-	frequency: number;
-	money:     number;
-	product:   string;
+	frequency: 		 number;
+	money:     		 number;
+	product:   		 string;
+	short_product: string;
 }
 
 // Top clients response
