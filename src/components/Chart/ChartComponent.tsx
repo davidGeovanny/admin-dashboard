@@ -102,7 +102,7 @@ export const ChartComponent = <T, K extends keyof T>({
   }
 
   return (
-      <canvas id={ chartName } style={{
+    <canvas id={ chartName } style={{
       position: 'absolute',
       top: '0',
       bottom: '0',

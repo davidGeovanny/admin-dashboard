@@ -17,9 +17,9 @@ div.loading {
   justify-content: center;
 }
 
-div.loading i {
+/* div.loading i {
   color: white;
-}
+} */
 
 .alert-dismissible .btn-close {
   position: absolute;

@@ -123,6 +123,16 @@ export const DashboardPage = () => {
     setTypeProducts( data.by_frequency );
   }
 
+  const getClients = async ( initDate: string, finalDate: string ) => {
+    const data = await getTopFromSales<TopClientsResponse>('top-clients', initDate, finalDate);
+    return ( data ) ? data.by_money : [];
+  }
+
+  const getProducts = async ( initDate: string, finalDate: string ) => {
+    const data = await getTopFromSales<TopProductsResponse>('top-products', initDate, finalDate, { limit: 10 });
+    return ( data ) ? data.by_frequency : [];
+  }
+
   useEffect(() => {
     isMounted.current = true;
 
@@ -150,12 +160,18 @@ export const DashboardPage = () => {
     <div className='container-fluid'>
       <h2>Información mensual</h2>
 
-      <DashoardChart<TopClientsResponse, TopClient[], 'by_frequency'>
+      <DashoardChart
         initDate={ initDate }
         finalDate={ finalDate }
+        getApiData={ getProducts }
+        columnName='product'
+        columnShortName='short_product'
+        columnValue='money'
+        title='Ingresos de los 10 productos más vendidos'
+        typeChart='bar'
       />
 
-      <div className='row'>
+      {/* <div className='row'>
         <div className='col-xl-8 col-lg-7'>
           <ChartCard
             loading={ true }
@@ -223,7 +239,7 @@ export const DashboardPage = () => {
           />
         </div>
 
-      </div>
+      </div> */}
     </div>
   );
 }
