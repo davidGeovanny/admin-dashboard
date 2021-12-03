@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { ChartProps } from '../../types/ChartType';
+import { Loading } from '../Loading/Loading';
 
 Chart.register( ...registerables );
 
@@ -14,6 +15,7 @@ export const ChartComponent = <T, K extends keyof T>({
   maintainRatio, 
   title = '', 
   legendPosition = 'top',
+  loading,
 }: ChartProps<T, K>) => {
 
   const isMounted = useRef( true );
@@ -21,6 +23,8 @@ export const ChartComponent = <T, K extends keyof T>({
 
   const createChart = () => {
     const ctx = document.querySelector(`#${ chartName }`) as HTMLCanvasElement;
+
+    if( !ctx ) return;
 
     myChart.current?.destroy();
 
@@ -91,10 +95,10 @@ export const ChartComponent = <T, K extends keyof T>({
   useEffect(() => {
     if( !isMounted.current ) return;
 
-    if( data.length > 0 ) {
+    if( data.length > 0 && !loading ) {
       createChart();
     }
-  }, [ data ]);
+  }, [ data, loading ]);
 
   useEffect(() => {
     chartName = chartName.replace(' ', '-');
@@ -108,17 +112,23 @@ export const ChartComponent = <T, K extends keyof T>({
     }
   }, []);
 
-  return (
-    <canvas 
-      id={ chartName } 
-      style={{
-        position: 'absolute',
-        top: '0',
-        bottom: '0',
-        left: '0',
-        height: '100%',
-        width: '100%',
-      }}>
-    </canvas>
-  );
+  return ( loading )
+    ? (
+      <div className='loading-section'>
+        <Loading size={ 3 } color='black' />
+      </div>
+    )
+    : (
+      <canvas 
+        id={ chartName } 
+        style={{
+          position: 'absolute',
+          top: '0',
+          bottom: '0',
+          left: '0',
+          height: '100%',
+          width: '100%',
+        }}>
+      </canvas>
+    );
 }

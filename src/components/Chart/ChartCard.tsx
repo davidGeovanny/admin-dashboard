@@ -1,7 +1,6 @@
 import React from 'react'
 import { ChartComponent } from './ChartComponent';
 import { ChartProps } from '../../types/ChartType';
-import { Loading } from '../Loading/Loading';
 
 export const ChartCard = <T, K extends keyof T>({ 
   chartName, 
@@ -32,29 +31,18 @@ export const ChartCard = <T, K extends keyof T>({
         }}
       >
         <div className='chart-area'>
-          {
-            ( loading )
-              ? (
-                <div className='loading-section'>
-                  <Loading size={ 3 } color='black' />
-                </div>
-              )
-              : (
-                <ChartComponent
-                  loading={ loading }
-                  maintainRatio={ maintainRatio }
-                  title={ title }
-                  chartName={ chartName }
-                  typeChart={ typeChart }
-                  data={ data }
-                  columnName={ columnName }
-                  columnShortName={ columnShortName }
-                  columnValue={ columnValue }
-                  legendPosition={ legendPosition }
-                />
-              )
-          }
-          
+          <ChartComponent
+            loading={ loading }
+            maintainRatio={ maintainRatio }
+            title={ title }
+            chartName={ chartName }
+            typeChart={ typeChart }
+            data={ data }
+            columnName={ columnName }
+            columnShortName={ columnShortName }
+            columnValue={ columnValue }
+            legendPosition={ legendPosition }
+          />
         </div>
       </div>
     </div>

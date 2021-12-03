@@ -62,5 +62,4 @@ export const DashoardChart = <T, K extends keyof T>({
       maintainRatio={ false }
     />
   );
-    
 }
