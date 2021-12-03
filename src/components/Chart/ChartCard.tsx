@@ -4,20 +4,21 @@ import { ChartProps } from '../../types/ChartType';
 import { Loading } from '../Loading/Loading';
 
 export const ChartCard = <T, K extends keyof T>({ 
-  loading, 
-  maintainRatio = true, 
-  title, chartName, 
-  typeChart, 
+  chartName, 
   data, 
+  typeChart, 
   columnName, 
   columnShortName, 
   columnValue, 
+  loading, 
+  maintainRatio = true, 
+  title, 
   legendPosition = 'top'
 }: ChartProps<T, K>) => {
   return (
     <div className='card shadow mb-4'>
       <div className='card-header py-3 d-flex flex-row align-items-center justify-content-between'>
-          <h6 className='m-0 font-weight-bold text-primary'> { title } </h6>
+        <h6 className='m-0 font-weight-bold text-primary'> { title } </h6>
       </div>
         
       <div 
@@ -32,9 +33,9 @@ export const ChartCard = <T, K extends keyof T>({
       >
         <div className='chart-area'>
           {
-            true
+            ( loading )
               ? (
-                <div className='loading'>
+                <div className='loading-section'>
                   <Loading size={ 3 } color='black' />
                 </div>
               )
@@ -49,6 +50,7 @@ export const ChartCard = <T, K extends keyof T>({
                   columnName={ columnName }
                   columnShortName={ columnShortName }
                   columnValue={ columnValue }
+                  legendPosition={ legendPosition }
                 />
               )
           }

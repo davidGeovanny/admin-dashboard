@@ -17,6 +17,14 @@ div.loading {
   justify-content: center;
 }
 
+div.loading-section {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* div.loading i {
   color: white;
 } */

@@ -1,19 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
+  TopClient, 
   TopProduct, 
+  TopBranchesResponse,
+  TopClientsResponse, 
   TopProductsResponse, 
   TopTypeProductsResponse, 
-  TopTypeProduct,
-  TopClient, TopClientsResponse, TopBranchesResponse, TopBranches
 } from '../../interfaces/SaleInterface';
+import { ColumnDefinitionType } from '../../types/SimpleTableType';
+import { DashoardChart } from './DashoardChart';
+import { DashboardTable } from './DashboardTable';
+import { ProfileImage } from '../../components/Image/ProfileImage';
 import { formatDate, formatCurrency, formatNumberWithCommas } from '../../helpers/format';
 import adminApi from '../../helpers/adminApi';
-import { ChartCard } from '../../components/Chart/ChartCard';
-import { ColumnDefinitionType } from '../../types/SimpleTableType';
-import { SimpleTable } from '../../components/SimpleTable/SimpleTable';
-import { ProfileImage } from '../../components/Image/ProfileImage';
-import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
-import { DashoardChart } from './DashoardChart';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {
@@ -64,17 +63,8 @@ const productColumns: ColumnDefinitionType<TopProduct, keyof TopProduct>[] = [
 ];
 
 export const DashboardPage = () => {
-
-  const [ loading, setLoading ]           = useState<boolean>( false );
-  const [ sales, setSales ]               = useState<TopProduct[]>([]);
-  const [ clients, setClients ]           = useState<TopClient[]>([]);
-  const [ products, setProducts ]         = useState<TopProduct[]>([]);
-  const [ typeProducts, setTypeProducts ] = useState<TopTypeProduct[]>([]);
-  const [ branches, setBranches ]         = useState<TopBranches[]>([]);
   const [ initDate, setInitDate ]   = useState<string>('');
   const [ finalDate, setFinalDate ] = useState<string>('');
-
-  const isMounted = useRef( true );
 
   const getTopFromSales = async <T,>( endpoint: string, initDate: string, finalDate: string, params?: {[x: string]: string | number} ): Promise<T | undefined> => {
     try {
@@ -90,56 +80,30 @@ export const DashboardPage = () => {
     }
   }
 
-  const getTopClients = async () => {
-    const data = await getTopFromSales<TopClientsResponse>('top-clients', initDate, finalDate);
-
-    if( !data ) return;
-
-    setClients( data.by_money );
-  }
-
-  const getTopProducts = async () => {
-    const data = await getTopFromSales<TopProductsResponse>('top-products', initDate, finalDate, { limit: 10 });
-
-    if( !data ) return;
-
-    setSales( data.by_frequency );
-    setProducts( data.by_money );
-  }
-
-  const getTopBranches = async () => {
-    const data = await getTopFromSales<TopBranchesResponse>('top-branches', initDate, finalDate);
-
-    if( !data ) return;
-
-    setBranches( data.by_money );
-  }
-
-  const getTopTypeProduct = async () => {
-    const data = await getTopFromSales<TopTypeProductsResponse>('top-type-product', initDate, finalDate);
-
-    if( !data ) return;
-
-    setTypeProducts( data.by_frequency );
-  }
-
-  const getClients = async ( initDate: string, finalDate: string ) => {
-    const data = await getTopFromSales<TopClientsResponse>('top-clients', initDate, finalDate);
-    return ( data ) ? data.by_money : [];
-  }
-
-  const getProducts = async ( initDate: string, finalDate: string ) => {
-    const data = await getTopFromSales<TopProductsResponse>('top-products', initDate, finalDate, { limit: 10 });
+  const getTopProductsSales = async ( initDate: string, finalDate: string ) => {
+    const data = await getTopFromSales<TopProductsResponse>( 'top-products', initDate, finalDate, { limit: 10 } );
     return ( data ) ? data.by_frequency : [];
   }
 
-  useEffect(() => {
-    isMounted.current = true;
+  const getTopProducts = async ( initDate: string, finalDate: string ) => {
+    const data = await getTopFromSales<TopProductsResponse>( 'top-products', initDate, finalDate, { limit: 5 } );
+    return ( data ) ? data.by_money : [];
+  }
 
-    return () => {
-      isMounted.current = false;
-    }
-  }, []);
+  const getTopTypeProduct = async ( initDate: string, finalDate: string ) => {
+    const data = await getTopFromSales<TopTypeProductsResponse>( 'top-type-product', initDate, finalDate );
+    return ( data ) ? data.by_frequency : [];
+  }
+
+  const getTopBranches = async ( initDate: string, finalDate: string ) => {
+    const data = await getTopFromSales<TopBranchesResponse>( 'top-branches', initDate, finalDate );
+    return ( data ) ? data.by_money : [];
+  }
+
+  const getTopClients = async ( initDate: string, finalDate: string ) => {
+    const data = await getTopFromSales<TopClientsResponse>( 'top-clients', initDate, finalDate );
+    return ( data ) ? data.by_money : [];
+  }
 
   useEffect(() => {
     const currentDate = new Date();
@@ -148,98 +112,78 @@ export const DashboardPage = () => {
     setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ) );
   }, []);
 
-  useEffect(() => {
-    if( !isMounted.current || !initDate || !finalDate ) return;
-    getTopClients();
-    getTopProducts();
-    getTopTypeProduct();
-    getTopBranches();
-  }, [ initDate, finalDate, isMounted ]);
-
   return (
     <div className='container-fluid'>
       <h2>Información mensual</h2>
 
-      <DashoardChart
-        initDate={ initDate }
-        finalDate={ finalDate }
-        getApiData={ getProducts }
-        columnName='product'
-        columnShortName='short_product'
-        columnValue='money'
-        title='Ingresos de los 10 productos más vendidos'
-        typeChart='bar'
-      />
-
-      {/* <div className='row'>
+      <div className='row'>
         <div className='col-xl-8 col-lg-7'>
-          <ChartCard
-            loading={ true }
-            title='Ingresos de los 10 productos más vendidos'
+          <DashoardChart
             chartName='monthly-sales'
+            initDate={ initDate }
+            finalDate={ finalDate }
+            getApiData={ getTopProductsSales }
             typeChart='bar'
-            data={ sales.slice(0, 10) }
             columnName='product'
             columnShortName='short_product'
             columnValue='money'
-            maintainRatio={ false }
+            title='Ingresos de los 10 productos más vendidos'
           />
         </div>
 
-
         <div className='col-xl-4 col-lg-5'>
-          <ChartCard
-            loading={ true }
-            title='Ingresos por tipo de productos'
+          <DashoardChart
             chartName='top-type-product'
+            initDate={ initDate }
+            finalDate={ finalDate }
+            getApiData={ getTopTypeProduct }
             typeChart='doughnut'
-            data={ typeProducts }
             columnName='type_product'
             columnShortName='type_product'
             columnValue='money'
-            maintainRatio={ false }
+            title='Ingresos por tipo de productos'
           />
         </div>
-
       </div>
 
       <div className='row justify-content-center mb-4'>
         <div className='col-xl-10 col-lg-10'>
-          <SimpleTableCard
-            data={ products.slice(0, 5) } 
-            columns={ productColumns } 
-            loading={ loading } 
+          <DashboardTable
+            initDate={ initDate }
+            finalDate={ finalDate }
+            getApiData={ getTopProducts }
+            columnDefinition={ productColumns }
             title='Productos con mayor ingreso'
           />
         </div>
-
       </div>
 
       <div className='row mb-4'>
         <div className='col-xl-4 col-lg-6'>
-          <ChartCard
-            loading={ true }
-            title='Ventas de sucursales'
+          <DashoardChart
             chartName='top-branch-month'
+            initDate={ initDate }
+            finalDate={ finalDate }
+            getApiData={ getTopBranches }
             typeChart='pie'
-            data={ branches }
             columnName='branch_company'
             columnShortName='branch_company'
             columnValue='money'
-            maintainRatio={ false }
+            title='Ventas de sucursales'
           />
         </div>
 
         <div className='col-xl-8 col-lg-6'>
-          <SimpleTableCard
-            data={ clients } 
-            columns={ clientColumns } 
-            loading={ loading } 
+          <DashboardTable
+            initDate={ initDate }
+            finalDate={ finalDate }
+            getApiData={ getTopClients }
+            columnDefinition={ clientColumns }
             title='Clientes con mayor ingreso'
           />
         </div>
 
-      </div> */}
+      </div>
     </div>
   );
 }

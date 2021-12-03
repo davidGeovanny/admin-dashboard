@@ -1,36 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { ChartProps } from '../../types/ChartType';
-import { randomColor } from '../../helpers/color';
 
 Chart.register( ...registerables );
 
-interface ChartColor {
-  background: string;
-  border:     string,
-}
-
 export const ChartComponent = <T, K extends keyof T>({ 
-  loading, maintainRatio, title, chartName, typeChart, data, columnName, columnShortName, columnValue, legendPosition = 'top'
+  chartName, 
+  data, 
+  typeChart, 
+  columnName, 
+  columnShortName, 
+  columnValue, 
+  maintainRatio, 
+  title = '', 
+  legendPosition = 'top',
 }: ChartProps<T, K>) => {
 
   const isMounted = useRef( true );
   const myChart = useRef<Chart<typeof typeChart, T[K][], T[K]>>();
-  useEffect(() => {
-    if( !isMounted.current ) return;
-
-    if( data.length > 0 ) {
-      createChart();
-    }
-  }, [ data ]);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    }
-  }, []);
 
   const createChart = () => {
     const ctx = document.querySelector(`#${ chartName }`) as HTMLCanvasElement;
@@ -94,21 +81,44 @@ export const ChartComponent = <T, K extends keyof T>({
           },
           title: {
             display: false, // change true if want to display the title
-            text: 'Chart.js Horizontal Bar Chart'
+            text: title
           }
         }
       },
     });
   }
 
+  useEffect(() => {
+    if( !isMounted.current ) return;
+
+    if( data.length > 0 ) {
+      createChart();
+    }
+  }, [ data ]);
+
+  useEffect(() => {
+    chartName = chartName.replace(' ', '-');
+  }, []);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    }
+  }, []);
+
   return (
-    <canvas id={ chartName } style={{
-      position: 'absolute',
-      top: '0',
-      bottom: '0',
-      left: '0',
-      height: '100%',
-      width: '100%',
-    }}></canvas>
+    <canvas 
+      id={ chartName } 
+      style={{
+        position: 'absolute',
+        top: '0',
+        bottom: '0',
+        left: '0',
+        height: '100%',
+        width: '100%',
+      }}>
+    </canvas>
   );
 }

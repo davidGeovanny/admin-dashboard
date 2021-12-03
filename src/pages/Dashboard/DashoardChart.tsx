@@ -1,35 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { ChartCard } from '../../components/Chart/ChartCard';
-import adminApi from '../../helpers/adminApi';
-import { ChartComponent } from '../../components/Chart/ChartComponent';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChartTypeRegistry } from 'chart.js';
-import { BgLoading } from '../../components/Loading/BgLoading';
-import { Loading } from '../../components/Loading/Loading';
+import { ChartCard } from '../../components/Chart/ChartCard';
 
 interface Props<T, K extends keyof T> {
-  initDate: string;
-  finalDate: string;
-  getApiData: ( initDate: string, finalDate: string ) => Promise<T[]>;
-  columnName: K;
+  chartName:       string;
+  initDate:        string;
+  finalDate:       string;
+  getApiData:      ( initDate: string, finalDate: string ) => Promise<T[]>;
+  typeChart:       keyof ChartTypeRegistry;
+  columnName:      K;
   columnShortName: K;
-  columnValue: K;
-  typeChart: keyof ChartTypeRegistry;
-  title: string;
+  columnValue:     K;
+  title:           string;
 }
 
 export const DashoardChart = <T, K extends keyof T>({ 
+  chartName,
   initDate,
   finalDate,
   getApiData,
+  typeChart,
   columnName,
   columnShortName,
   columnValue,
   title,
-  typeChart
 }: Props<T, K>) => {
-  
+  const isMounted               = useRef( true );
   const [ loading, setLoading ] = useState( false );
-  const [ data, setData ] = useState<T[]>([]);
+  const [ data, setData ]       = useState<T[]>([]);
 
   const getData = async () => {
     setLoading( true );
@@ -39,30 +37,30 @@ export const DashoardChart = <T, K extends keyof T>({
   }
   
   useEffect(() => {
-    if( !initDate || !finalDate ) return;
+    if( !initDate || !finalDate || !isMounted.current ) return;
     getData();
   }, [ initDate, finalDate ]);
 
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    }
+  }, []);
+
   return (
-    <>
-      {
-        loading
-          ? <Loading size={ 3 } />
-          : (
-            <ChartCard
-              loading={ true }
-              title={ title }
-              chartName='un_test'
-              typeChart={ typeChart }
-              data={ data }
-              columnName={ columnName }
-              columnShortName={ columnShortName }
-              columnValue={ columnValue }
-              maintainRatio={ false }
-            />
-          )
-      }
-    </>
-  )
+    <ChartCard
+      loading={ loading }
+      title={ title }
+      chartName={ chartName }
+      typeChart={ typeChart }
+      data={ data }
+      columnName={ columnName }
+      columnShortName={ columnShortName }
+      columnValue={ columnValue }
+      maintainRatio={ false }
+    />
+  );
     
 }
