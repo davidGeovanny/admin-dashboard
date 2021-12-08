@@ -9,10 +9,12 @@ import {
 } from '../../interfaces/SaleInterface';
 import { ColumnDefinitionType } from '../../types/SimpleTableType';
 import { DashoardChart } from './DashoardChart';
-import { DashboardTable } from './DashboardTable';
+import { DashboardSimpleTable } from './DashboardSimpleTable';
 import { ProfileImage } from '../../components/Image/ProfileImage';
 import { formatDate, formatCurrency, formatNumberWithCommas } from '../../helpers/format';
 import adminApi from '../../helpers/adminApi';
+import { Dropdown } from '../../components/ui/Dropdown';
+import { dashboard__dropdownData } from '../../data/dropdown';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {
@@ -63,6 +65,7 @@ const productColumns: ColumnDefinitionType<TopProduct, keyof TopProduct>[] = [
 ];
 
 export const DashboardPage = () => {
+  const [ periodRange, setPeriodRange ] = useState<string>( dashboard__dropdownData[1] );
   const [ initDate, setInitDate ]   = useState<string>('');
   const [ finalDate, setFinalDate ] = useState<string>('');
 
@@ -105,16 +108,51 @@ export const DashboardPage = () => {
     return ( data ) ? data.by_money : [];
   }
 
-  useEffect(() => {
+  const onReloadPeriodData = () => {
     const currentDate = new Date();
 
-    setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ) ) );
-    setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ) );
+    if( periodRange === 'Semanal' ) {
+      setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 6 ) ) );
+      setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() ) ) );
+    } else if( periodRange === 'Mensual' ) {
+      setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ) ) );
+      setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ) );
+    } else if( periodRange === 'Trimestral' ) {
+      setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() - 2, 1 ) ) );
+      setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ) );
+    }
+  }
+
+  useEffect(() => {
+    onReloadPeriodData();
   }, []);
 
   return (
     <div className='container-fluid'>
-      <h2>Información mensual</h2>
+
+      <div className="row">
+        <div className="col-8">
+          <h2>Información mensual</h2>
+        </div>
+
+        <div className="col">
+          <div className="row justify-content-end">
+            <Dropdown
+              data={ dashboard__dropdownData }
+              defaultOption={ periodRange }
+              onChange={ setPeriodRange }
+              position='left'
+            />
+            <button 
+              type='button' 
+              className='btn btn-primary btn-square'
+              onClick={ onReloadPeriodData }
+            >
+              <i className="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div className='row'>
         <div className='col-xl-8 col-lg-7'>
@@ -148,7 +186,7 @@ export const DashboardPage = () => {
 
       <div className='row justify-content-center mb-4'>
         <div className='col-xl-10 col-lg-10'>
-          <DashboardTable
+          <DashboardSimpleTable
             initDate={ initDate }
             finalDate={ finalDate }
             getApiData={ getTopProducts }
@@ -174,7 +212,7 @@ export const DashboardPage = () => {
         </div>
 
         <div className='col-xl-8 col-lg-6'>
-          <DashboardTable
+          <DashboardSimpleTable
             initDate={ initDate }
             finalDate={ finalDate }
             getApiData={ getTopClients }

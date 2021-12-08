@@ -49,6 +49,10 @@ div.loading-section {
   background-color: transparent;
 }
 
+.btn-square {
+  border-radius: 0;
+}
+
 .z-depth-0 {
   -webkit-box-shadow: none !important;
   box-shadow: none !important

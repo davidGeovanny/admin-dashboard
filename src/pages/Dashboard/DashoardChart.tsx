@@ -30,6 +30,8 @@ export const DashoardChart = <T, K extends keyof T>({
   const [ data, setData ]       = useState<T[]>([]);
 
   const getData = async () => {
+    if( loading ) return;
+    
     setLoading( true );
     const datos = await getApiData( initDate, finalDate );
     setData( datos );

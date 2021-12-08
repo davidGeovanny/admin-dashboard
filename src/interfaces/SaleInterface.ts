@@ -4,7 +4,7 @@ export interface CommissionFormData {
 };
 
 export interface SalesState {
-	loadingCommissions: boolean
+	loadingCommissions: boolean;
 	waterCommissions:  	Commission[];
 	icebarCommissions: 	Commission[];
 	icecubeCommissions: Commission[];

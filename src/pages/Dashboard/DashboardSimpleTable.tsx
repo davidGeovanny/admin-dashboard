@@ -10,7 +10,7 @@ interface Props<T> {
   title:            string;
 }
 
-export const DashboardTable = <T,>({
+export const DashboardSimpleTable = <T,>({
   initDate,
   finalDate,
   getApiData,
@@ -22,6 +22,8 @@ export const DashboardTable = <T,>({
   const [ data, setData ]       = useState<T[]>([]);
 
   const getData = async () => {
+    if( loading ) return;
+    
     setLoading( true );
     const datos = await getApiData( initDate, finalDate );
     setData( datos );
