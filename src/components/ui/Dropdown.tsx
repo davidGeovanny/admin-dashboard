@@ -2,25 +2,25 @@ import React, { useEffect, useRef, useState } from 'react';
 import './dropdown.css';
 import { useClickOutside } from '../../hooks/useClickOutside';
 
-interface Props {
-  data:           string[];
-  onChange:       ( option: string ) => any;
-  defaultOption?: string;
+interface Props<T> {
+  data:           T[];
+  onChange:       ( option: T ) => any;
+  defaultOption?: T;
   position?:      'up' | 'down' | 'right' | 'left';
   variant?:       'primary' | 'success' | 'warning' | 'danger' | 'info' | 'secondary' | 'dark';
 }
 
-export const Dropdown = ( { 
+export const Dropdown = <T,>( { 
   data: initData,
   onChange,
   position = 'down',
   variant  = 'primary',
   defaultOption,
-}: Props ) => {
+}: Props<T> ) => {
   const dropdownDiv       = useRef<HTMLDivElement>( null );
-  const [ data, setData ] = useState<string[]>( initData );
+  const [ data, setData ] = useState<T[]>( initData );
   const [ show, setShow ] = useState<boolean>( false );
-  const [ labelText, setLabelText ] = useState<string>('Seleccionar');
+  const [ labelText, setLabelText ] = useState<T | string>('Seleccionar');
 
   useClickOutside(dropdownDiv, () => { setShow( false ) })
 
@@ -28,7 +28,7 @@ export const Dropdown = ( {
     setShow( !show ); 
   }
 
-  const onClickItem = ( dropItem: string ) => {
+  const onClickItem = ( dropItem: T ) => {
     if( dropItem !== labelText ) {
       setLabelText( dropItem );
       onChange( dropItem );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { 
   TopClient, 
   TopProduct, 
@@ -15,6 +15,9 @@ import { formatDate, formatCurrency, formatNumberWithCommas } from '../../helper
 import adminApi from '../../helpers/adminApi';
 import { Dropdown } from '../../components/ui/Dropdown';
 import { dashboard__dropdownData } from '../../data/dropdown';
+import { DashboardContext } from '../../context/DashboardContext';
+import { ChartCard } from '../../components/Chart/ChartCard';
+import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {
@@ -65,9 +68,20 @@ const productColumns: ColumnDefinitionType<TopProduct, keyof TopProduct>[] = [
 ];
 
 export const DashboardPage = () => {
-  const [ periodRange, setPeriodRange ] = useState<string>( dashboard__dropdownData[1] );
   const [ initDate, setInitDate ]   = useState<string>('');
   const [ finalDate, setFinalDate ] = useState<string>('');
+
+  const { 
+    getSalesData,
+    changePeriod,
+    loading,
+    period,
+    productsTopFrequent,
+    productsTopIncome,
+    clientsTopIncome,
+    branchesRevenue,
+    typeProductRevenue,
+  } = useContext( DashboardContext );
 
   const getTopFromSales = async <T,>( endpoint: string, initDate: string, finalDate: string, params?: {[x: string]: string | number} ): Promise<T | undefined> => {
     try {
@@ -111,21 +125,29 @@ export const DashboardPage = () => {
   const onReloadPeriodData = () => {
     const currentDate = new Date();
 
-    if( periodRange === 'Semanal' ) {
+    if( period === 'Semanal' ) {
       setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 6 ) ) );
       setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() ) ) );
-    } else if( periodRange === 'Mensual' ) {
+    } else if( period === 'Mensual' ) {
       setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ) ) );
       setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ) );
-    } else if( periodRange === 'Trimestral' ) {
+    } else if( period === 'Trimestral' ) {
       setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() - 2, 1 ) ) );
       setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ) );
     }
   }
+  
+  useEffect(() => {
+    if( period !== 'Personalizado' ) {
+      onReloadPeriodData();
+    }
+  }, [ period ]);
 
   useEffect(() => {
-    onReloadPeriodData();
-  }, []);
+    if( period !== 'Personalizado' && initDate && finalDate ) {
+      getSalesData( initDate, finalDate );
+    }
+  }, [ initDate, finalDate ]);
 
   return (
     <div className='container-fluid'>
@@ -139,8 +161,8 @@ export const DashboardPage = () => {
           <div className="row justify-content-end">
             <Dropdown
               data={ dashboard__dropdownData }
-              defaultOption={ periodRange }
-              onChange={ setPeriodRange }
+              defaultOption={ period }
+              onChange={ changePeriod }
               position='left'
             />
             <button 
@@ -156,41 +178,40 @@ export const DashboardPage = () => {
 
       <div className='row'>
         <div className='col-xl-8 col-lg-7'>
-          <DashoardChart
+          <ChartCard
+            loading={ loading }
+            title='Ingresos de los 10 productos más vendidos'
             chartName='monthly-sales'
-            initDate={ initDate }
-            finalDate={ finalDate }
-            getApiData={ getTopProductsSales }
             typeChart='bar'
+            data={ productsTopFrequent }
             columnName='product'
             columnShortName='short_product'
             columnValue='money'
-            title='Ingresos de los 10 productos más vendidos'
+            maintainRatio={ false }
           />
         </div>
 
         <div className='col-xl-4 col-lg-5'>
-          <DashoardChart
+          <ChartCard
+            loading={ loading }
+            title='Ingresos por tipo de productos'
             chartName='top-type-product'
-            initDate={ initDate }
-            finalDate={ finalDate }
-            getApiData={ getTopTypeProduct }
             typeChart='doughnut'
+            data={ typeProductRevenue }
             columnName='type_product'
             columnShortName='type_product'
             columnValue='money'
-            title='Ingresos por tipo de productos'
+            maintainRatio={ false }
           />
         </div>
       </div>
 
       <div className='row justify-content-center mb-4'>
         <div className='col-xl-10 col-lg-10'>
-          <DashboardSimpleTable
-            initDate={ initDate }
-            finalDate={ finalDate }
-            getApiData={ getTopProducts }
-            columnDefinition={ productColumns }
+          <SimpleTableCard
+            data={ productsTopIncome } 
+            columns={ productColumns } 
+            loading={ loading } 
             title='Productos con mayor ingreso'
           />
         </div>
@@ -198,27 +219,27 @@ export const DashboardPage = () => {
 
       <div className='row mb-4'>
         <div className='col-xl-4 col-lg-6'>
-          <DashoardChart
+          <ChartCard
+            loading={ loading }
+            title='Ventas de sucursales'
             chartName='top-branch-month'
-            initDate={ initDate }
-            finalDate={ finalDate }
-            getApiData={ getTopBranches }
             typeChart='pie'
+            data={ branchesRevenue }
             columnName='branch_company'
             columnShortName='branch_company'
             columnValue='money'
-            title='Ventas de sucursales'
+            maintainRatio={ false }
           />
         </div>
 
         <div className='col-xl-8 col-lg-6'>
-          <DashboardSimpleTable
-            initDate={ initDate }
-            finalDate={ finalDate }
-            getApiData={ getTopClients }
-            columnDefinition={ clientColumns }
+          <SimpleTableCard
+            data={ clientsTopIncome } 
+            columns={ clientColumns } 
+            loading={ loading } 
             title='Clientes con mayor ingreso'
           />
+          
         </div>
 
       </div>
