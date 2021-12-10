@@ -2,17 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { 
   TopClient, 
   TopProduct, 
-  TopBranchesResponse,
-  TopClientsResponse, 
-  TopProductsResponse, 
-  TopTypeProductsResponse, 
 } from '../../interfaces/SaleInterface';
 import { ColumnDefinitionType } from '../../types/SimpleTableType';
-import { DashoardChart } from './DashoardChart';
-import { DashboardSimpleTable } from './DashboardSimpleTable';
 import { ProfileImage } from '../../components/Image/ProfileImage';
 import { formatDate, formatCurrency, formatNumberWithCommas } from '../../helpers/format';
-import adminApi from '../../helpers/adminApi';
 import { Dropdown } from '../../components/ui/Dropdown';
 import { dashboard__dropdownData } from '../../data/dropdown';
 import { DashboardContext } from '../../context/DashboardContext';
@@ -20,6 +13,7 @@ import { ChartCard } from '../../components/Chart/ChartCard';
 import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { DashboardForm } from './DashboardForm';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {
@@ -85,82 +79,78 @@ export const DashboardPage = () => {
     typeProductRevenue,
   } = useContext( DashboardContext );
 
-  const getTopFromSales = async <T,>( endpoint: string, initDate: string, finalDate: string, params?: {[x: string]: string | number} ): Promise<T | undefined> => {
-    try {
-      const { data } = await adminApi.get<T>(`/sales/${ endpoint }/`, { 
-        params: { 
-          initDate, 
-          finalDate, 
-          ...params 
-        }});
-      return data;
-    } catch ( err ) {
-      return undefined;
-    }
-  }
-
-  const onReloadPeriodData = () => {
-    const currentDate = new Date();
-
-    if( period === 'Semanal' ) {
-      setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 6 ) ) );
-      setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() ) ) );
-    } else if( period === 'Mensual' ) {
-      setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ) ) );
-      setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ) );
-    } else if( period === 'Trimestral' ) {
-      setInitDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() - 2, 1 ) ) );
-      setFinalDate( formatDate( new Date( currentDate.getFullYear(), currentDate.getMonth() + 1, 0 ) ) );
-    }
-  }
   
-  useEffect(() => {
-    if( period !== 'Personalizado' ) {
-      onReloadPeriodData();
-    }
-  }, [ period ]);
 
-  useEffect(() => {
-    if( period !== 'Personalizado' && initDate && finalDate ) {
-      getSalesData( initDate, finalDate );
-    }
-  }, [ initDate, finalDate ]);
+  // useEffect(() => {
+  //   if( period !== 'Personalizado' && initDate && finalDate ) {
+  //     getSalesData( initDate, finalDate );
+  //   }
+  // }, [ initDate, finalDate ]);
 
   return (
     <div className='container-fluid'>
 
-      <div className="row">
-        <div className="col-8">
-          <h2>Información mensual</h2>
+      <h3 className='wrapper justify-content-between'>
+        <span>Información inicial</span>
+        <span className='pointer'>
+          <i className={`fas ${ true ? 'fa-chevron-up' : 'fa-chevron-down' }`}></i>
+        </span>
+      </h3>
+
+      <DashboardForm
+        
+      />
+
+      {/* <div className="row">
+        <div className="col-xl-7 col-lg-7">
+          <p className='h2'>Información trimestral</p>
         </div>
 
-        <div className="col">
-          <div className="row justify-content-end">
-            {/* <ReactDatePicker
-              className={`form-control`}
-              placeholderText='Seleccionar fecha inicial'
-              dateFormat='MMMM d, yyyy'
-              onChange={ ( date ) => {
-                
-              }}
-            /> */}
+        <div className="col-xl-5 col-lg-5">
+          <div className="row">
+            <div className="col-xl-4 mb-xl-0 mb-2">
+              <ReactDatePicker
+                className={`form-control`}
+                placeholderText='Desde'
+                dateFormat='MMMM d, yyyy'
+                onChange={ ( date ) => {
+                  
+                }}
+              />
+            </div>
 
-            <Dropdown
-              data={ dashboard__dropdownData }
-              defaultOption={ period }
-              onChange={ changePeriod }
-              position='left'
-            />
-            <button 
-              type='button' 
-              className='btn btn-primary btn-square'
-              onClick={ onReloadPeriodData }
-            >
-              <i className="fas fa-sync-alt"></i>
-            </button>
+            <div className="col-xl-4 mb-xl-0 mb-2">
+              <ReactDatePicker
+                className={`form-control`}
+                placeholderText='Hasta'
+                dateFormat='MMMM d, yyyy'
+                onChange={ ( date ) => {
+                  
+                }}
+              />
+            </div>
+
+            <div className="col-xl-4 ">
+              <div className="row justify-content-center">
+                <Dropdown
+                  data={ dashboard__dropdownData }
+                  defaultOption={ period }
+                  onChange={ changePeriod }
+                  position='left'
+                />
+                <button 
+                  type='button' 
+                  className='btn btn-primary btn-square'
+                  onClick={ onReloadPeriodData }
+                >
+                  <i className="fas fa-sync-alt"></i>
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className='row'>
         <div className='col-xl-8 col-lg-7'>

@@ -15,10 +15,24 @@ type DashboardAction =
 	| { type: 'setClientsTopIncome', 		payload: TopClient[] }
 	| { type: 'setBranchesRevenue', 		payload: TopBranches[] }
 	| { type: 'setTypeProductRevenue', 	payload: TopTypeProduct[] }
-	| { type: 'setPeriod', 	payload: RangePeriod }
+	| { type: 'setPeriod',		payload: RangePeriod }
+	| { type: 'setInitDate',	payload: string }
+	| { type: 'setFinalDate', payload: string }
 
 export const DashboardReducer =  ( state: DashboardState, action: DashboardAction ): DashboardState => {
 	switch ( action.type ) {
+
+		case 'setFinalDate':
+			return {
+				...state,
+				finalDate: action.payload,
+			};
+
+		case 'setInitDate':
+			return {
+				...state,
+				initDate: action.payload,
+			};
 
 		case 'setPeriod':
 			return {

@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import { DashboardReducer } from '../reducer/DashboardReducer';
 import {
   TopBranches,
   TopBranchesResponse,
@@ -8,14 +9,16 @@ import {
   TopTypeProduct,
   TopTypeProductsResponse
 } from '../interfaces/SaleInterface';
+import { DashboardState, PropsSales } from '../interfaces/DashboardInterface';
 import { TopProductsResponse } from '../interfaces/SaleInterface';
-import { DashboardState } from '../interfaces/DashboardInterface';
 import { RangePeriod } from '../types/DashboardType';
-import { DashboardReducer } from '../reducer/DashboardReducer';
+import { formatDate } from '../helpers/format';
 import adminApi from '../helpers/adminApi';
 
 interface ContextProps {
   period:              RangePeriod;
+  initDate:            string;
+  finalDate:           string;
   productsTopFrequent: TopProduct[];
   productsTopIncome:   TopProduct[];
   clientsTopIncome:    TopClient[];
@@ -24,18 +27,15 @@ interface ContextProps {
   loading:             boolean;
   getSalesData:        ( initDate: string, finalDate: string ) => Promise<void>;
   changePeriod:        ( period: RangePeriod ) => void;
-}
-
-interface PropsSales {
-  endpoint:  string;
-  initDate:  string;
-  finalDate: string;
-  params?:   { [ x: string ] : string | number };
+  changeInitDate:      ( date: string ) => void;
+  changeFinalDate:     ( date: string ) => void;
 }
 
 const dashboardInitState: DashboardState = {
-  period:  'Mensual',
-  loading: false,
+  period:    'Mensual',
+  initDate:  '',
+  finalDate: '',
+  loading:   false,
   productsTopFrequent: [],
   productsTopIncome:   [],
   clientsTopIncome:    [],
@@ -85,8 +85,38 @@ export const DashboardProvider: React.FC = ({ children }) => {
     dispatch({ type: 'clearLoading' });
   }
 
+  const changeInitDate = ( date: string ) => {
+    
+  }
+
+  const changeFinalDate = ( date: string ) => {
+
+  }
+
   const changePeriod = ( period: RangePeriod ) => {
+    const date = new Date();
+    
     dispatch({ type: 'setPeriod', payload: period });
+
+    switch ( period ) {
+      case 'Semanal':
+        dispatch({ type: 'setInitDate',  payload: formatDate( new Date( date.getFullYear(), date.getMonth(), date.getDate() - 6 ) ) });
+        dispatch({ type: 'setFinalDate', payload: formatDate( new Date( date.getFullYear(), date.getMonth(), date.getDate() ) ) });
+        break;
+
+      case 'Mensual':
+        dispatch({ type: 'setInitDate',  payload: formatDate( new Date( date.getFullYear(), date.getMonth(), 1 ) ) });
+        dispatch({ type: 'setFinalDate', payload: formatDate( new Date( date.getFullYear(), date.getMonth() + 1, 0 ) ) });
+        break;
+
+      case 'Trimestral':
+        dispatch({ type: 'setInitDate',  payload: formatDate( new Date( date.getFullYear(), date.getMonth() - 2, 1 ) ) });
+        dispatch({ type: 'setFinalDate', payload: formatDate( new Date( date.getFullYear(), date.getMonth() + 1, 0 ) ) });
+        break;
+    
+      default:
+        break;
+    }
   }
 
   return (
@@ -95,6 +125,8 @@ export const DashboardProvider: React.FC = ({ children }) => {
         ...state,
         getSalesData,
         changePeriod,
+        changeInitDate,
+        changeFinalDate,
       }}
     >
       { children }

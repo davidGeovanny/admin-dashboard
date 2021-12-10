@@ -8,10 +8,19 @@ import {
 
 export interface DashboardState {
 	period:              RangePeriod;
+  initDate:            string;
+  finalDate:           string;
   productsTopFrequent: TopProduct[];
   productsTopIncome:   TopProduct[];
   clientsTopIncome:    TopClient[];
   branchesRevenue:     TopBranches[];
   typeProductRevenue:  TopTypeProduct[];
   loading:             boolean;
+}
+
+export interface PropsSales {
+  endpoint:  string;
+  initDate:  string;
+  finalDate: string;
+  params?:   { [ x: string ] : string | number };
 }
