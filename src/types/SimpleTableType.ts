@@ -9,6 +9,7 @@ export type TableProps<T, K extends keyof T> = {
   data:    Array<T>;
   columns: Array<ColumnDefinitionType<T, K>>;
   loading: boolean;
+  title?:  string;
 }
 
 export type TableRowsProps<T, K extends keyof T> = {

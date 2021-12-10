@@ -6,7 +6,7 @@ export const SimpleTableRows = <T, K extends keyof T>({ data, columns, loading }
       return (
         <tr>
           <td colSpan={ columns.length } className="text-center">
-            <i className="fas fa-spinner fa-pulse"></i> Loading...
+            <i className="fas fa-spinner fa-pulse"></i> Cargando...
           </td>
         </tr>
       );
@@ -38,7 +38,7 @@ export const SimpleTableRows = <T, K extends keyof T>({ data, columns, loading }
       return (
         <tr>
           <td colSpan={ columns.length }>
-            <div className='text-center'> No results available </div>
+            <div className='text-center'> Sin resultados </div>
           </td>
         </tr>
       );

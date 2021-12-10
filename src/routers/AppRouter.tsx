@@ -6,7 +6,7 @@ import {
 import { PublicRoutes } from './PublicRoutes';
 import { PrivateRoutes } from './PrivateRoutes';
 import { AuthContext } from '../context/AuthContext';
-import { Loading } from '../components/Loading';
+import { BgLoading } from '../components/Loading/BgLoading';
 
 export const AppRouter = () => {
 
@@ -14,7 +14,7 @@ export const AppRouter = () => {
 
   if( status === 'checking' ) {
     return (
-      <Loading />
+      <BgLoading />
     );
   }
 

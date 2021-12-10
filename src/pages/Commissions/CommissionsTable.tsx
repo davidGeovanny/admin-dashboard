@@ -1,16 +1,19 @@
 import React from 'react';
 import { SimpleTable } from '../../components/SimpleTable/SimpleTable';
+import { ExcelLocalExport } from '../../components/Export/Excel/ExcelLocalExport';
 import { TableCommissionsProps } from '../../types/SalesType';
+import { formatDate } from '../../helpers/format';
 
-export const CommissionsTable = <T, K extends keyof T>({
+export const CommissionsTable = <T, K extends keyof T, Y>({
   data,
+  dataExport,
   columns,
   show,
   setShow,
   section,
   title,
   loading,
-}: TableCommissionsProps<T, K>): JSX.Element => {
+}: TableCommissionsProps<T, K, Y>): JSX.Element => {
   return (
     <div className='card'>
       <div className='card-body'>
@@ -22,6 +25,20 @@ export const CommissionsTable = <T, K extends keyof T>({
         </h3>
 
         <div className={`row table-responsive ${ !show ? 'd-none' : 'fadeIn' }`}>
+          <div className='col-12'>
+            <div className='row justify-content-end'>
+              <div className='my-1'>
+                {
+                  ( dataExport ) && 
+                    <ExcelLocalExport
+                      fileName={`${ section }-${ formatDate( new Date() ) }`}
+                      data={ dataExport }
+                    />
+                }
+              </div>
+            </div>
+          </div>
+
           <SimpleTable 
             data={ data } 
             columns={ columns } 

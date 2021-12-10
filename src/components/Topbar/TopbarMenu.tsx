@@ -6,10 +6,10 @@ import { Picture, TopbarItem } from '../../interfaces/TopbarInterface';
 import { SidebarContext } from '../../context/SidebarContext';
 
 interface Props {
-  picture : Picture;
-  items   : TopbarItem[];
-  title  ?: string;
-  url     : string;
+  picture: Picture;
+  items:   TopbarItem[];
+  title?:  string;
+  url:     string;
 }
 
 export const TopbarMenu = ({ picture, title, items, url }: Props) => {

@@ -5,6 +5,7 @@ import { SidebarProvider } from './context/SidebarContext';
 import { Toaster } from 'react-hot-toast';
 import { ConfirmationProvider } from './context/ConfirmationContext';
 import { SalesProvider } from './context/SalesContex';
+import { DashboardProvider } from './context/DashboardContext';
 
 const App = () => {
   return (
@@ -20,7 +21,9 @@ const AppState: React.FC = ({ children }) => {
       <SidebarProvider>
         <ConfirmationProvider>
           <SalesProvider>
-            { children }
+            <DashboardProvider>
+              { children }
+            </DashboardProvider>
           </SalesProvider>
         </ConfirmationProvider>
         <Toaster />

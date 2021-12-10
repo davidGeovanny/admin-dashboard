@@ -58,7 +58,7 @@ export const useSidebarMenuItem = ( menuItem: SidebarMenu ) => {
   useEffect(() => {
     if( !menuItem.subitem ) return;
     setIsPathMatch( menuItem.subitem.items.findIndex( item => item.redirection === location.pathname ) > -1 ? true : false );
-  }, [ location ]);
+  }, [ location, menuItem.subitem ]);
 
   useEffect(() => {
     if( isPathMatch && menuItemStatus === 'hide' && !menuState.isSidebarCollapsed ) {

@@ -19,10 +19,14 @@ export const formatDate = ( date: string | number | Date | null | undefined ): s
 
 export const formatCurrency = ( currency: number ): string => {
   const formatMX = Intl.NumberFormat('es-MX', {
-    style: 'currency',
+    style:    'currency',
     currency: 'MXN',
 
   });
 
   return formatMX.format( currency );
+}
+
+export const formatNumberWithCommas = ( x: number ): string => {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
 }

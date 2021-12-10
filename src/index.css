@@ -17,9 +17,17 @@ div.loading {
   justify-content: center;
 }
 
-div.loading i {
-  color: white;
+div.loading-section {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* div.loading i {
+  color: white;
+} */
 
 .alert-dismissible .btn-close {
   position: absolute;
@@ -39,6 +47,10 @@ div.loading i {
   border-radius: .25rem;
   opacity: .7;
   background-color: transparent;
+}
+
+.btn-square {
+  border-radius: 0;
 }
 
 .z-depth-0 {
@@ -170,4 +182,9 @@ div.loading i {
 
 .pointer {
   cursor: pointer;
+}
+
+.sidebar-logo {
+  max-width: 50px;
+  max-height: 50px;
 }

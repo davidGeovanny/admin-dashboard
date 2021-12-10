@@ -62,6 +62,7 @@ export const CommissionsPage = () => {
             setShow={ changeSetShowCommission }
             section='water'
             data={ waterCommissions }
+            dataExport={ waterCommissions.map( item => ({ Sucursal: item.branch, Empleado: item.employee, 'Comisión': item.commission }) ) }
             columns={ columns }
             title='Comisiones de agua'
             loading={ loadingCommissions }
@@ -73,6 +74,7 @@ export const CommissionsPage = () => {
             setShow={ changeSetShowCommission }
             section='icebar'
             data={ icebarCommissions }
+            dataExport={ icebarCommissions.map( item => ({ Sucursal: item.branch, Empleado: item.employee, 'Comisión': item.commission }) ) }
             columns={ columns }
             title='Comisiones de barra'
             loading={ loadingCommissions }
@@ -84,6 +86,7 @@ export const CommissionsPage = () => {
             setShow={ changeSetShowCommission }
             section='icecube'
             data={ icecubeCommissions }
+            dataExport={ icecubeCommissions.map( item => ({ Sucursal: item.branch, Empleado: item.employee, 'Comisión': item.commission }) ) }
             columns={ columns }
             title='Comisiones de cubo'
             loading={ loadingCommissions }

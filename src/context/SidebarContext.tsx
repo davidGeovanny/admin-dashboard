@@ -29,13 +29,12 @@ export const SidebarProvider: React.FC = ({ children }) => {
   
   const onCollapseSubmenu = ( id: string, isOpen: boolean ) => {
     dispatch({
-      type: 'collapse-submenu',
+      type:    'collapse-submenu',
       payload: { id, isOpen }
     });
   }
 
   const redirectTo = ( url: string ) => {
-    console.log( url );
     history.push( url );
   }
   
