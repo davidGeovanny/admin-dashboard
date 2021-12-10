@@ -18,6 +18,8 @@ import { dashboard__dropdownData } from '../../data/dropdown';
 import { DashboardContext } from '../../context/DashboardContext';
 import { ChartCard } from '../../components/Chart/ChartCard';
 import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
+import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {
@@ -97,31 +99,6 @@ export const DashboardPage = () => {
     }
   }
 
-  const getTopProductsSales = async ( initDate: string, finalDate: string ) => {
-    const data = await getTopFromSales<TopProductsResponse>( 'top-products', initDate, finalDate, { limit: 10 } );
-    return ( data ) ? data.by_frequency : [];
-  }
-
-  const getTopProducts = async ( initDate: string, finalDate: string ) => {
-    const data = await getTopFromSales<TopProductsResponse>( 'top-products', initDate, finalDate, { limit: 5 } );
-    return ( data ) ? data.by_money : [];
-  }
-
-  const getTopTypeProduct = async ( initDate: string, finalDate: string ) => {
-    const data = await getTopFromSales<TopTypeProductsResponse>( 'top-type-product', initDate, finalDate );
-    return ( data ) ? data.by_frequency : [];
-  }
-
-  const getTopBranches = async ( initDate: string, finalDate: string ) => {
-    const data = await getTopFromSales<TopBranchesResponse>( 'top-branches', initDate, finalDate );
-    return ( data ) ? data.by_money : [];
-  }
-
-  const getTopClients = async ( initDate: string, finalDate: string ) => {
-    const data = await getTopFromSales<TopClientsResponse>( 'top-clients', initDate, finalDate );
-    return ( data ) ? data.by_money : [];
-  }
-
   const onReloadPeriodData = () => {
     const currentDate = new Date();
 
@@ -159,6 +136,15 @@ export const DashboardPage = () => {
 
         <div className="col">
           <div className="row justify-content-end">
+            {/* <ReactDatePicker
+              className={`form-control`}
+              placeholderText='Seleccionar fecha inicial'
+              dateFormat='MMMM d, yyyy'
+              onChange={ ( date ) => {
+                
+              }}
+            /> */}
+
             <Dropdown
               data={ dashboard__dropdownData }
               defaultOption={ period }

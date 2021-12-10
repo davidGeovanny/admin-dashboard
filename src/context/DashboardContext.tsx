@@ -8,11 +8,11 @@ import {
   TopTypeProduct,
   TopTypeProductsResponse
 } from '../interfaces/SaleInterface';
-import adminApi from '../helpers/adminApi';
-import { DashboardState } from '../interfaces/DashboardInterface';
-import { DashboardReducer } from '../reducer/DashboardReducer';
-import { RangePeriod } from '../types/DashboardType';
 import { TopProductsResponse } from '../interfaces/SaleInterface';
+import { DashboardState } from '../interfaces/DashboardInterface';
+import { RangePeriod } from '../types/DashboardType';
+import { DashboardReducer } from '../reducer/DashboardReducer';
+import adminApi from '../helpers/adminApi';
 
 interface ContextProps {
   period:              RangePeriod;
@@ -68,17 +68,16 @@ export const DashboardProvider: React.FC = ({ children }) => {
       dispatch({ type: 'setLoading' });
       const commonData: PropsSales = { endpoint: '', initDate, finalDate };
   
-      const dataProducts       = await getTopFromSales<TopProductsResponse>({     ...commonData, endpoint: 'top-products', params: { limit: 10 } });
-      const clientsIncome      = await getTopFromSales<TopClientsResponse>({      ...commonData, endpoint: 'top-clients' });
-      const branchesRevenue    = await getTopFromSales<TopBranchesResponse>({     ...commonData, endpoint: 'top-branches' });
+      const dataProducts       = await getTopFromSales<TopProductsResponse>({ ...commonData, endpoint: 'top-products', params: { limit: 10 } });
+      const clientsIncome      = await getTopFromSales<TopClientsResponse>({ ...commonData, endpoint: 'top-clients' });
+      const branchesRevenue    = await getTopFromSales<TopBranchesResponse>({ ...commonData, endpoint: 'top-branches' });
       const typeProductRevenue = await getTopFromSales<TopTypeProductsResponse>({ ...commonData, endpoint: 'top-type-product' });
   
-      dispatch({ type: 'setProductsTopFrequent', payload: dataProducts ? dataProducts.by_frequency : [] });
-      dispatch({ type: 'setProductsTopIncome',   payload: dataProducts ? dataProducts.by_money.slice(0,5) : [] });
-      dispatch({ type: 'setClientsTopIncome',    payload: clientsIncome ? clientsIncome.by_money : [] });
-      dispatch({ type: 'setBranchesRevenue',     payload: branchesRevenue ? branchesRevenue.by_money : [] });
-      dispatch({ type: 'setTypeProductRevenue',  payload: typeProductRevenue ? typeProductRevenue.by_frequency : [] });
-
+      dispatch({ type: 'setProductsTopFrequent', payload: dataProducts       ? dataProducts.by_frequency        : [] });
+      dispatch({ type: 'setProductsTopIncome',   payload: dataProducts       ? dataProducts.by_money.slice(0,5) : [] });
+      dispatch({ type: 'setClientsTopIncome',    payload: clientsIncome      ? clientsIncome.by_money           : [] });
+      dispatch({ type: 'setBranchesRevenue',     payload: branchesRevenue    ? branchesRevenue.by_money         : [] });
+      dispatch({ type: 'setTypeProductRevenue',  payload: typeProductRevenue ? typeProductRevenue.by_frequency  : [] });
     } catch ( err ) {
       
     }
