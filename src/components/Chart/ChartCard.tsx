@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 import { ChartComponent } from './ChartComponent';
 import { ChartProps } from '../../types/ChartType';
 
 export const ChartCard = <T, K extends keyof T>({ 
-  chartName, 
   data, 
   typeChart, 
   columnName, 
@@ -35,7 +34,6 @@ export const ChartCard = <T, K extends keyof T>({
             loading={ loading }
             maintainRatio={ maintainRatio }
             title={ title }
-            chartName={ chartName }
             typeChart={ typeChart }
             data={ data }
             columnName={ columnName }
@@ -46,5 +44,5 @@ export const ChartCard = <T, K extends keyof T>({
         </div>
       </div>
     </div>
-  )
+  );
 }

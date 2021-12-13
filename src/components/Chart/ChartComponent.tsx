@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Chart, Color, registerables } from 'chart.js';
+import React, { useEffect, useRef } from 'react';
+import { Chart, registerables } from 'chart.js';
 import { ChartProps } from '../../types/ChartType';
 import { Loading } from '../Loading/Loading';
+import { v4 } from 'uuid';
 
 Chart.register( ...registerables );
 
 export const ChartComponent = <T, K extends keyof T>({ 
-  chartName, 
   data, 
   typeChart, 
   columnName, 
@@ -18,11 +18,12 @@ export const ChartComponent = <T, K extends keyof T>({
   loading,
 }: ChartProps<T, K>) => {
 
+  const chartName = useRef( 'chart-' + v4() );
   const isMounted = useRef( true );
   const myChart   = useRef<Chart<typeof typeChart, T[K][], T[K]>>();
 
   const createChart = () => {
-    const ctx = document.querySelector(`#${ chartName }`) as HTMLCanvasElement;
+    const ctx = document.querySelector(`#${ chartName.current }`) as HTMLCanvasElement;
 
     if( !ctx ) return;
 
@@ -134,7 +135,7 @@ export const ChartComponent = <T, K extends keyof T>({
   }, [ data, loading ]);
 
   useEffect(() => {
-    chartName = chartName.replace(' ', '-');
+    // chartName.current = chartName.current.replace(' ', '-');
   }, []);
 
   useEffect(() => {
@@ -159,7 +160,7 @@ export const ChartComponent = <T, K extends keyof T>({
       )
       : (
         <canvas 
-          id={ chartName } 
+          id={ chartName.current } 
           style={{
             position: 'absolute',
             top: '0',

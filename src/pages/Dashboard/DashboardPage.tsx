@@ -7,6 +7,7 @@ import { ProfileImage } from '../../components/Image/ProfileImage';
 import { ChartCard } from '../../components/Chart/ChartCard';
 import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
 import { formatCurrency, formatNumberWithCommas } from '../../helpers/format';
+import { DashboardCards } from './DashboardCards';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {
@@ -92,12 +93,13 @@ export const DashboardPage = () => {
 
       <DashboardForm show={ show } />
 
+      <DashboardCards />
+
       <div className='row'>
         <div className='col-xl-8 col-lg-7'>
           <ChartCard
             loading={ loading }
             title='Ingresos de los 10 productos más vendidos'
-            chartName='monthly-sales'
             typeChart='bar'
             data={ productsTopFrequent }
             columnName='product'
@@ -111,7 +113,6 @@ export const DashboardPage = () => {
           <ChartCard
             loading={ loading }
             title='Ingresos por tipo de productos'
-            chartName='top-type-product'
             typeChart='doughnut'
             data={ typeProductRevenue }
             columnName='type_product'
@@ -138,7 +139,6 @@ export const DashboardPage = () => {
           <ChartCard
             loading={ loading }
             title='Ventas de sucursales'
-            chartName='top-branch-month'
             typeChart='pie'
             data={ branchesRevenue }
             columnName='branch_company'
