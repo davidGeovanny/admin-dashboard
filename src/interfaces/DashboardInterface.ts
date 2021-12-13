@@ -24,3 +24,8 @@ export interface PropsSales {
   finalDate: string;
   params?:   { [ x: string ] : string | number };
 }
+
+export interface DashboardFormData {
+	initDate : Date | null | undefined;
+	finalDate: Date | null | undefined;
+};

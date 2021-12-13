@@ -25,7 +25,7 @@ interface ContextProps {
   branchesRevenue:     TopBranches[];
   typeProductRevenue:  TopTypeProduct[];
   loading:             boolean;
-  getSalesData:        ( initDate: string, finalDate: string ) => Promise<void>;
+  getSalesData:        ( initDate: Date | null | undefined, finalDate: Date | null | undefined ) => Promise<void>;
   changePeriod:        ( period: RangePeriod ) => void;
   changeInitDate:      ( date: string ) => void;
   changeFinalDate:     ( date: string ) => void;
@@ -63,10 +63,12 @@ export const DashboardProvider: React.FC = ({ children }) => {
     }
   }
 
-  const getSalesData = async ( initDate: string, finalDate: string ) => {
+  const getSalesData = async ( initDate: Date | null | undefined, finalDate: Date | null | undefined ) => {
     try {
+      if( !initDate && !finalDate ) return;
+
       dispatch({ type: 'setLoading' });
-      const commonData: PropsSales = { endpoint: '', initDate, finalDate };
+      const commonData: PropsSales = { endpoint: '', initDate: formatDate( initDate ), finalDate: formatDate( finalDate ) };
   
       const dataProducts       = await getTopFromSales<TopProductsResponse>({ ...commonData, endpoint: 'top-products', params: { limit: 10 } });
       const clientsIncome      = await getTopFromSales<TopClientsResponse>({ ...commonData, endpoint: 'top-clients' });
