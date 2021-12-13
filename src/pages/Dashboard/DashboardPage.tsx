@@ -1,19 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { 
-  TopClient, 
-  TopProduct, 
-} from '../../interfaces/SaleInterface';
-import { ColumnDefinitionType } from '../../types/SimpleTableType';
-import { ProfileImage } from '../../components/Image/ProfileImage';
-import { formatDate, formatCurrency, formatNumberWithCommas } from '../../helpers/format';
-import { Dropdown } from '../../components/ui/Dropdown';
-import { dashboard__dropdownData } from '../../data/dropdown';
 import { DashboardContext } from '../../context/DashboardContext';
+import { ColumnDefinitionType } from '../../types/SimpleTableType';
+import { TopClient, TopProduct } from '../../interfaces/SaleInterface';
+import { DashboardForm } from './DashboardForm';
+import { ProfileImage } from '../../components/Image/ProfileImage';
 import { ChartCard } from '../../components/Chart/ChartCard';
 import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
-import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { DashboardForm } from './DashboardForm';
+import { formatCurrency, formatNumberWithCommas } from '../../helpers/format';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {
@@ -64,12 +57,9 @@ const productColumns: ColumnDefinitionType<TopProduct, keyof TopProduct>[] = [
 ];
 
 export const DashboardPage = () => {
-  const [ initDate, setInitDate ]   = useState<string>('');
-  const [ finalDate, setFinalDate ] = useState<string>('');
 
   const { 
     getSalesData,
-    changePeriod,
     loading,
     period,
     productsTopFrequent,
@@ -79,78 +69,28 @@ export const DashboardPage = () => {
     typeProductRevenue,
   } = useContext( DashboardContext );
 
-  
+  const [ show, setShow ] = useState<boolean>( false );
 
-  // useEffect(() => {
-  //   if( period !== 'Personalizado' && initDate && finalDate ) {
-  //     getSalesData( initDate, finalDate );
-  //   }
-  // }, [ initDate, finalDate ]);
+  useEffect(() => {
+    if( period !== 'Personalizado' ) {
+      getSalesData();
+    }
+  }, [ period ]);
 
   return (
     <div className='container-fluid'>
 
       <h3 className='wrapper justify-content-between'>
-        <span>Información inicial</span>
-        <span className='pointer'>
-          <i className={`fas ${ true ? 'fa-chevron-up' : 'fa-chevron-down' }`}></i>
+        <span>Información: { period }</span>
+        <span 
+          className='pointer' 
+          onClick={ () => setShow( !show )}
+        >
+          <i className={`fas ${ show ? 'fa-chevron-up' : 'fa-chevron-down' }`}></i>
         </span>
       </h3>
 
-      <DashboardForm
-        
-      />
-
-      {/* <div className="row">
-        <div className="col-xl-7 col-lg-7">
-          <p className='h2'>Información trimestral</p>
-        </div>
-
-        <div className="col-xl-5 col-lg-5">
-          <div className="row">
-            <div className="col-xl-4 mb-xl-0 mb-2">
-              <ReactDatePicker
-                className={`form-control`}
-                placeholderText='Desde'
-                dateFormat='MMMM d, yyyy'
-                onChange={ ( date ) => {
-                  
-                }}
-              />
-            </div>
-
-            <div className="col-xl-4 mb-xl-0 mb-2">
-              <ReactDatePicker
-                className={`form-control`}
-                placeholderText='Hasta'
-                dateFormat='MMMM d, yyyy'
-                onChange={ ( date ) => {
-                  
-                }}
-              />
-            </div>
-
-            <div className="col-xl-4 ">
-              <div className="row justify-content-center">
-                <Dropdown
-                  data={ dashboard__dropdownData }
-                  defaultOption={ period }
-                  onChange={ changePeriod }
-                  position='left'
-                />
-                <button 
-                  type='button' 
-                  className='btn btn-primary btn-square'
-                  onClick={ onReloadPeriodData }
-                >
-                  <i className="fas fa-sync-alt"></i>
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div> */}
+      <DashboardForm show={ show } />
 
       <div className='row'>
         <div className='col-xl-8 col-lg-7'>
@@ -215,7 +155,6 @@ export const DashboardPage = () => {
             loading={ loading } 
             title='Clientes con mayor ingreso'
           />
-          
         </div>
 
       </div>

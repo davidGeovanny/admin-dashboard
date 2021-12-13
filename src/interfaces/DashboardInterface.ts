@@ -8,8 +8,8 @@ import {
 
 export interface DashboardState {
 	period:              RangePeriod;
-  initDate:            string;
-  finalDate:           string;
+  initDate:            Date;
+  finalDate:           Date;
   productsTopFrequent: TopProduct[];
   productsTopIncome:   TopProduct[];
   clientsTopIncome:    TopClient[];
@@ -26,6 +26,6 @@ export interface PropsSales {
 }
 
 export interface DashboardFormData {
-	initDate : Date | null | undefined;
-	finalDate: Date | null | undefined;
+	initDate : Date | null;
+	finalDate: Date | null;
 };

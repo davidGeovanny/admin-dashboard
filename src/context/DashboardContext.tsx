@@ -1,40 +1,41 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 import { DashboardReducer } from '../reducer/DashboardReducer';
+import { useToastNotification } from '../hooks/useToastNotification';
+import { RangePeriod } from '../types/DashboardType';
 import {
   TopBranches,
   TopBranchesResponse,
   TopClient,
   TopClientsResponse,
   TopProduct,
+  TopProductsResponse,
   TopTypeProduct,
   TopTypeProductsResponse
 } from '../interfaces/SaleInterface';
 import { DashboardState, PropsSales } from '../interfaces/DashboardInterface';
-import { TopProductsResponse } from '../interfaces/SaleInterface';
-import { RangePeriod } from '../types/DashboardType';
 import { formatDate } from '../helpers/format';
 import adminApi from '../helpers/adminApi';
 
 interface ContextProps {
   period:              RangePeriod;
-  initDate:            string;
-  finalDate:           string;
+  initDate:            Date;
+  finalDate:           Date;
   productsTopFrequent: TopProduct[];
   productsTopIncome:   TopProduct[];
   clientsTopIncome:    TopClient[];
   branchesRevenue:     TopBranches[];
   typeProductRevenue:  TopTypeProduct[];
   loading:             boolean;
-  getSalesData:        ( initDate: Date | null | undefined, finalDate: Date | null | undefined ) => Promise<void>;
+  getSalesData:        () => Promise<void>;
   changePeriod:        ( period: RangePeriod ) => void;
-  changeInitDate:      ( date: string ) => void;
-  changeFinalDate:     ( date: string ) => void;
+  changeInitDate:      ( date: Date | null ) => void;
+  changeFinalDate:     ( date: Date | null ) => void;
 }
 
 const dashboardInitState: DashboardState = {
   period:    'Mensual',
-  initDate:  '',
-  finalDate: '',
+  initDate:  new Date(),
+  finalDate: new Date(),
   loading:   false,
   productsTopFrequent: [],
   productsTopIncome:   [],
@@ -48,23 +49,31 @@ export const DashboardContext = createContext( {} as ContextProps );
 export const DashboardProvider: React.FC = ({ children }) => {
 
   const [ state, dispatch ] = useReducer( DashboardReducer, dashboardInitState );
+  const { displayToast }    = useToastNotification();
 
   const getTopFromSales = async <T,>({ endpoint, initDate, finalDate, params }: PropsSales): Promise<T | undefined> => {
     try {
       const { data } = await adminApi.get<T>(`/sales/${ endpoint }/`, { 
-        params: { 
-          initDate, 
-          finalDate, 
-          ...params 
-        }});
+        params: { initDate, finalDate, ...params }
+      });
       return data;
     } catch ( err ) {
       return undefined;
     }
   }
 
-  const getSalesData = async ( initDate: Date | null | undefined, finalDate: Date | null | undefined ) => {
+  const getSalesData = async () => {
     try {
+      const { initDate, finalDate, loading } = state;
+
+      if( loading ) {
+        return displayToast({
+          message:  'Cargando...',
+          type:     'info',
+          duration: 5000
+        });
+      }
+
       if( !initDate && !finalDate ) return;
 
       dispatch({ type: 'setLoading' });
@@ -76,50 +85,69 @@ export const DashboardProvider: React.FC = ({ children }) => {
       const typeProductRevenue = await getTopFromSales<TopTypeProductsResponse>({ ...commonData, endpoint: 'top-type-product' });
   
       dispatch({ type: 'setProductsTopFrequent', payload: dataProducts       ? dataProducts.by_frequency        : [] });
-      dispatch({ type: 'setProductsTopIncome',   payload: dataProducts       ? dataProducts.by_money.slice(0,5) : [] });
+      dispatch({ type: 'setProductsTopIncome',   payload: dataProducts       ? dataProducts.by_money.slice(0, 5) : [] });
       dispatch({ type: 'setClientsTopIncome',    payload: clientsIncome      ? clientsIncome.by_money           : [] });
       dispatch({ type: 'setBranchesRevenue',     payload: branchesRevenue    ? branchesRevenue.by_money         : [] });
       dispatch({ type: 'setTypeProductRevenue',  payload: typeProductRevenue ? typeProductRevenue.by_frequency  : [] });
     } catch ( err ) {
-      
+      return displayToast({
+        message:  'Ha ocurrido un error al cargar la información',
+        type:     'danger',
+        duration: 5000
+      });
     }
 
     dispatch({ type: 'clearLoading' });
   }
 
-  const changeInitDate = ( date: string ) => {
-    
+  const changeInitDate = ( date: Date | null ) => {
+    if( !date || state.period !== 'Personalizado' ) return;
+    dispatch({ type: 'setInitDate',  payload: date });
   }
 
-  const changeFinalDate = ( date: string ) => {
-
+  const changeFinalDate = ( date: Date | null ) => {
+    if( !date || state.period !== 'Personalizado' ) return;
+    dispatch({ type: 'setFinalDate',  payload: date });
   }
 
   const changePeriod = ( period: RangePeriod ) => {
+    const { loading } = state;
     const date = new Date();
+
+    if( loading ) {
+      return displayToast({
+        message:  'No se puede cambiar el periodo mientras se carga.',
+        type:     'warning',
+        duration: 5000
+      });
+    }
     
     dispatch({ type: 'setPeriod', payload: period });
 
     switch ( period ) {
       case 'Semanal':
-        dispatch({ type: 'setInitDate',  payload: formatDate( new Date( date.getFullYear(), date.getMonth(), date.getDate() - 6 ) ) });
-        dispatch({ type: 'setFinalDate', payload: formatDate( new Date( date.getFullYear(), date.getMonth(), date.getDate() ) ) });
+        dispatch({ type: 'setInitDate',  payload: new Date( date.getFullYear(), date.getMonth(), date.getDate() - 6 ) });
+        dispatch({ type: 'setFinalDate', payload: new Date( date.getFullYear(), date.getMonth(), date.getDate() ) });
         break;
 
       case 'Mensual':
-        dispatch({ type: 'setInitDate',  payload: formatDate( new Date( date.getFullYear(), date.getMonth(), 1 ) ) });
-        dispatch({ type: 'setFinalDate', payload: formatDate( new Date( date.getFullYear(), date.getMonth() + 1, 0 ) ) });
+        dispatch({ type: 'setInitDate',  payload: new Date( date.getFullYear(), date.getMonth(), 1 ) });
+        dispatch({ type: 'setFinalDate', payload: new Date( date.getFullYear(), date.getMonth() + 1, 0 ) });
         break;
 
       case 'Trimestral':
-        dispatch({ type: 'setInitDate',  payload: formatDate( new Date( date.getFullYear(), date.getMonth() - 2, 1 ) ) });
-        dispatch({ type: 'setFinalDate', payload: formatDate( new Date( date.getFullYear(), date.getMonth() + 1, 0 ) ) });
+        dispatch({ type: 'setInitDate',  payload: new Date( date.getFullYear(), date.getMonth() - 2, 1 ) });
+        dispatch({ type: 'setFinalDate', payload: new Date( date.getFullYear(), date.getMonth() + 1, 0 ) });
         break;
     
       default:
         break;
     }
   }
+
+  useEffect(() => {
+    changePeriod( 'Mensual' );
+  }, []);
 
   return (
     <DashboardContext.Provider

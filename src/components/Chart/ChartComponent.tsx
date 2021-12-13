@@ -151,17 +151,23 @@ export const ChartComponent = <T, K extends keyof T>({
         <Loading size={ 3 } color='black' />
       </div>
     )
-    : (
-      <canvas 
-        id={ chartName } 
-        style={{
-          position: 'absolute',
-          top: '0',
-          bottom: '0',
-          left: '0',
-          height: '100%',
-          width: '100%',
-        }}>
-      </canvas>
-    );
+    : ( data.length === 0 )
+      ? (
+        <div className='loading-section'>
+          No hay información para mostrar
+        </div>
+      )
+      : (
+        <canvas 
+          id={ chartName } 
+          style={{
+            position: 'absolute',
+            top: '0',
+            bottom: '0',
+            left: '0',
+            height: '100%',
+            width: '100%',
+          }}>
+        </canvas>
+      )
 }
