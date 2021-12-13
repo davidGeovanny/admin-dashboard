@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DashboardCard } from './DashboardCard';
 import { DashboardContext } from '../../context/DashboardContext';
 import { formatCurrency } from '../../helpers/format';
+import { Loading } from '../../components/Loading/Loading';
 
 
 
 export const DashboardCards = () => {
-  const { period, branchesRevenue } = useContext( DashboardContext );
+  const { loading, period, branchesRevenue } = useContext( DashboardContext );
   const [ totalRevenue, setTotalRevenue ] = useState<number>( 0 );
 
   useEffect(() => {
@@ -15,10 +16,10 @@ export const DashboardCards = () => {
 
   return (
     <div className="row">
-      {/* Earnings (Monthly) Card Example */}
+      {/* Earning period card */}
       <DashboardCard
         title={`Ingresos (${ period })`}
-        content={ formatCurrency( totalRevenue ) }
+        content={ loading ? <div className='loading-section'><Loading color='#4e73df' /></div> : formatCurrency( totalRevenue ) }
         icon='fa-dollar-sign'
       />
     </div>
