@@ -58,7 +58,6 @@ const productColumns: ColumnDefinitionType<TopProduct, keyof TopProduct>[] = [
 ];
 
 export const DashboardPage = () => {
-
   const { 
     getSalesData,
     loading,
@@ -99,7 +98,7 @@ export const DashboardPage = () => {
         <div className='col-xl-8 col-lg-7'>
           <ChartCard
             loading={ loading }
-            title='Ingresos de los 10 productos más vendidos'
+            title={`Ingresos de los ${ productsTopFrequent.length } productos más vendidos`}
             typeChart='bar'
             data={ productsTopFrequent }
             columnName='product'

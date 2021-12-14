@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { DashboardCard } from './DashboardCard';
 import { DashboardContext } from '../../context/DashboardContext';
-import { formatCurrency } from '../../helpers/format';
+import { DashboardCard } from './DashboardCard';
 import { Loading } from '../../components/Loading/Loading';
-
-
+import { formatCurrency } from '../../helpers/format';
 
 export const DashboardCards = () => {
   const { loading, period, branchesRevenue } = useContext( DashboardContext );
-  const [ totalRevenue, setTotalRevenue ] = useState<number>( 0 );
+  const [ totalRevenue, setTotalRevenue ]    = useState<number>( 0 );
 
   useEffect(() => {
     setTotalRevenue( branchesRevenue.reduce( ( a, b ) => a + b.money, 0 ) )
