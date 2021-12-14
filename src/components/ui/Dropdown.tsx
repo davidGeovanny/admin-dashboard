@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './dropdown.css';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import './dropdown.css';
 
 interface Props<T> {
   data:           T[];
   onChange:       ( option: T ) => any;
+  loading:        boolean;
   defaultOption?: T;
   position?:      'up' | 'down' | 'right' | 'left';
   variant?:       'primary' | 'success' | 'warning' | 'danger' | 'info' | 'secondary' | 'dark';
@@ -13,6 +14,7 @@ interface Props<T> {
 export const Dropdown = <T,>( { 
   data: initData,
   onChange,
+  loading,
   position = 'down',
   variant  = 'primary',
   defaultOption,
@@ -22,13 +24,14 @@ export const Dropdown = <T,>( {
   const [ show, setShow ] = useState<boolean>( false );
   const [ labelText, setLabelText ] = useState<T | string>('Seleccionar');
 
-  useClickOutside(dropdownDiv, () => { setShow( false ) })
+  useClickOutside( dropdownDiv, () => { setShow( false ) } );
 
   const handleShowDropdown = () => {
     setShow( !show ); 
   }
 
   const onClickItem = ( dropItem: T ) => {
+    if( loading ) return;
     if( dropItem !== labelText ) {
       setLabelText( dropItem );
       onChange( dropItem );
@@ -46,8 +49,12 @@ export const Dropdown = <T,>( {
     
     setLabelText( defaultOption );
   }, [ data ]);
-
-  const arrow = <i className={`fas fa-angle-${ position }`}></i>;
+  
+  const renderIcon = (): JSX.Element => {
+    return loading 
+      ? <i className='fas fa-spinner fa-pulse'></i>
+      : <i className={`fas fa-angle-${ position }`}></i>;
+  }
 
   return (
     <div 
@@ -58,10 +65,11 @@ export const Dropdown = <T,>( {
         type='button'
         className={`btn btn-square btn-${ variant }`}
         onClick={ handleShowDropdown }
+        disabled={ loading }
       >
-        { position === 'left' && arrow }
+        { position === 'left' && renderIcon() }
         {' '}{ labelText }{' '}
-        { position !== 'left' && arrow }
+        { position !== 'left' && renderIcon() }
       </button>
 
       <div className={`dropdown-menu dropdown-${ variant } ${ show && 'show' }`}>

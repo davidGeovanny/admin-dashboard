@@ -13,12 +13,8 @@ interface Props {
 export const ProfileImage = memo(({ image, text, width, height, figure, colorRandom = false }: Props) => {
   const [ bgColor, setBgColor ] = useState<string>();
 
-  const getColor = () => {
-    setBgColor( colorRandom ? randomColor( 0.2 ) : '#446AD8' );
-  }
-
   useEffect(() => {
-    getColor();
+    setBgColor( colorRandom ? randomColor( 0.2 ) : '#446AD8' );
   }, []);
   
   return (

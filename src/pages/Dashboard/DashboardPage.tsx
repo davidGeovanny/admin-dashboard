@@ -3,11 +3,11 @@ import { DashboardContext } from '../../context/DashboardContext';
 import { ColumnDefinitionType } from '../../types/SimpleTableType';
 import { TopClient, TopProduct } from '../../interfaces/SaleInterface';
 import { DashboardForm } from './DashboardForm';
+import { DashboardCards } from './DashboardCards';
 import { ProfileImage } from '../../components/Image/ProfileImage';
 import { ChartCard } from '../../components/Chart/ChartCard';
 import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
 import { formatCurrency, formatNumberWithCommas } from '../../helpers/format';
-import { DashboardCards } from './DashboardCards';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {

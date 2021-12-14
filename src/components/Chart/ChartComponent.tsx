@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { ChartProps } from '../../types/ChartType';
 import { Loading } from '../Loading/Loading';
 import { v4 } from 'uuid';
+import { formatCurrency } from '../../helpers/format';
 
 Chart.register( ...registerables );
 
@@ -22,13 +23,13 @@ export const ChartComponent = <T, K extends keyof T>({
   const isMounted = useRef( true );
   const myChart   = useRef<Chart<typeof typeChart, T[K][], T[K]>>();
 
-  const createChart = () => {
+  const createChart = useCallback(() => {
     const ctx = document.querySelector(`#${ chartName.current }`) as HTMLCanvasElement;
 
     if( !ctx ) return;
 
     myChart.current?.destroy();
-
+    
     myChart.current = new Chart( ctx, {
       type: typeChart,
       data: {
@@ -65,7 +66,7 @@ export const ChartComponent = <T, K extends keyof T>({
         
         datasets: [
           {
-            label: '$MXN$',
+            label: 'Ingresos',
             data: data.map( item => item[ columnValue ] ),
             backgroundColor: [
               'rgba(255, 99, 132, 0.4)',
@@ -115,6 +116,25 @@ export const ChartComponent = <T, K extends keyof T>({
               title: function( this, tooltipItems ) {
                 return data.filter( item => `${ item[ columnShortName ] }` === tooltipItems[0].label ).map( item => `${ item[ columnName ] }` )
               },
+            //   label: function(this, data) {
+            //     return "$" + Number(this.yLabel).toFixed(0).replace(/./g, function(c, i, a) {
+            //         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+            //     });
+            // }
+              label: function( this, t ) {
+                return `${ t.dataset.label }: ${ formatCurrency( this.dataPoints[0].raw as number ) } MXN`;
+              }
+              // label: function(context) {
+              //   let label = context.dataset.label || '';
+
+              //   if (label) {
+              //     label += ': ';
+              //   }
+              //   if (context.parsed.y !== null) {
+              //     label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+              //   }
+              //   return label;
+              // }
             },
           },
           title: {
@@ -124,7 +144,7 @@ export const ChartComponent = <T, K extends keyof T>({
         }
       },
     });
-  }
+  }, [ data, columnName, columnShortName, columnValue, legendPosition, maintainRatio, title, typeChart ] );
 
   useEffect(() => {
     if( !isMounted.current ) return;
@@ -132,11 +152,7 @@ export const ChartComponent = <T, K extends keyof T>({
     if( data.length > 0 && !loading ) {
       createChart();
     }
-  }, [ data, loading ]);
-
-  useEffect(() => {
-    // chartName.current = chartName.current.replace(' ', '-');
-  }, []);
+  }, [ data, loading, createChart ]);
 
   useEffect(() => {
     isMounted.current = true;

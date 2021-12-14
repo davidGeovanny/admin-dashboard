@@ -18,6 +18,7 @@ export const DashboardForm = ({ show }: Props) => {
     period,
     initDate,
     finalDate,
+    loading,
   } = useContext( DashboardContext );
 
   const onSubmit = () => {
@@ -66,6 +67,7 @@ export const DashboardForm = ({ show }: Props) => {
                 defaultOption={ period }
                 onChange={ changePeriod }
                 position='left'
+                loading={ loading }
               />
               <button 
                 type='button' 
