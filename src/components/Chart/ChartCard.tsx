@@ -3,15 +3,15 @@ import { ChartComponent } from './ChartComponent';
 import { ChartProps } from '../../types/ChartType';
 
 export const ChartCard = <T, K extends keyof T>({ 
-  data, 
-  typeChart, 
   columnName, 
   columnShortName, 
   columnValue, 
+  data, 
   loading, 
-  maintainRatio = true, 
   title, 
-  legendPosition = 'top'
+  typeChart, 
+  maintainRatio  = true, 
+  legendPosition = 'top',
 }: ChartProps<T, K>) => {
   return (
     <div className='card shadow mb-4'>

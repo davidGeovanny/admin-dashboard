@@ -1,7 +1,9 @@
 import React, { createContext, useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
-import { SidebarState } from '../interfaces/SidebarInterface';
+
 import { SidebarReducer } from '../reducer/SidebarReducer';
+import { SidebarState } from '../interfaces/SidebarInterface';
+
 import { menu } from '../data/menu';
 
 interface ContextProps {

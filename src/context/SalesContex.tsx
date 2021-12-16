@@ -1,12 +1,12 @@
 import React, { createContext, useReducer } from 'react';
+import { SalesReducer } from '../reducer/SalesReducer';
+import { useToastNotification } from '../hooks/useToastNotification';
 import { 
   SalesState, 
   CommissionResponse, 
   Commission,
   CommissionFormData
 } from '../interfaces/SaleInterface';
-import { SalesReducer } from '../reducer/SalesReducer';
-import { useToastNotification } from '../hooks/useToastNotification';
 import { formatDate } from '../helpers/format';
 import adminApi from '../helpers/adminApi';
 
@@ -36,13 +36,11 @@ export const SalesProvider: React.FC = ({ children }) => {
     try {
 
       if( state.loadingCommissions ) {
-        displayToast({
+        return displayToast({
           message:  'Waiting for response',
           type:     'info',
           duration: 5000
         });
-
-        return;
       }
 
       dispatch({ type: 'setLoadingCommission' });

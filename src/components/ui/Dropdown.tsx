@@ -4,20 +4,20 @@ import './dropdown.css';
 
 interface Props<T> {
   data:           T[];
-  onChange:       ( option: T ) => any;
   loading:        boolean;
   defaultOption?: T;
   position?:      'up' | 'down' | 'right' | 'left';
   variant?:       'primary' | 'success' | 'warning' | 'danger' | 'info' | 'secondary' | 'dark';
+  onChange:       ( option: T ) => any;
 }
 
 export const Dropdown = <T,>( { 
   data: initData,
-  onChange,
+  defaultOption,
   loading,
   position = 'down',
   variant  = 'primary',
-  defaultOption,
+  onChange,
 }: Props<T> ) => {
   const dropdownDiv       = useRef<HTMLDivElement>( null );
   const [ data, setData ] = useState<T[]>( initData );

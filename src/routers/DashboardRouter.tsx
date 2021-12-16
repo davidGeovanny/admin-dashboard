@@ -37,11 +37,11 @@ export const DashboardRouter = () => {
               component={ CommissionsPage }
             />
 
-            {/* <Route
+            <Route
               exact
               path='/profile'
               component={ ProfilePage }
-            /> */}
+            />
 
             {/* <Route
               exact

@@ -1,16 +1,15 @@
 import React, { useContext } from 'react';
 import Micromodal from 'micromodal';
-import '../micromodal.css';
 
 import { ConfirmationContext } from '../context/ConfirmationContext';
+import '../micromodal.css';
 
 Micromodal.init();
 
 export const ModalConfirm = () => {
-
   const { 
-    callback,
     btnMessage,
+    callback,
     textBody,
   } = useContext( ConfirmationContext );
 

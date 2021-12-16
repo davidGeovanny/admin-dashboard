@@ -1,16 +1,17 @@
 import React, { memo, useState, useEffect } from 'react';
+import { Image } from './Image';
 import { randomColor } from '../../helpers/color';
 
 interface Props {
+  figure:       'circle' | 'square',
+  height:       string | number;
+  width:        string | number;
+  colorRandom?: boolean,
   image?:       string;
   text?:        string;
-  width:        string | number;
-  height:       string | number;
-  figure:       'circle' | 'square',
-  colorRandom?: boolean,
 }
 
-export const ProfileImage = memo(({ image, text, width, height, figure, colorRandom = false }: Props) => {
+export const ProfileImage = memo(({ figure, height, image, text, width, colorRandom = false }: Props) => {
   const [ bgColor, setBgColor ] = useState<string>();
 
   useEffect(() => {
@@ -18,31 +19,27 @@ export const ProfileImage = memo(({ image, text, width, height, figure, colorRan
   }, []);
   
   return (
-    <div
-      style={{
-        backgroundColor: bgColor,
-        borderRadius:    ( figure === 'circle' ) ? '100%' : '20%',
-        textAlign:        'center',
-        width,
-        height,
-      }}
-    >
+    <div style={{
+      backgroundColor: bgColor,
+      borderRadius:    ( figure === 'circle' ) ? '100%' : '20%',
+      textAlign:        'center',
+      height,
+      width,
+    }}>
       {
         ( image )
           ? (
-            <img
-              className='img-profile rounded-circle'
+            <Image
               src={ image }
-              alt='Profile'
+              className='img-profile rounded-circle'
               style={{
                 width,
-                height,
+                height
               }}
             />
           )
           : <> { text } </>
       }
-      
     </div>
   );
-})
+});

@@ -6,7 +6,6 @@ export const menu: SidebarMenu[] = [
     item: {
       id: v4(),
       name: 'Dashboard',
-      active: false,
       redirection: '/dashboard'
     },
     icon: 'fa-tachometer-alt',
@@ -15,7 +14,6 @@ export const menu: SidebarMenu[] = [
     item: {
       id: v4(),
       name: 'Ventas',
-      active: false,
       redirection: '/',
     },
     icon: 'fa-hand-holding-usd',
@@ -27,20 +25,18 @@ export const menu: SidebarMenu[] = [
           id: v4(),
           name: 'Comisiones',
           redirection: '/commissions',
-          active: false,
         }
       ]
     }
   },
-  // {
-  //   item: {
-  //     id: v4(),
-  //     name: 'Profile',
-  //     active: false,
-  //     redirection: '/profile'
-  //   },
-  //   icon: 'fa-user',
-  // },
+  {
+    item: {
+      id: v4(),
+      name: 'Profile',
+      redirection: '/profile'
+    },
+    icon: 'fa-user',
+  },
   // {
   //   item: {
   //     id: v4(),

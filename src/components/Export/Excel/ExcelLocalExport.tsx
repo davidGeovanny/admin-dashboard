@@ -2,7 +2,7 @@ import React from 'react';
 import XLSX from 'sheetjs-style';
 
 interface Props<T> {
-  data:     Array<T>;
+  data:     T[];
   fileName: string;
 }
 

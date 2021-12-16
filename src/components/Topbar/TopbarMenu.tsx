@@ -1,18 +1,20 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+
 import { TopbarMenuItem } from './TopbarMenuItem';
-import { useTopbarMenuItem } from '../../hooks/useTopbarMenuItem';
-import { Picture, TopbarItem } from '../../interfaces/TopbarInterface';
 import { SidebarContext } from '../../context/SidebarContext';
+import { useTopbarMenuItem } from '../../hooks/useTopbarMenuItem';
+import { TopbarItem } from '../../interfaces/TopbarInterface';
+import { Picture } from '../../types/TopbarType';
 
 interface Props {
-  picture: Picture;
   items:   TopbarItem[];
-  title?:  string;
+  picture: Picture;
   url:     string;
+  title?:  string;
 }
 
-export const TopbarMenu = ({ picture, title, items, url }: Props) => {
+export const TopbarMenu = ({ items, picture, title, url }: Props) => {
   const { redirectTo } = useContext( SidebarContext );
 
   const { type } = picture;

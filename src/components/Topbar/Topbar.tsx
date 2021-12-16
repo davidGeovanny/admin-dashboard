@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { SidebarContext } from '../../context/SidebarContext';
-import { TopbarMenu } from './TopbarMenu';
+
+// import { TopbarMenu } from './TopbarMenu';
 import { TopbarProfileMenu } from './TopbarProfileMenu';
-import { topbarNotifications, topbarMessages } from '../../data/topbar';
+import { SidebarContext } from '../../context/SidebarContext';
+// import { topbarNotifications, topbarMessages } from '../../data/topbar';
 
 export const Topbar = () => {
   const { onCollapseSidebar } = useContext( SidebarContext );

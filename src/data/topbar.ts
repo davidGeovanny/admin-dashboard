@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import { TopbarItem } from '../interfaces/TopbarInterface';
 
-export const topbarNotifications: TopbarItem[] = [
+export const topbar__notifications: TopbarItem[] = [
   {
     id: v4(),
     read: false,
@@ -34,7 +34,7 @@ export const topbarNotifications: TopbarItem[] = [
   },
 ];
 
-export const topbarMessages: TopbarItem[] = [
+export const topbar__messages: TopbarItem[] = [
   {
     id: v4(),
     read: false,

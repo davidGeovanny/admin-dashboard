@@ -2,22 +2,22 @@ import React, { createContext, useState } from 'react';
 import MicroModal from 'micromodal';
 
 interface ContextProps {
-  changeCallback:   ( newCallback: Function ) => void;
+  btnMessage:       string;
+  callback:         Function;
+  textBody  :       string | JSX.Element;
   changeBtnMessage: ( text: string ) => void;
+  changeCallback:   ( newCallback: Function ) => void;
   changeTextBody:   ( content: string ) => void;
   closeModal:       () => void;
   openModal:        () => void;
-  callback:         Function;
-  btnMessage:       string;
-  textBody  :       string | JSX.Element;
 }
 
-export const ConfirmationContext = createContext({} as ContextProps);
+export const ConfirmationContext = createContext( {} as ContextProps );
 
 export const ConfirmationProvider: React.FC = ({ children }) => {
   const [ callback, setCallback ]     = useState<Function>( () => () => {} );
   const [ btnMessage, setBtnMessage ] = useState<string>('Continuar');
-  const [ textBody, setTextBody ] = useState<string | JSX.Element>('¿Está seguro que desea continuar?');
+  const [ textBody, setTextBody ]     = useState<string | JSX.Element>('¿Está seguro que desea continuar?');
 
   const changeCallback = ( newCallback: Function ) => {
     setCallback( () => () => newCallback() );

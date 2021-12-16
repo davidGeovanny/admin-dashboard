@@ -21,7 +21,6 @@ export const formatCurrency = ( currency: number ): string => {
   const formatMX = Intl.NumberFormat('es-MX', {
     style:    'currency',
     currency: 'MXN',
-
   });
 
   return formatMX.format( currency );

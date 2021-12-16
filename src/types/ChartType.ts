@@ -13,6 +13,12 @@ export type ChartProps<T, K extends keyof T> = {
   legendPosition?: LegendPosition;
 }
 
-type LegendPosition = 'left' | 'right' | 'center' | 'top' | 'bottom' | 'chartArea' | _DeepPartialObject<{
-  [scaleId: string]: number;
-}> | undefined;
+type LegendPosition = 
+  | 'left' 
+  | 'right' 
+  | 'center' 
+  | 'top' 
+  | 'bottom' 
+  | 'chartArea' 
+  | _DeepPartialObject<{ [ scaleId: string ]: number; }> 
+  | undefined;

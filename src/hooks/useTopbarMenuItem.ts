@@ -4,7 +4,7 @@ import { TopbarItem } from '../interfaces/TopbarInterface';
 export const useTopbarMenuItem = ( items: TopbarItem[] ) => {
   const [ isMenuVisible, setIsMenuVisible ] = useState<boolean>( false );
   const isHover = useRef<boolean>( false );
-  const divRef = useRef( null );
+  const divRef  = useRef( null );
 
   const getCountReadItems = () => items.filter( item => item.read ).length;
 

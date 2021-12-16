@@ -1,12 +1,13 @@
+import React from 'react';
 import { TableRowsProps } from '../../types/SimpleTableType';
 
-export const SimpleTableRows = <T, K extends keyof T>({ data, columns, loading }: TableRowsProps<T, K>): JSX.Element => {
+export const SimpleTableRows = <T, K extends keyof T>({ columns, data, loading }: TableRowsProps<T, K>): JSX.Element => {
   const renderRows = (): JSX.Element | JSX.Element[] => {
     if( loading ) {
       return (
         <tr>
-          <td colSpan={ columns.length } className="text-center">
-            <i className="fas fa-spinner fa-pulse"></i> Cargando...
+          <td colSpan={ columns.length } className='text-center'>
+            <i className='fas fa-spinner fa-pulse'></i> Cargando...
           </td>
         </tr>
       );

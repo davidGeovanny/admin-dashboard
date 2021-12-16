@@ -1,73 +1,72 @@
 import React from 'react';
 import toast, { ToastPosition } from 'react-hot-toast';
 
-type ToastType = 'success' | 'danger' | 'info' | 'warning' | 'primary' | 'light' | 'dark'
+import { ToastType } from '../types/ToastType';
 
 interface ToastProps {
   message    : string;
-  duration  ?: number;
-  type      ?: ToastType;
   customIcon?: JSX.Element,
+  duration  ?: number;
   position  ?: ToastPosition,
+  type      ?: ToastType;
 };
 
 export const useToastNotification = () => {
-
   const getToastStyle = ( type: ToastType ): React.CSSProperties => {
     switch ( type ) {
       case 'success':
         return {
-          color: '#155724',
+          color:           '#155724',
           backgroundColor: '#d4edda',
-          borderColor: '#c3e6cb',
+          borderColor:     '#c3e6cb',
           borderLeftColor: '#155724'
         };
 
       case 'danger':
         return {
-          color: '#721c24',
+          color:           '#721c24',
           backgroundColor: '#f8d7da',
-          borderColor: '#f5c6cb',
+          borderColor:     '#f5c6cb',
           borderLeftColor: '#721c24'
         };
 
       case 'info':
         return {
-          color: '#0c5460',
+          color:           '#0c5460',
           backgroundColor: '#d1ecf1',
-          borderColor: '#bee5eb',
+          borderColor:     '#bee5eb',
           borderLeftColor: '#0c5460'
         };
 
       case 'warning':
         return {
-          color: '#856404',
+          color:           '#856404',
           backgroundColor: '#fff3cd',
-          borderColor: '#ffeeba',
+          borderColor:     '#ffeeba',
           borderLeftColor: '#856404'
         };
 
       case 'primary':
         return {
-          color: '#0b3d91',
+          color:           '#0b3d91',
           backgroundColor: '#d0e0fc',
-          borderColor: '#b8d1fb',
+          borderColor:     '#b8d1fb',
           borderLeftColor: '#0b3d91'
         };
 
       case 'light':
         return {
-          color: '#818182',
+          color:           '#818182',
           backgroundColor: '#fefefe',
-          borderColor: '#fdfdfe',
+          borderColor:     '#fdfdfe',
           borderLeftColor: '#818182'
         };
 
       case 'dark':
         return {
-          color: '#171717',
+          color:           '#171717',
           backgroundColor: '#d4d4d4',
-          borderColor: '#bebebe',
+          borderColor:     '#bebebe',
           borderLeftColor: '#171717'
         };
     
@@ -106,7 +105,7 @@ export const useToastNotification = () => {
     }
   };
 
-  const displayToast = ({ message, customIcon, type = 'light', position = 'top-right', duration = 4000 }: ToastProps) => {
+  const displayToast = ({ customIcon, message, duration = 4000, position = 'top-right', type = 'light' }: ToastProps) => {
     const id    = new Date().getTime().toString();
     const icon  = renderIcon( customIcon, type );
     const style = getToastStyle( type );

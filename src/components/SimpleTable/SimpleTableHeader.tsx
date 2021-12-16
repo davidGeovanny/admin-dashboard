@@ -1,3 +1,4 @@
+import React from 'react';
 import { TableHeaderProps } from '../../types/SimpleTableType';
 
 export const SimpleTableHeader = <T, K extends keyof T>({ columns }: TableHeaderProps<T, K>): JSX.Element => {

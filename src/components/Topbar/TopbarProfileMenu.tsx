@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { useTopbarMenuItem } from '../../hooks/useTopbarMenuItem';
+
+import { ProfileImage } from '../Image/ProfileImage';
 import { AuthContext } from '../../context/AuthContext';
 import { ConfirmationContext } from '../../context/ConfirmationContext';
-import { ProfileImage } from '../Image/ProfileImage';
+import { useTopbarMenuItem } from '../../hooks/useTopbarMenuItem';
+// import male_avatar from '../../assets/svg/male_avatar.svg';
+// import female_avatar from '../../assets/svg/female_avatar.svg';
 
 export const TopbarProfileMenu = React.memo(() => {
   const { logOut, user } = useContext( AuthContext );

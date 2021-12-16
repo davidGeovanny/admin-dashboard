@@ -1,18 +1,18 @@
 import React, { createContext, useEffect, useReducer } from 'react';
+import { AuthReducer } from '../reducer/AuthReducer';
+import { useToastNotification } from '../hooks/useToastNotification';
 import { LoginResponse, LoginData, UserLogin } from '../interfaces/LoginInterface';
 import { RegisterData, RegisterResponse } from '../interfaces/RegisterInterface';
 import { AuthState } from '../interfaces/AuthState';
-import { AuthReducer } from '../reducer/AuthReducer';
-import { useToastNotification } from '../hooks/useToastNotification';
 import adminApi from '../helpers/adminApi';
 
 interface ContextProps {
-  errorMessage: string;
-  withError:    boolean;
-  token:        string | null;
-  user:         UserLogin | null;
   status:       'checking' | 'authenticated' | 'not-authenticated';
+  user:         UserLogin | null;
+  token:        string | null;
   loading:      boolean;
+  withError:    boolean;
+  errorMessage: string;
   signUp:       ( registerData: RegisterData ) => Promise<boolean>;
   signIn:       ( loginData: LoginData ) => void;
   logOut:       () => void;

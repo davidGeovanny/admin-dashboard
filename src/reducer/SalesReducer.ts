@@ -3,7 +3,6 @@ import { SalesState, Commission } from '../interfaces/SaleInterface';
 type SalesAction = 
 	| { type: 'setLoadingCommission' }
 	| { type: 'setCommissions', payload: { water: Commission[], icebar: Commission[], icecube: Commission[] } }
-	| { type: '' }
 
 export const SalesReducer =  ( state: SalesState, action: SalesAction ): SalesState => {
 	switch ( action.type ) {

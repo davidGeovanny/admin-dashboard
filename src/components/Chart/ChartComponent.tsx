@@ -1,24 +1,24 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
-import { ChartProps } from '../../types/ChartType';
-import { Loading } from '../Loading/Loading';
 import { v4 } from 'uuid';
+
+import { Loading } from '../Loading/Loading';
+import { ChartProps } from '../../types/ChartType';
 import { formatCurrency } from '../../helpers/format';
 
 Chart.register( ...registerables );
 
 export const ChartComponent = <T, K extends keyof T>({ 
-  data, 
-  typeChart, 
   columnName, 
   columnShortName, 
   columnValue, 
-  maintainRatio, 
-  title = '', 
-  legendPosition = 'top',
+  data, 
   loading,
+  maintainRatio, 
+  typeChart, 
+  legendPosition = 'top',
+  title          = '',
 }: ChartProps<T, K>) => {
-
   const chartName = useRef( 'chart-' + v4() );
   const isMounted = useRef( true );
   const myChart   = useRef<Chart<typeof typeChart, T[K][], T[K]>>();
@@ -34,36 +34,6 @@ export const ChartComponent = <T, K extends keyof T>({
       type: typeChart,
       data: {
         labels: data.map( item => item[ columnShortName ] ),
-
-        // datasets: data.map( item => {
-        //   return {
-        //     label: '$MXN$',
-        //     data: data.map( item => item[ columnValue ] ),
-        //     backgroundColor: [
-        //       'rgba(255, 99, 132, 0.3)',
-        //       'rgba(54, 162, 235, 0.3)',
-        //       'rgba(255, 206, 86, 0.3)',
-        //       'rgba(75, 192, 192, 0.3)',
-        //       'rgba(153, 102, 255, 0.3)',
-        //       'rgba(255, 205, 86, 0.3)',
-        //       'rgba(255, 159, 64, 0.3)',
-        //       'rgba(201, 203, 207, 0.3)',
-        //     ],
-        //     borderColor: [
-        //       'rgba(255, 99, 132, 1)',
-        //       'rgba(54, 162, 235, 1)',
-        //       'rgba(255, 206, 86, 1)',
-        //       'rgba(75, 192, 192, 1)',
-        //       'rgba(153, 102, 255, 1)',
-        //       'rgba(255, 205, 86, 1)',
-        //       'rgba(255, 159, 64, 1)',
-        //       'rgba(201, 203, 207, 1)',
-        //     ],
-        //     borderWidth: 1,
-        //     fill: 'start',
-        //   }
-        // })
-        
         datasets: [
           {
             label: 'Ingresos',
@@ -96,8 +66,6 @@ export const ChartComponent = <T, K extends keyof T>({
       options: {
         // indexAxis: 'y',
         maintainAspectRatio: maintainRatio,
-        // Elements options apply to all of the options unless overridden in a dataset
-        // In this case, we are setting the border of each horizontal bar to be 2px wide
         elements: {
           bar: {
             borderWidth: 2,
@@ -116,25 +84,9 @@ export const ChartComponent = <T, K extends keyof T>({
               title: function( this, tooltipItems ) {
                 return data.filter( item => `${ item[ columnShortName ] }` === tooltipItems[0].label ).map( item => `${ item[ columnName ] }` )
               },
-            //   label: function(this, data) {
-            //     return "$" + Number(this.yLabel).toFixed(0).replace(/./g, function(c, i, a) {
-            //         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
-            //     });
-            // }
               label: function( this, t ) {
                 return `${ t.dataset.label }: ${ formatCurrency( this.dataPoints[0].raw as number ) } MXN`;
               }
-              // label: function(context) {
-              //   let label = context.dataset.label || '';
-
-              //   if (label) {
-              //     label += ': ';
-              //   }
-              //   if (context.parsed.y !== null) {
-              //     label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
-              //   }
-              //   return label;
-              // }
             },
           },
           title: {
@@ -144,7 +96,16 @@ export const ChartComponent = <T, K extends keyof T>({
         }
       },
     });
-  }, [ data, columnName, columnShortName, columnValue, legendPosition, maintainRatio, title, typeChart ] );
+  }, [ 
+    columnName, 
+    columnShortName, 
+    columnValue, 
+    data, 
+    legendPosition, 
+    maintainRatio, 
+    title, 
+    typeChart, 
+  ]);
 
   useEffect(() => {
     if( !isMounted.current ) return;
@@ -179,11 +140,11 @@ export const ChartComponent = <T, K extends keyof T>({
           id={ chartName.current } 
           style={{
             position: 'absolute',
-            top: '0',
-            bottom: '0',
-            left: '0',
-            height: '100%',
-            width: '100%',
+            top:      '0',
+            bottom:   '0',
+            left:     '0',
+            height:   '100%',
+            width:    '100%',
           }}>
         </canvas>
       )

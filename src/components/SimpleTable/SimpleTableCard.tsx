@@ -2,7 +2,7 @@ import React from 'react'
 import { SimpleTable } from './SimpleTable';
 import { TableProps } from '../../types/SimpleTableType'
 
-export const SimpleTableCard = <T, K extends keyof T>({ data, columns, loading, title }: TableProps<T, K>): JSX.Element => {
+export const SimpleTableCard = <T, K extends keyof T>({ columns, data, loading, title }: TableProps<T, K>): JSX.Element => {
   return (
     <div className='card'>
       <div className='card-body'>
@@ -10,7 +10,7 @@ export const SimpleTableCard = <T, K extends keyof T>({ data, columns, loading, 
           <span> { title } </span>
         </h5>
 
-        <div className={`row table-responsive`}>
+        <div className='row table-responsive'>
           <SimpleTable
             data={ data } 
             columns={ columns } 
