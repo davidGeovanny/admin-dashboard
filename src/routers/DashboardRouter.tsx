@@ -4,11 +4,12 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+
 import { CommissionsPage } from '../pages/Commissions/CommissionsPage';
 import { DashboardPage } from '../pages/Dashboard/DashboardPage';
 import { ProfilePage } from '../pages/ProfilePage';
-import { NotificationCenterPage } from '../pages/NotificationCenterPage';
-import { MessageCenterPage } from '../pages/MessageCenterPage';
+// import { NotificationCenterPage } from '../pages/NotificationCenterPage';
+// import { MessageCenterPage } from '../pages/MessageCenterPage';
 import { Sidebar } from '../components/Sidebar/Sidebar';
 import { Topbar } from '../components/Topbar/Topbar';
 

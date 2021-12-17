@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
+
 import { LoginPage } from '../pages/LoginPage';
 // import { RegisterPage } from '../pages/RegisterPage';
 

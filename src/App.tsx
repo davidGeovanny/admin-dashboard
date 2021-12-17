@@ -1,8 +1,9 @@
 import React from 'react';
+import { Toaster } from 'react-hot-toast';
+
 import { AppRouter } from './routers/AppRouter';
 import { AuthProvider } from './context/AuthContext';
 import { SidebarProvider } from './context/SidebarContext';
-import { Toaster } from 'react-hot-toast';
 import { ConfirmationProvider } from './context/ConfirmationContext';
 import { SalesProvider } from './context/SalesContex';
 import { DashboardProvider } from './context/DashboardContext';

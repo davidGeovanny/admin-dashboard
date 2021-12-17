@@ -1,15 +1,74 @@
 import React, {  useContext, useEffect, useReducer, useState } from 'react'
 import adminApi from '../helpers/adminApi';
-import { EmployeeResponse, Employee, UpdateEmployeeResponse, UpdateResponse, UpdateResponsePassword, UpdateEmployeeData, UpdatePasswordData } from '../interfaces/ProfilePageInterface';
+import { 
+  EmployeeResponse, 
+  Employee, 
+  UpdateEmployeeResponse, 
+  UpdateResponse, 
+  UpdateResponsePassword, 
+  UpdateEmployeeData, 
+  UpdatePasswordData 
+} from '../interfaces/ProfilePageInterface';
 import { AuthContext } from '../context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useToastNotification } from '../hooks/useToastNotification';
+import { UserResponse } from '../interfaces/ProfileInterface';
 
 //contraseña actual '123456'
 
+interface EmployeeValues {
+  name:            string;
+  first_lastname:  string;
+  second_lastname: string;
+  email:           string;
+  gender:          string;
+};
+
+interface UserValues {
+  user:        string;
+  id_employee: number;
+};
+
 export const ProfilePage = () => {
-  // get the log user 
-  const {user} = useContext(AuthContext)
+  const { user } = useContext( AuthContext );
+
+  const [ employeeValues, setEmployeeValues ] = useState<EmployeeValues>({
+    name:            '',
+    first_lastname:  '',
+    second_lastname: '',
+    email:           '',
+    gender:          '',
+  });
+
+  const [ userValues, setUserValues ] = useState<UserValues>({
+    user:        '',
+    id_employee: 0,
+  });
+
+
+  const getUserData = async () => {
+    if( !user ) return;
+
+    try {
+      const { data } = await adminApi.get<UserResponse>(`/users`, {
+        params: { id: user.id }
+      });
+
+      setUserValues({
+        id_employee: data.data[0].id_employee,
+        user: data.data[0].username,
+      });
+
+      return data;
+    } catch ( err ) {
+      return undefined;
+    }
+  }
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+  
 
   const initState = {
     loading: false
