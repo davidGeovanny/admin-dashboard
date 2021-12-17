@@ -7,7 +7,7 @@ import {
 
 import { CommissionsPage } from '../pages/Commissions/CommissionsPage';
 import { DashboardPage } from '../pages/Dashboard/DashboardPage';
-import { ProfilePage } from '../pages/ProfilePage';
+// import { ProfilePage } from '../pages/ProfilePage';
 // import { NotificationCenterPage } from '../pages/NotificationCenterPage';
 // import { MessageCenterPage } from '../pages/MessageCenterPage';
 import { Sidebar } from '../components/Sidebar/Sidebar';
@@ -38,11 +38,11 @@ export const DashboardRouter = () => {
               component={ CommissionsPage }
             />
 
-            <Route
+            {/* <Route
               exact
               path='/profile'
               component={ ProfilePage }
-            />
+            /> */}
 
             {/* <Route
               exact
