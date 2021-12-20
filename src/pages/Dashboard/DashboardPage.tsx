@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DashboardContext } from '../../context/DashboardContext';
-import { ColumnDefinitionType } from '../../types/SimpleTableType';
-import { TopClient, TopProduct } from '../../interfaces/SaleInterface';
 import { DashboardForm } from './DashboardForm';
 import { DashboardCards } from './DashboardCards';
 import { ProfileImage } from '../../components/Image/ProfileImage';
 import { ChartCard } from '../../components/Chart/ChartCard';
 import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
+import { ColumnDefinitionType } from '../../types/SimpleTableType';
+import { TopClient, TopProduct } from '../../interfaces/SaleInterface';
 import { formatCurrency, formatNumberWithCommas } from '../../helpers/format';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
@@ -17,7 +17,7 @@ const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
     cell:   ( value ) => (
       <ProfileImage
         colorRandom={ true }
-        figure='circle'
+        figure="circle"
         text={ value.client.slice(0, 1) }
         height={ 25 }
         width={ 25 }
@@ -78,81 +78,85 @@ export const DashboardPage = () => {
   }, [ period ]);
 
   return (
-    <div className='container-fluid'>
+    <div className="container-fluid">
 
-      <h3 className='wrapper justify-content-between'>
+      <h3 className="wrapper justify-content-between">
         <span>Información: { period }</span>
         <span 
-          className='pointer' 
+          className="pointer" 
           onClick={ () => setShow( !show )}
         >
-          <i className={`fas ${ show ? 'fa-chevron-up' : 'fa-chevron-down' }`}></i>
+          <i className={`fas ${ show ? "fa-chevron-up" : "fa-chevron-down" }`}></i>
         </span>
       </h3>
 
-      <DashboardForm show={ show } />
+      <div className={`row mx-1 my-1 justify-content-end ${ !show ? "d-none" : "fadeIn" } `}>
+        <div className="col-xl-10 col-lg-10 col-12">
+          <DashboardForm />
+        </div>
+      </div>
 
       <DashboardCards />
 
-      <div className='row'>
-        <div className='col-xl-8 col-lg-7'>
+      <div className="row">
+        <div className="col-xl-8 col-lg-7">
           <ChartCard
             loading={ loading }
             title={`Ingresos de los ${ productsTopFrequent.length } productos más vendidos`}
-            typeChart='bar'
+            typeChart="bar"
             data={ productsTopFrequent }
-            columnName='product'
-            columnShortName='short_product'
-            columnValue='money'
+            columnName="product"
+            columnShortName="short_product"
+            columnValue="money"
             maintainRatio={ false }
           />
         </div>
 
-        <div className='col-xl-4 col-lg-5'>
+        <div className="col-xl-4 col-lg-5">
           <ChartCard
             loading={ loading }
-            title='Ingresos por tipo de productos'
-            typeChart='doughnut'
+            title="Ingresos por tipo de productos"
+            typeChart="doughnut"
             data={ typeProductRevenue }
-            columnName='type_product'
-            columnShortName='type_product'
-            columnValue='money'
+            columnName="type_product"
+            columnShortName="type_product"
+            columnValue="money"
             maintainRatio={ false }
           />
         </div>
       </div>
 
-      <div className='row justify-content-center mb-4'>
-        <div className='col-xl-10 col-lg-10'>
+      <div className="row justify-content-center mb-4">
+        <div className="col-xl-10 col-lg-10">
           <SimpleTableCard
             data={ productsTopIncome } 
             columns={ productColumns } 
             loading={ loading } 
-            title='Productos con mayor ingreso'
+            title="Productos con mayor ingreso"
           />
         </div>
       </div>
 
-      <div className='row mb-4'>
-        <div className='col-xl-4 col-lg-6'>
+      <div className="row mb-4">
+        <div className="col-xl-4 col-lg-6">
           <ChartCard
             loading={ loading }
-            title='Ventas de sucursales'
-            typeChart='pie'
+            title="Ventas de sucursales"
+            typeChart="pie"
             data={ branchesRevenue }
-            columnName='branch_company'
-            columnShortName='branch_company'
-            columnValue='money'
+            columnName="branch_company"
+            columnShortName="branch_company"
+            columnValue="money"
             maintainRatio={ false }
           />
         </div>
 
-        <div className='col-xl-8 col-lg-6'>
+        <div className="col-xl-8 col-lg-6">
           <SimpleTableCard
             data={ clientsTopIncome } 
             columns={ clientColumns } 
             loading={ loading } 
-            title='Clientes con mayor ingreso'
+            title="Clientes con mayor ingreso"
           />
         </div>
 

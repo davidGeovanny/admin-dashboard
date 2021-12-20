@@ -37,8 +37,8 @@ export const CommissionsPage = () => {
   } = useContext( SalesContext );
 
   const [ showCommissions, setShowCommissions ] = useState({
-    water: false,
-    icebar: false,
+    water:   false,
+    icebar:  false,
     icecube: false,
   });
 
@@ -51,7 +51,11 @@ export const CommissionsPage = () => {
   
   return (
     <div className='container-fluid'>
-      <CommissionsForm loading={ loadingCommissions } />
+      <div className="row">
+        <div className="col-12">
+          <CommissionsForm loading={ loadingCommissions } />
+        </div>
+      </div>
 
       <hr />
     

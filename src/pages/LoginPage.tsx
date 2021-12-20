@@ -1,27 +1,28 @@
 import React, { useContext, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from 'formik';
+
 import { AuthContext } from '../context/AuthContext';
 import { LoginData } from '../interfaces/LoginInterface';
 
 
 export const LoginPage = () => {
-  const defaultValues: LoginData = {
+  const initialValues: LoginData = {
     username: '',
     password: '',
   };
 
   const { signIn, loading } = useContext( AuthContext );
-  const onSubmit = ( data: LoginData, formikHelpers: FormikHelpers<LoginData> ) => {
+  const handleSubmit = ( data: LoginData, formikHelpers: FormikHelpers<LoginData> ) => {
     signIn({ username: data.username, password: data.password });
   }
 
-  const validationSchema = Yup.object({
+  const validationSchema: Yup.SchemaOf<LoginData> = Yup.object({
     username: Yup.string()
                  .required('El nombre de usuario es obligatorio'),
     password: Yup.string()
                  .required('La contraseña es obligatoria'),
-  });
+  }).defined();
 
   useEffect(() => {
     const body = document.querySelector('body');
@@ -47,8 +48,8 @@ export const LoginPage = () => {
                     </div>
 
                     <Formik 
-                      initialValues={ defaultValues }
-                      onSubmit={ onSubmit }
+                      initialValues={ initialValues }
+                      onSubmit={ handleSubmit }
                       validationSchema={ validationSchema }
                     >
                       {( { errors, touched } ) => (
@@ -78,7 +79,7 @@ export const LoginPage = () => {
                             { 
                               loading 
                                 ? <> <i className="fas fa-spinner fa-pulse"></i> Cargando, espere... </>
-                                : "Iniciar sesión" 
+                                : 'Iniciar sesión' 
                             }
                           </button>
                         </Form>

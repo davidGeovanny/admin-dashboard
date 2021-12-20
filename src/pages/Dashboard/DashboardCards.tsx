@@ -17,8 +17,8 @@ export const DashboardCards = () => {
       {/* Earning period card */}
       <DashboardCard
         title={`Ingresos (${ period })`}
-        content={ loading ? <div className='loading-section'><Loading color='#4e73df' /></div> : formatCurrency( totalRevenue ) }
-        icon='fa-dollar-sign'
+        content={ loading ? <div className="loading-section"><Loading color="#4e73df" /></div> : formatCurrency( totalRevenue ) }
+        icon="fa-dollar-sign"
       />
     </div>
   );
