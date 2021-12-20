@@ -37,7 +37,7 @@ export const CommissionsForm = ({ loading }: Props) => {
       onSubmit={ handleSubmit }
       validationSchema={ validationSchema }
     >
-      {( { errors, touched } ) => (
+      {( { errors, touched, values } ) => (
         <Form className="user">
           <div className="row">
             <div className="col-lg-5 col-md-6 col-12 mb-lg-0 mb-md-0 mb-2">
@@ -49,6 +49,9 @@ export const CommissionsForm = ({ loading }: Props) => {
                   className={`form-control ${ ( errors.initDate && touched.initDate ) ? "is-invalid" : "" }`}
                   placeholderText="Seleccione la fecha inicial"
                   dateFormat="MMMM d, yyyy"
+                  startDate={ values.initDate }
+                  endDate={ values.finalDate }
+                  selectsStart
                 />
               </div>
               <ErrorMessage name="initDate" component="div" className="invalid-feedback" />
@@ -63,6 +66,11 @@ export const CommissionsForm = ({ loading }: Props) => {
                   className={`form-control ${ ( errors.finalDate && touched.finalDate ) ? "is-invalid" : "" }`}
                   placeholderText="Seleccione la fecha final"
                   dateFormat="MMMM d, yyyy"
+                  startDate={ values.initDate }
+                  endDate={ values.finalDate }
+                  minDate={ values.initDate }
+                  selectsEnd
+                  showMonthDropdown
                 />
               </div>
               <ErrorMessage name="finalDate" component="div" className="invalid-feedback" />

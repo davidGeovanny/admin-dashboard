@@ -58,7 +58,7 @@ export const DashboardForm = () => {
       validationSchema={ validationSchema }
       validate={ handleValidate }
     >
-      {( { errors, touched } ) => (
+      {( { errors, touched, values } ) => (
         <Form className="user">
           <div className="row justify-content-end">
             <div className="col-xl-4 col-lg-4 col-12 mb-xl-0 mb-lg-0 mb-2">
@@ -70,6 +70,9 @@ export const DashboardForm = () => {
                   placeholderText="Seleccione la fecha inicial"
                   dateFormat="MMMM d, yyyy"
                   disabled={ period !== 'Personalizado' }
+                  startDate={ values.initDate }
+                  endDate={ values.finalDate }
+                  selectsStart
                 />
               </div>
               <ErrorMessage name="initDate" component="div" className="invalid-feedback" />
@@ -84,6 +87,10 @@ export const DashboardForm = () => {
                   placeholderText="Seleccione la fecha final"
                   dateFormat="MMMM d, yyyy"
                   disabled={ period !== 'Personalizado' }
+                  startDate={ values.initDate }
+                  endDate={ values.finalDate }
+                  minDate={ values.initDate }
+                  selectsEnd
                 />
               </div>
               <ErrorMessage name="finalDate" component="div" className="invalid-feedback" />
