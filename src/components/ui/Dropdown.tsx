@@ -58,7 +58,7 @@ export const Dropdown = <T,>( {
 
   return (
     <div 
-      className={`drop${ position }`}
+      className={`select-drop${ position }`}
       ref={ dropdownDiv }
     >
       <button

@@ -3,6 +3,8 @@ import React, { useContext } from 'react';
 // import { TopbarMenu } from './TopbarMenu';
 import { TopbarProfileMenu } from './TopbarProfileMenu';
 import { SidebarContext } from '../../context/SidebarContext';
+// import { TopbarMenu } from './TopbarMenu';
+// import { topbar__messages, topbar__notifications } from '../../data/topbar';
 // import { topbarNotifications, topbarMessages } from '../../data/topbar';
 
 export const Topbar = () => {
@@ -25,7 +27,7 @@ export const Topbar = () => {
             icon: 'fa-bell'
           }}
           title='Centro de notificaciones'
-          items={ topbarNotifications }
+          items={ topbar__notifications }
           url='/notification-center'
         />
 
@@ -35,7 +37,7 @@ export const Topbar = () => {
             icon: 'fa-envelope'
           }}
           title='Centro de mensajes'
-          items={ topbarMessages }
+          items={ topbar__messages }
           url='/message-center'
         /> */}
 
