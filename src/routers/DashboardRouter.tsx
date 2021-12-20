@@ -12,6 +12,17 @@ import { DashboardPage } from '../pages/Dashboard/DashboardPage';
 // import { MessageCenterPage } from '../pages/MessageCenterPage';
 import { Sidebar } from '../components/Sidebar/Sidebar';
 import { Topbar } from '../components/Topbar/Topbar';
+import { MyProfilePage } from '../pages/MyProfile/MyProfilePage';
+
+import { MyProfileProvider } from '../context/MyProfileContext';
+
+const MyProfilePageState: React.FC = () => {
+  return (
+    <MyProfileProvider>
+      <MyProfilePage />
+    </MyProfileProvider>
+  );
+}
 
 export const DashboardRouter = () => {
   return (
@@ -38,11 +49,11 @@ export const DashboardRouter = () => {
               component={ CommissionsPage }
             />
 
-            {/* <Route
+            <Route
               exact
               path='/profile'
-              component={ ProfilePage }
-            /> */}
+              component={ MyProfilePageState }
+            />
 
             {/* <Route
               exact

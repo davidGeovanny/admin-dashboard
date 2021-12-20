@@ -57,6 +57,7 @@ export const DashboardForm = () => {
       onSubmit={ handleSubmit }
       validationSchema={ validationSchema }
       validate={ handleValidate }
+      enableReinitialize={ true }
     >
       {( { errors, touched, values } ) => (
         <Form className="user">

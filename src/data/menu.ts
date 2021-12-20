@@ -29,14 +29,14 @@ export const menu: SidebarMenu[] = [
       ]
     }
   },
-  // {
-  //   item: {
-  //     id: v4(),
-  //     name: 'Profile',
-  //     redirection: '/profile'
-  //   },
-  //   icon: 'fa-user',
-  // },
+  {
+    item: {
+      id: v4(),
+      name: 'Profile',
+      redirection: '/profile'
+    },
+    icon: 'fa-user',
+  },
   // {
   //   item: {
   //     id: v4(),
