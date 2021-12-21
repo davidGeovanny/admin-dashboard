@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { MyProfileEmployee } from './MyProfileEmployee';
 import { MyProfileUser } from './MyProfileUser';
+import { MyProfileContext } from '../../context/MyProfileContext';
+import { AuthContext } from '../../context/AuthContext';
 
 export const MyProfilePage = () => {
+  const { user } = useContext( AuthContext );
+  const { getSpecificUser } = useContext( MyProfileContext );
+
+  useEffect(() => {
+    if( !user ) return;
+    getSpecificUser( user.id );
+  }, [ user ]);
 
   return (
     <div className="container-fluid">

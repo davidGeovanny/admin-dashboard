@@ -25,7 +25,7 @@ export const DatePicker = ({ ...props }: Props) => {
       { ...field }
       { ...props }
       locale="es"
-      selected={ ( field.value && new Date( field.value ) ) || null }
+      selected={ ( field.value ) ? new Date( field.value ) : null }
       onChange={ handleChange }
       closeOnScroll={ true }
     />
