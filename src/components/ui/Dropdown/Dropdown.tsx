@@ -68,7 +68,7 @@ export const Dropdown = <T,>({
       </button>
 
       
-      <div className={`dropdown-menu dropdown-${ variant } ${ show && 'show' }`}>
+      <ul className={`dropdown-menu dropdown-${ variant } ${ show && 'show' }`}>
         {
           data.map( ( item, index )  => (
             <li
@@ -80,7 +80,7 @@ export const Dropdown = <T,>({
             </li>
           ))
         }
-      </div>
+      </ul>
     </div>
   );
 }

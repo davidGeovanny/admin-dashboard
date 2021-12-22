@@ -103,9 +103,9 @@ export const DashboardForm = () => {
               <ErrorMessage name="finalDate" component="div" className="invalid-feedback" />
             </div>
 
-            <div className="col-xl-3 col-lg-3 col-12">
+            <div className="col-xl-3 col-lg-3 col-md-8 col-6">
               <div className="row justify-content-end" >
-                <div className="col-9" style={{ paddingRight: 0 }}>
+                <div className="col-9" style={{ paddingRight: 0, paddingLeft: 0 }}>
                   <Dropdown
                     data={ dashboard__dropdownData }
                     name="period"
@@ -114,7 +114,7 @@ export const DashboardForm = () => {
                     className="btn-square"
                   />
                 </div>
-                <div className="col-3" style={{ paddingLeft: 0 }}>
+                <div className="col-3" style={{ paddingLeft: 0, paddingRight: 0 }}>
                   <button className="btn btn-primary btn-square w-100">
                     <i className="fas fa-sync-alt"></i>
                   </button>
