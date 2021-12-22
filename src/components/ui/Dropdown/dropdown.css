@@ -204,3 +204,22 @@
 .select-dropright .dropdown-menu {
   padding: .5rem !important;
 }
+
+.select-dropdown .dropdown-menu li.dropdown-item::first-letter,
+.select-dropdown .dropdown-menu li.dropdown-item::first-letter,
+.select-dropup .dropdown-menu li.dropdown-item::first-letter,
+.select-dropup .dropdown-menu li.dropdown-item::first-letter,
+.select-dropleft .dropdown-menu li.dropdown-item::first-letter,
+.select-dropleft .dropdown-menu li.dropdown-item::first-letter,
+.select-dropright .dropdown-menu li.dropdown-item::first-letter,
+.select-dropright .dropdown-menu li.dropdown-item::first-letter,
+.select-dropdown button.btn,
+.select-dropdown button.btn,
+.select-dropup button.btn,
+.select-dropup button.btn,
+.select-dropleft button.btn,
+.select-dropleft button.btn,
+.select-dropright button.btn,
+.select-dropright button.btn {
+  text-transform: capitalize;
+}

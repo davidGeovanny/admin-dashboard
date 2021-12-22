@@ -28,4 +28,5 @@ export interface PropsSales {
 export interface DashboardFormData {
 	initDate : Date | null;
 	finalDate: Date | null;
+  period:    RangePeriod;
 };

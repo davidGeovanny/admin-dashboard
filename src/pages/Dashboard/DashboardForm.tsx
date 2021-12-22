@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { Formik, Form, ErrorMessage, FormikHelpers } from 'formik';
 
 import { DashboardContext } from '../../context/DashboardContext';
-import { Dropdown } from '../../components/ui/Dropdown';
+import { Dropdown } from '../../components/ui/Dropdown/Dropdown';
 import { DatePicker } from '../../components/ui/DatePicker/DatePicker';
 import { DashboardFormData } from '../../interfaces/DashboardInterface';
 
@@ -24,6 +24,7 @@ export const DashboardForm = () => {
   const initialValues: DashboardFormData = {
     initDate,
     finalDate,
+    period,
   }
 
   const validationSchema: Yup.SchemaOf<DashboardFormData> = Yup.object({
@@ -35,7 +36,8 @@ export const DashboardForm = () => {
               .required('La fecha final es obligatoria')
               .min( Yup.ref('initDate'), 'La fecha final debe ser mayor a la fecha inicial' )
               .nullable(),
-  });
+    period: Yup.mixed().oneOf([ dashboard__dropdownData ])
+  }).defined();
 
   const handleSubmit = ( data: DashboardFormData, {  }: FormikHelpers<DashboardFormData> ) => {
     getSalesData();
@@ -48,6 +50,10 @@ export const DashboardForm = () => {
     
     if( data.finalDate ) {
       changeFinalDate( data.finalDate );
+    }
+
+    if( data.period !== period ) {
+      changePeriod( data.period );
     }
   }
 
@@ -80,11 +86,11 @@ export const DashboardForm = () => {
             </div>
 
             <div className="col-xl-4 col-lg-4 col-12 mb-xl-0 mb-lg-0 mb-2">
-              <div className={`input-group ${ period !== 'Personalizado' ? "d-none" : "fadeIn" } ${ ( errors.finalDate && touched.finalDate ) ? "is-invalid" : "" }`}>
+              <div className={`input-group ${ period !== 'Personalizado' ? 'd-none' : 'fadeIn' } ${ ( errors.finalDate && touched.finalDate ) ? 'is-invalid' : '' }`}>
                 <DatePicker
                   name="finalDate"
                   autoComplete="off"
-                  className={`form-control ${ ( errors.finalDate && touched.finalDate ) ? "is-invalid" : "" }`}
+                  className={`form-control ${ ( errors.finalDate && touched.finalDate ) ? 'is-invalid' : '' }`}
                   placeholderText="Seleccione la fecha final"
                   dateFormat="MMMM d, yyyy"
                   disabled={ period !== 'Personalizado' }
@@ -97,18 +103,22 @@ export const DashboardForm = () => {
               <ErrorMessage name="finalDate" component="div" className="invalid-feedback" />
             </div>
 
-            <div className="col-xl-3 col-lg-3 col-12 mr-xl-0 mr-lg-0 mr-2">
-              <div className="row justify-content-end">
-                <Dropdown
-                  data={ dashboard__dropdownData }
-                  defaultOption={ period }
-                  onChange={ changePeriod }
-                  position="left"
-                  loading={ loading }
-                />
-                <button className="btn btn-primary btn-square">
-                  <i className="fas fa-sync-alt"></i>
-                </button>
+            <div className="col-xl-3 col-lg-3 col-12">
+              <div className="row justify-content-end" >
+                <div className="col-9" style={{ paddingRight: 0 }}>
+                  <Dropdown
+                    data={ dashboard__dropdownData }
+                    name="period"
+                    position="left"
+                    loading={ loading }
+                    className="btn-square"
+                  />
+                </div>
+                <div className="col-3" style={{ paddingLeft: 0 }}>
+                  <button className="btn btn-primary btn-square w-100">
+                    <i className="fas fa-sync-alt"></i>
+                  </button>
+                </div>
               </div>
             </div>
 

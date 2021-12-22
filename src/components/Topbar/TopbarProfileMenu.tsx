@@ -48,10 +48,10 @@ export const TopbarProfileMenu = React.memo(() => {
         onMouseEnter={ () => handleMouseEvent( true ) }
         onMouseLeave={ () => handleMouseEvent( false ) }
       >
-        {/* <span className='dropdown-item' onClick={ () => redirect('/profile') }>
+        <span className='dropdown-item' onClick={ () => redirect('/profile') }>
           <i className='fas fa-user fa-sm fa-fw mr-2 text-gray-400'></i>
-          Profile
-        </span> */}
+          Mi perfil
+        </span>
 
         <div className='dropdown-divider'></div>
 

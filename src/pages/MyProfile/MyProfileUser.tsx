@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, ErrorMessage, FormikHelpers } from 'formik';
+
 import { Input } from '../../components/ui/Input/Input';
 import { MyProfileContext } from '../../context/MyProfileContext';
 
@@ -12,7 +13,7 @@ interface UserFormData {
 };
 
 export const MyProfileUser = () => {
-  const { user } = useContext( MyProfileContext );
+  const { user, loading, updatePasswordUser } = useContext( MyProfileContext );
 
   const initialValues: UserFormData = {
     user:             user?.username,
@@ -30,8 +31,17 @@ export const MyProfileUser = () => {
     current_password: Yup.string().required('Necesita ingresar su contraseña actual'),
   });
 
-  const handleSubmit = ( data: UserFormData, formikHelpers: FormikHelpers<UserFormData> ) => {
-    console.log('submit');
+  const handleSubmit = async ( data: UserFormData, formikHelpers: FormikHelpers<UserFormData> ) => {
+    if( !user ) return;
+
+    await updatePasswordUser({
+      id:              user.id,
+      password:        data.password,
+      currentPassword: data.current_password,
+      confirmPassword: data.repeat_password,
+    });
+
+    formikHelpers.resetForm();
   }
 
   return (
@@ -101,8 +111,16 @@ export const MyProfileUser = () => {
             </div>
 
             <div className="col-12 mt-1">
-              <button className="btn btn-primary btn-block" type="submit">
-                Actualizar usuario
+              <button 
+                className="btn btn-primary btn-block" 
+                type="submit"
+                disabled={ loading }
+              >
+                { 
+                  loading 
+                    ? <> <i className="fas fa-spinner fa-pulse"></i> Cargando, espere... </>
+                    : 'Actualizar usuario' 
+                }
               </button>
             </div>
 

@@ -15,7 +15,7 @@ export const MyProfilePage = () => {
 
   return (
     <div className="container-fluid">
-      <h2>Mi información</h2>
+      <h2>Mi información personal</h2>
 
       <div className="row">
         <div className="col-xl-4 col-12 py-2">
