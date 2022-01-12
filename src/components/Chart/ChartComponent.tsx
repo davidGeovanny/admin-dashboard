@@ -3,8 +3,11 @@ import { Chart, registerables } from 'chart.js';
 import { v4 } from 'uuid';
 
 import { Loading } from '../Loading/Loading';
+import { Image } from '../Image/Image';
 import { ChartProps } from '../../types/ChartType';
 import { formatCurrency } from '../../helpers/format';
+
+import no_data from '../../assets/svg/no_data.svg';
 
 Chart.register( ...registerables );
 
@@ -131,8 +134,24 @@ export const ChartComponent = <T, K extends keyof T>({
     )
     : ( data.length === 0 )
       ? (
-        <div className='loading-section'>
-          No hay información para mostrar
+        <div className='loading-section row'>
+          <div className='col-12 text-center'>
+            No hay información para mostrar
+          </div>
+          <div className='col-12' style={{
+            textAlign:'center',
+            height: '80%',
+            width: '80%',
+          }}>
+              <Image
+                src={ no_data }
+                className='img-profile'
+                style={{
+                  height: '100%',
+                  width: '100%',
+                }}
+              />
+          </div>
         </div>
       )
       : (

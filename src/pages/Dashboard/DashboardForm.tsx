@@ -111,7 +111,7 @@ export const DashboardForm = () => {
                     name="period"
                     position="left"
                     loading={ loading }
-                    className="btn-square"
+                    className="btn-square "
                   />
                 </div>
                 <div className="col-3" style={{ paddingLeft: 0, paddingRight: 0 }}>
