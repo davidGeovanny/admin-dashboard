@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
+
 import { SalesContext } from '../../context/SalesContex';
 import { CommissionsTable } from './CommissionsTable';
 import { CommissionsForm } from './CommissionsForm';
-import { Commission } from '../../interfaces/SaleInterface';
+import { Commission } from '../../interfaces/api/Sale/GetCommissions';
 import { CommissionsSection } from '../../types/SalesType';
 import { ColumnDefinitionType } from '../../types/SimpleTableType';
 import { formatCurrency } from '../../helpers/format';

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import { MyProfileEmployee } from './MyProfileEmployee';
-import { MyProfileUser } from './MyProfileUser';
+
 import { MyProfileContext } from '../../context/MyProfileContext';
 import { AuthContext } from '../../context/AuthContext';
+import { MyProfileEmployeeForm } from './MyProfileEmployeeForm';
+import { MyProfileUserForm } from './MyProfileUserForm';
 
 export const MyProfilePage = () => {
   const { user } = useContext( AuthContext );
@@ -25,7 +26,7 @@ export const MyProfilePage = () => {
             </div>
               
             <div className='card-body border-left-primary'>
-              <MyProfileUser />
+              <MyProfileUserForm />
             </div>
           </div>
         </div>
@@ -37,7 +38,7 @@ export const MyProfilePage = () => {
             </div>
               
             <div className='card-body border-left-primary'>
-              <MyProfileEmployee />
+              <MyProfileEmployeeForm />
             </div>
           </div>
         </div>

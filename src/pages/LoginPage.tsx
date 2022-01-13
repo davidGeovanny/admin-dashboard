@@ -3,21 +3,20 @@ import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from 'formik';
 
 import { AuthContext } from '../context/AuthContext';
-import { LoginData } from '../interfaces/LoginInterface';
-
+import { LoginRequest } from '../interfaces/api/Auth/AuthInterface';
 
 export const LoginPage = () => {
-  const initialValues: LoginData = {
+  const initialValues: LoginRequest = {
     username: '',
     password: '',
   };
 
   const { signIn, loading } = useContext( AuthContext );
-  const handleSubmit = ( data: LoginData, formikHelpers: FormikHelpers<LoginData> ) => {
+  const handleSubmit = ( data: LoginRequest, formikHelpers: FormikHelpers<LoginRequest> ) => {
     signIn({ username: data.username, password: data.password });
   }
 
-  const validationSchema: Yup.SchemaOf<LoginData> = Yup.object({
+  const validationSchema: Yup.SchemaOf<LoginRequest> = Yup.object({
     username: Yup.string()
                  .required('El nombre de usuario es obligatorio'),
     password: Yup.string()

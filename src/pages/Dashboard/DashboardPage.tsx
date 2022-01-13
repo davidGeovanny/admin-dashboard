@@ -6,8 +6,8 @@ import { ProfileImage } from '../../components/Image/ProfileImage';
 import { ChartCard } from '../../components/Chart/ChartCard';
 import { SimpleTableCard } from '../../components/SimpleTable/SimpleTableCard';
 import { ColumnDefinitionType } from '../../types/SimpleTableType';
-import { TopClient, TopProduct } from '../../interfaces/SaleInterface';
 import { formatCurrency, formatNumberWithCommas } from '../../helpers/format';
+import { TopClient, TopProduct } from '../../interfaces/models/SaleInterface';
 
 const clientColumns: ColumnDefinitionType<TopClient, keyof TopClient>[] = [
   {

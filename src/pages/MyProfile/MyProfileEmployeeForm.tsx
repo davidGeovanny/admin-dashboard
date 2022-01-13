@@ -14,7 +14,7 @@ interface EmployeeFormData {
   gender:          string;
 };
 
-export const MyProfileEmployee = () => {
+export const MyProfileEmployeeForm = () => {
   const { employee, loading, updateEmployee } = useContext( MyProfileContext );
 
   const initialValues: EmployeeFormData = {

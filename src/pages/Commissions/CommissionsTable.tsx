@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { SimpleTable } from '../../components/SimpleTable/SimpleTable';
 import { ExcelLocalExport } from '../../components/Export/Excel/ExcelLocalExport';
 import { TableCommissionsProps } from '../../types/SalesType';

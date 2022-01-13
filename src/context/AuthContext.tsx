@@ -1,10 +1,11 @@
 import React, { createContext, useEffect, useReducer } from 'react';
+
 import { AuthReducer } from '../reducer/AuthReducer';
+import { apiValidateUserToken, apiLogin } from '../api/AuthApi';
 import { useToastNotification } from '../hooks/useToastNotification';
-import { LoginResponse, LoginData, UserLogin } from '../interfaces/LoginInterface';
-import { RegisterData, RegisterResponse } from '../interfaces/RegisterInterface';
+import { LoginRequest } from '../interfaces/api/Auth/AuthInterface';
+import { UserLogin } from '../interfaces/models/UserInterface';
 import { AuthState } from '../interfaces/AuthState';
-import adminApi from '../helpers/adminApi';
 
 interface ContextProps {
   status:       'checking' | 'authenticated' | 'not-authenticated';
@@ -13,8 +14,7 @@ interface ContextProps {
   loading:      boolean;
   withError:    boolean;
   errorMessage: string;
-  signUp:       ( registerData: RegisterData ) => Promise<boolean>;
-  signIn:       ( loginData: LoginData ) => void;
+  signIn:       ( loginData: LoginRequest ) => void;
   logOut:       () => void;
   removeError:  () => void;
 }
@@ -47,19 +47,20 @@ export const AuthProvider: React.FC = ({ children }) => {
       if( !token ) {
         return dispatch({ type: 'notAuthenticated' });
       }
-      
-      const resp = await adminApi.get<LoginResponse>('/auth');
-      if( resp.status !== 200 ) {
+
+      const { status, data } = await apiValidateUserToken();
+
+      if( status !== 200 ) {
         return dispatch({ type: 'notAuthenticated' });
       }
-  
-      localStorage.setItem('token', resp.data.token);
+
+      localStorage.setItem('token', data.token);
   
       dispatch({
         type: 'signUp',
         payload: {
-          token: resp.data.token,
-          user:  resp.data.user
+          token: data.token,
+          user:  data.user
         }
       });
     } catch ( error:  any ) {
@@ -67,11 +68,11 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
   
-  const signIn = async({ username, password }: LoginData ) => {
+  const signIn = async( request: LoginRequest ) => {
     try {
       dispatch({ type: 'setLoading' });
 
-      const { data } = await adminApi.post<LoginResponse>('/auth/login', { username, password });
+      const { data } = await apiLogin( request );
 
       localStorage.setItem( 'token', data.token );
 
@@ -105,32 +106,6 @@ export const AuthProvider: React.FC = ({ children }) => {
       });
     }
   };
-  
-  const signUp = async ( registerData: RegisterData ): Promise<boolean> =>  {
-    try {
-      dispatch({ type: 'setLoading' });
-
-      const resp = await adminApi.post<RegisterResponse>('/auth/register', registerData);
-
-      if( resp.status === 201 ) {
-        return true;
-      } 
-      return false;
-    } catch ( error: any ) {
-      displayToast({
-        message:  error.response?.data.msg || 'Datos incorrectos',
-        type:     'danger',
-        duration: Infinity
-      });  
-
-      dispatch({
-        type:    'addError',
-        payload: error.response?.data.msg || 'Datos incorrectos'
-      });
-
-      return false;
-    }
-  }
 
   const logOut = () =>  {
     localStorage.removeItem('token');
@@ -146,7 +121,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     <AuthContext.Provider
       value={{
         ...state,
-        signUp,
         signIn,
         logOut,
         removeError,

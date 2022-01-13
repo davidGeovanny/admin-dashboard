@@ -1,37 +1,26 @@
 import React, { createContext, useState } from 'react';
-import { User, Employee, SpecificUserResponse } from '../interfaces/UserInterface';
+
+import { apiGetUserEmployee, apiUpdateUserPassword } from '../api/UserApi';
+import { apiUpdateEmployee } from '../api/EmployeeApi';
 import { useToastNotification } from '../hooks/useToastNotification';
-import adminApi from '../helpers/adminApi';
-
-interface UpdateEmployee {
-  id:              number;
-  name:            string;
-  first_lastname:  string;
-  second_lastname: string;
-  email:           string;
-  gender:          string;
-};
-
-interface UpdatePassword {
-  id:              number;
-  password:        string;
-  confirmPassword: string;
-  currentPassword: string;
-}
+import { Employee } from '../interfaces/models/EmployeeInterface';
+import { User } from '../interfaces/models/UserInterface';
+import { UpdateUserPasswordRequest } from '../interfaces/api/User/UpdateUserPasswordInterface';
+import { UpdateEmployeeRequest } from '../interfaces/api/Employee/UpdateEmployeeInterface';
 
 interface ContextProps {
   user:     User | null;
   employee: Employee | null;
   loading:  boolean;
   getSpecificUser:    ( id: number ) => void;
-  updatePasswordUser: ( data: UpdatePassword ) => void;
-  updateEmployee:     ( data: UpdateEmployee ) => void;
+  updatePasswordUser: ( data: UpdateUserPasswordRequest ) => void;
+  updateEmployee:     ( data: UpdateEmployeeRequest ) => void;
 }
 
 export const MyProfileContext = createContext( {} as ContextProps );
 
 export const MyProfileProvider: React.FC = ({ children }) => {
-  const { displayToast, deleteAllToasts } = useToastNotification();
+  const { displayToast } = useToastNotification();
 
   const [ user, setUser ]         = useState<User | null>( null );
   const [ employee, setEmployee ] = useState<Employee | null>( null );
@@ -41,32 +30,33 @@ export const MyProfileProvider: React.FC = ({ children }) => {
     try {
       setLoading( true );
 
-      const { data: respData } = await adminApi.get<SpecificUserResponse>(`/users/${ id }`);
-      const { ok, data } = respData;
+      const { data: resp } = await apiGetUserEmployee( id );
+      const { employee, ...user } = resp.data;
 
-      if( !ok ) {
+      if( !resp.ok ) {
+        // TODO: Mostrar toast con error
         return;
       }
 
-      setUser( data );
-      setEmployee( data.employee );
-
+      setUser( user );
+      setEmployee( employee );
     } catch ( error ) {
-      console.log( error );
+      console.log( {error} );
     }
     
     setLoading( false );
   }
 
-  const updatePasswordUser = async ({ id, password, confirmPassword, currentPassword }: UpdatePassword) => {
+  const updatePasswordUser = async ( request: UpdateUserPasswordRequest ) => {
     try {
       setLoading( true );
 
-      const { data } = await adminApi.put(`/users/${ id }/change-password`, {
-        password,
-        password_confirmation: confirmPassword,
-        current_password:      currentPassword,
-      });
+      const { data: resp } = await apiUpdateUserPassword( request );
+
+      if( !resp.ok ) {
+        // TODO: Mostrar toast con error
+        return;
+      }
 
       displayToast({
         position: 'top-right',
@@ -87,13 +77,18 @@ export const MyProfileProvider: React.FC = ({ children }) => {
     setLoading( false );
   }
 
-  const updateEmployee = async ({ id, ...rest }: UpdateEmployee) => {
+  const updateEmployee = async ( request: UpdateEmployeeRequest ) => {
     try {
       setLoading( true );
 
-      const { data } = await adminApi.put(`/employees/${ id }`, { ...rest });
+      const { data: resp } = await apiUpdateEmployee( request );
 
-      setEmployee( data.data );
+      if( !resp.ok ) {
+        // TODO: Mostrar toast con error
+        return;
+      }
+
+      setEmployee( resp.data );
 
       displayToast({
         position: 'top-right',

@@ -1,11 +1,6 @@
 import { RangePeriod } from '../types/DashboardType';
 import { DashboardState } from '../interfaces/DashboardInterface';
-import { 
-	TopProduct, 
-	TopClient, 
-	TopBranches, 
-	TopTypeProduct 
-} from '../interfaces/SaleInterface';
+import { TopBranch, TopClient, TopProduct, TopTypeProduct } from '../interfaces/models/SaleInterface';
 
 type DashboardAction = 
 	| { type: 'setLoading' }
@@ -13,7 +8,7 @@ type DashboardAction =
 	| { type: 'setProductsTopFrequent', payload: TopProduct[] }
 	| { type: 'setProductsTopIncome', 	payload: TopProduct[] }
 	| { type: 'setClientsTopIncome', 		payload: TopClient[] }
-	| { type: 'setBranchesRevenue', 		payload: TopBranches[] }
+	| { type: 'setBranchesRevenue', 		payload: TopBranch[] }
 	| { type: 'setTypeProductRevenue', 	payload: TopTypeProduct[] }
 	| { type: 'setPeriod',		payload: RangePeriod }
 	| { type: 'setInitDate',	payload: Date }

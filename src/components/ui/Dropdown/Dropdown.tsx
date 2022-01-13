@@ -63,10 +63,14 @@ export const Dropdown = <T,>({
         disabled={ loading }
       >
         { position === 'left' && renderIcon() }
-        {' '}{ ( field.value ) ? field.value : 'Seleccionar' }{' '}
+        <span className='d-none d-sm-inline'>
+          {' '}{ ( field.value ) ? field.value : 'Seleccionar' }{' '}
+        </span>
+        <span className=' d-sm-none'>
+          {' '}{ ( field.value ) ? ( typeof field.value === 'string' ? field.value.charAt(0) : field.value ) : 'Seleccionar' }{' '}
+        </span>
         { position !== 'left' && renderIcon() }
       </button>
-
       
       <ul className={`dropdown-menu dropdown-${ variant } ${ show && 'show' }`}>
         {

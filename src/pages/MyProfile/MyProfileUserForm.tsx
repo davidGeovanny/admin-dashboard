@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, ErrorMessage, FormikHelpers } from 'formik';
 
-import { Input } from '../../components/ui/Input/Input';
 import { MyProfileContext } from '../../context/MyProfileContext';
+import { Input } from '../../components/ui/Input/Input';
 
 interface UserFormData {
   user:             string | undefined;
@@ -12,7 +12,7 @@ interface UserFormData {
   current_password: string;
 };
 
-export const MyProfileUser = () => {
+export const MyProfileUserForm = () => {
   const { user, loading, updatePasswordUser } = useContext( MyProfileContext );
 
   const initialValues: UserFormData = {

@@ -1,20 +1,16 @@
 import React, { createContext, useReducer, useEffect } from 'react';
+
 import { DashboardReducer } from '../reducer/DashboardReducer';
 import { useToastNotification } from '../hooks/useToastNotification';
+import { getTopFromSales } from '../api/SaleApi';
+import { DashboardState, PropsTopFromSales } from '../interfaces/DashboardInterface';
+import { GetTopBranchesResponse } from '../interfaces/api/Sale/GetTopBranchesInterface';
+import { GetTopClientsResponse } from '../interfaces/api/Sale/GetTopClientsInterface';
+import { GetTopProductsResponse } from '../interfaces/api/Sale/GetTopProductsInterface';
+import { GetTopTypeProductsResponse } from '../interfaces/api/Sale/GetTopTypeProductsInterface';
+import { TopBranch, TopClient, TopProduct, TopTypeProduct } from '../interfaces/models/SaleInterface';
 import { RangePeriod } from '../types/DashboardType';
-import {
-  TopBranches,
-  TopBranchesResponse,
-  TopClient,
-  TopClientsResponse,
-  TopProduct,
-  TopProductsResponse,
-  TopTypeProduct,
-  TopTypeProductsResponse
-} from '../interfaces/SaleInterface';
-import { DashboardState, PropsSales } from '../interfaces/DashboardInterface';
 import { formatDate } from '../helpers/format';
-import adminApi from '../helpers/adminApi';
 
 interface ContextProps {
   period:              RangePeriod;
@@ -23,7 +19,7 @@ interface ContextProps {
   productsTopFrequent: TopProduct[];
   productsTopIncome:   TopProduct[];
   clientsTopIncome:    TopClient[];
-  branchesRevenue:     TopBranches[];
+  branchesRevenue:     TopBranch[];
   typeProductRevenue:  TopTypeProduct[];
   loading:             boolean;
   getSalesData:        () => Promise<void>;
@@ -51,17 +47,6 @@ export const DashboardProvider: React.FC = ({ children }) => {
   const [ state, dispatch ] = useReducer( DashboardReducer, dashboardInitState );
   const { displayToast }    = useToastNotification();
 
-  const getTopFromSales = async <T,>({ endpoint, initDate, finalDate, params }: PropsSales): Promise<T | undefined> => {
-    try {
-      const { data } = await adminApi.get<T>(`/sales/${ endpoint }/`, { 
-        params: { initDate, finalDate, ...params }
-      });
-      return data;
-    } catch ( err ) {
-      return undefined;
-    }
-  }
-
   const getSalesData = async () => {
     try {
       const { initDate, finalDate, loading } = state;
@@ -77,12 +62,12 @@ export const DashboardProvider: React.FC = ({ children }) => {
       if( !initDate && !finalDate ) return;
 
       dispatch({ type: 'setLoading' });
-      const commonData: PropsSales = { endpoint: '', initDate: formatDate( initDate ), finalDate: formatDate( finalDate ) };
+      const commonData: PropsTopFromSales = { endpoint: '', initDate: formatDate( initDate ), finalDate: formatDate( finalDate ) };
   
-      const dataProducts = await getTopFromSales<TopProductsResponse>({ ...commonData, endpoint: 'top-products', params: { limit: 10 } });
-      const clientsIncome = await getTopFromSales<TopClientsResponse>({ ...commonData, endpoint: 'top-clients' });
-      const branchesRevenue = await getTopFromSales<TopBranchesResponse>({ ...commonData, endpoint: 'top-branches' });
-      const typeProductRevenue = await getTopFromSales<TopTypeProductsResponse>({ ...commonData, endpoint: 'top-type-product' });
+      const dataProducts = await getTopFromSales<GetTopProductsResponse>({ ...commonData, endpoint: 'top-products', params: { limit: 10 } });
+      const clientsIncome = await getTopFromSales<GetTopClientsResponse>({ ...commonData, endpoint: 'top-clients' });
+      const branchesRevenue = await getTopFromSales<GetTopBranchesResponse>({ ...commonData, endpoint: 'top-branches' });
+      const typeProductRevenue = await getTopFromSales<GetTopTypeProductsResponse>({ ...commonData, endpoint: 'top-type-product' });
   
       dispatch({ type: 'setProductsTopFrequent', payload: dataProducts       ? dataProducts.by_frequency         : [] });
       dispatch({ type: 'setProductsTopIncome',   payload: dataProducts       ? dataProducts.by_money.slice(0, 5) : [] });

@@ -1,4 +1,4 @@
-import { UserLogin } from './LoginInterface';
+import { UserLogin } from './models/UserInterface';
 
 export interface AuthState {
   errorMessage: string;

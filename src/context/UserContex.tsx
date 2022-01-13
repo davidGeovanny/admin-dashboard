@@ -3,8 +3,8 @@ import React, { createContext } from 'react';
 interface ContextProps {
 }
 
-const userInitState: {} = {
-};
+// const userInitState: {} = {
+// };
 
 export const UserContext = createContext( {} as ContextProps );
 

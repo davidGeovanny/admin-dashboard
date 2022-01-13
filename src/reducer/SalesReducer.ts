@@ -1,4 +1,8 @@
-import { SalesState, Commission } from '../interfaces/SaleInterface';
+import { Commission } from '../interfaces/api/Sale/GetCommissions';
+import { 
+	SalesState, 
+	// Commission 
+} from '../interfaces/SaleInterface';
 
 type SalesAction = 
 	| { type: 'setLoadingCommission' }

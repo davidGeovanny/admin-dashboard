@@ -1,5 +1,5 @@
 import { AuthState } from '../interfaces/AuthState';
-import { UserLogin } from '../interfaces/LoginInterface';
+import { UserLogin } from '../interfaces/models/UserInterface';
 
 type AuthAction =
   | { type: 'signUp', payload: { token: string, user: UserLogin } }

@@ -1,12 +1,9 @@
 import React, { createContext, useReducer } from 'react';
+
 import { SalesReducer } from '../reducer/SalesReducer';
 import { useToastNotification } from '../hooks/useToastNotification';
-import { 
-  SalesState, 
-  CommissionResponse, 
-  Commission,
-  CommissionFormData
-} from '../interfaces/SaleInterface';
+import { SalesState } from '../interfaces/SaleInterface';
+import { Commission, GetCommissionsRequest, GetCommissionsResponse } from '../interfaces/api/Sale/GetCommissions';
 import { formatDate } from '../helpers/format';
 import adminApi from '../helpers/adminApi';
 
@@ -15,7 +12,7 @@ interface ContextProps {
   waterCommissions:   Commission[];
   icebarCommissions:  Commission[];
   icecubeCommissions: Commission[];
-  getCommissions:     ( dates: CommissionFormData ) => void;
+  getCommissions:     ( dates: GetCommissionsRequest ) => void;
 }
 
 const salesInitState: SalesState = {
@@ -32,7 +29,7 @@ export const SalesProvider: React.FC = ({ children }) => {
   const [ state, dispatch ] = useReducer( SalesReducer, salesInitState );
   const { deleteAllToasts, displayToast } = useToastNotification();
 
-  const getCommissions = async ({ initDate, finalDate }: CommissionFormData) => {
+  const getCommissions = async ({ initDate, finalDate }: GetCommissionsRequest) => {
     try {
 
       if( state.loadingCommissions ) {
@@ -44,7 +41,7 @@ export const SalesProvider: React.FC = ({ children }) => {
       }
 
       dispatch({ type: 'setLoadingCommission' });
-      const { data } = await adminApi.get<CommissionResponse>('/sales/commissions/', {
+      const { data } = await adminApi.get<GetCommissionsResponse>('/sales/commissions/', {
         params: {
           initDate:  formatDate( initDate ),
           finalDate: formatDate( finalDate ),

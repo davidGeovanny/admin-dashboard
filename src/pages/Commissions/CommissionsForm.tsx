@@ -4,19 +4,19 @@ import { Formik, Form, ErrorMessage, FormikHelpers } from 'formik';
 
 import { SalesContext } from '../../context/SalesContex';
 import { DatePicker } from '../../components/ui/DatePicker/DatePicker';
-import { CommissionFormData } from '../../interfaces/SaleInterface';
+import { GetCommissionsRequest } from '../../interfaces/api/Sale/GetCommissions';
 
 interface Props { loading: boolean; }
 
 export const CommissionsForm = ({ loading }: Props) => {
   const { getCommissions } = useContext( SalesContext );
 
-  const initialValues: CommissionFormData = {
+  const initialValues: GetCommissionsRequest = {
     initDate:  null,
     finalDate: null,
   };
 
-  const validationSchema: Yup.SchemaOf<CommissionFormData> = Yup.object({
+  const validationSchema: Yup.SchemaOf<GetCommissionsRequest> = Yup.object({
     initDate: Yup.date()
               .required('La fecha inicial es obligatoria')
               .max( Yup.ref('finalDate'), 'La fecha inicial debe ser mayor a la fecha final' )
@@ -27,7 +27,7 @@ export const CommissionsForm = ({ loading }: Props) => {
               .nullable(),
   });
 
-  const handleSubmit = ( data: CommissionFormData, {  }: FormikHelpers<CommissionFormData> ) => {
+  const handleSubmit = ( data: GetCommissionsRequest, {  }: FormikHelpers<GetCommissionsRequest> ) => {
     getCommissions({ initDate: data.initDate, finalDate: data.finalDate });
   }
 
