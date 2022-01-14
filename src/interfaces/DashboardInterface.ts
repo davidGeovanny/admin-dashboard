@@ -1,7 +1,7 @@
 import { RangePeriod } from '../types/DashboardType';
 import { TopBranch, TopClient, TopProduct, TopTypeProduct } from './models/SaleInterface';
 
-export interface DashboardState {
+export interface DashboardContextState {
 	period:              RangePeriod;
   initDate:            Date;
   finalDate:           Date;
@@ -11,13 +11,6 @@ export interface DashboardState {
   branchesRevenue:     TopBranch[];
   typeProductRevenue:  TopTypeProduct[];
   loading:             boolean;
-}
-
-export interface PropsTopFromSales {
-  endpoint:  string;
-  initDate:  string;
-  finalDate: string;
-  params?:   { [ x: string ] : string | number };
 }
 
 export interface DashboardFormData {

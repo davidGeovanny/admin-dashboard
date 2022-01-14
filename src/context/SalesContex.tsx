@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from 'react';
 
 import { SalesReducer } from '../reducer/SalesReducer';
 import { useToastNotification } from '../hooks/useToastNotification';
-import { SalesState } from '../interfaces/SaleInterface';
+import { SalesContextState } from '../interfaces/SaleInterface';
 import { Commission, GetCommissionsRequest, GetCommissionsResponse } from '../interfaces/api/Sale/GetCommissions';
 import { formatDate } from '../helpers/format';
 import adminApi from '../helpers/adminApi';
@@ -15,7 +15,7 @@ interface ContextProps {
   getCommissions:     ( dates: GetCommissionsRequest ) => void;
 }
 
-const salesInitState: SalesState = {
+const salesInitState: SalesContextState = {
   loadingCommissions: false,
   waterCommissions:   [],
   icebarCommissions:  [],

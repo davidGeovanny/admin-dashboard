@@ -5,7 +5,7 @@ import { apiValidateUserToken, apiLogin } from '../api/AuthApi';
 import { useToastNotification } from '../hooks/useToastNotification';
 import { LoginRequest } from '../interfaces/api/Auth/AuthInterface';
 import { UserLogin } from '../interfaces/models/UserInterface';
-import { AuthState } from '../interfaces/AuthState';
+import { AuthContextState } from '../interfaces/AuthContextInterface';
 
 interface ContextProps {
   status:       'checking' | 'authenticated' | 'not-authenticated';
@@ -19,7 +19,7 @@ interface ContextProps {
   removeError:  () => void;
 }
 
-const authInitState: AuthState = {
+const authInitState: AuthContextState = {
   status:       'checking',
   loading:      false,
   token:        null,

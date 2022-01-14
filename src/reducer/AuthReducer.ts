@@ -1,4 +1,4 @@
-import { AuthState } from '../interfaces/AuthState';
+import { AuthContextState } from '../interfaces/AuthContextInterface';
 import { UserLogin } from '../interfaces/models/UserInterface';
 
 type AuthAction =
@@ -9,7 +9,7 @@ type AuthAction =
   | { type: 'logout' }
   | { type: 'setLoading' }
 
-export const AuthReducer = ( state: AuthState, action: AuthAction ): AuthState => {
+export const AuthReducer = ( state: AuthContextState, action: AuthAction ): AuthContextState => {
   switch ( action.type ) {
     case 'addError':
       return {

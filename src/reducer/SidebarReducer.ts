@@ -1,10 +1,10 @@
-import { SidebarState } from '../interfaces/SidebarInterface';
+import { SidebarContextState } from '../interfaces/SidebarInterface';
 
 type Actions = 
   | { type: 'collapse-menu' }
   | { type: 'collapse-submenu', payload: { id: string, isOpen: boolean } }
 
-export const SidebarReducer = ( state: SidebarState, action: Actions ): SidebarState => {
+export const SidebarReducer = ( state: SidebarContextState, action: Actions ): SidebarContextState => {
   switch ( action.type ) {
     case 'collapse-menu':
       return {

@@ -2,18 +2,18 @@ import React, { createContext, useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SidebarReducer } from '../reducer/SidebarReducer';
-import { SidebarState } from '../interfaces/SidebarInterface';
+import { SidebarContextState } from '../interfaces/SidebarInterface';
 
 import { menu } from '../data/menu';
 
 interface ContextProps {
-  menuState:         SidebarState;
+  menuState:         SidebarContextState;
   onCollapseSidebar: () => void;
   onCollapseSubmenu: ( id: string, isOpen: boolean ) => void;
   redirectTo:        ( url: string ) => void;
 }
 
-const initSidebarState: SidebarState = {
+const initSidebarState: SidebarContextState = {
   menu,
   isSidebarCollapsed: false,
 };

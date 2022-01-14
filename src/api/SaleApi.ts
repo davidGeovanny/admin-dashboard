@@ -1,4 +1,4 @@
-import { PropsTopFromSales } from '../interfaces/DashboardInterface';
+import { PropsTopFromSales } from '../interfaces/api/Sale/GetTopFromSales';
 import adminApi from '../helpers/adminApi';
 
 export const getTopFromSales = async <T,>({ endpoint, initDate, finalDate, params }: PropsTopFromSales): Promise<T | undefined> => {

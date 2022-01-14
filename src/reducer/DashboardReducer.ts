@@ -1,5 +1,5 @@
 import { RangePeriod } from '../types/DashboardType';
-import { DashboardState } from '../interfaces/DashboardInterface';
+import { DashboardContextState } from '../interfaces/DashboardInterface';
 import { TopBranch, TopClient, TopProduct, TopTypeProduct } from '../interfaces/models/SaleInterface';
 
 type DashboardAction = 
@@ -14,7 +14,7 @@ type DashboardAction =
 	| { type: 'setInitDate',	payload: Date }
 	| { type: 'setFinalDate', payload: Date }
 
-export const DashboardReducer =  ( state: DashboardState, action: DashboardAction ): DashboardState => {
+export const DashboardReducer =  ( state: DashboardContextState, action: DashboardAction ): DashboardContextState => {
 	switch ( action.type ) {
 
 		case 'setFinalDate':

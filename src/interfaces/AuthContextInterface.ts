@@ -1,6 +1,6 @@
 import { UserLogin } from './models/UserInterface';
 
-export interface AuthState {
+export interface AuthContextState {
   errorMessage: string;
   withError:    boolean;
   loading:      boolean;

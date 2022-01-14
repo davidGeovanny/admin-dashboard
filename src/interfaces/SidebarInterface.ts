@@ -1,3 +1,8 @@
+export interface SidebarContextState {
+  menu:               SidebarMenu[];
+  isSidebarCollapsed: boolean;
+}
+
 export interface SidebarMenu {
   icon:     string;
   item:     SidebarItem;
@@ -14,9 +19,4 @@ export interface SidebarSubmenu {
   header: string;
   isOpen: boolean;
   items:  SidebarItem[];
-}
-
-export interface SidebarState {
-  menu:               SidebarMenu[];
-  isSidebarCollapsed: boolean;
 }

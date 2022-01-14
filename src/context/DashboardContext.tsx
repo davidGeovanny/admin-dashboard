@@ -3,7 +3,7 @@ import React, { createContext, useReducer, useEffect } from 'react';
 import { DashboardReducer } from '../reducer/DashboardReducer';
 import { useToastNotification } from '../hooks/useToastNotification';
 import { getTopFromSales } from '../api/SaleApi';
-import { DashboardState, PropsTopFromSales } from '../interfaces/DashboardInterface';
+import { DashboardContextState } from '../interfaces/DashboardInterface';
 import { GetTopBranchesResponse } from '../interfaces/api/Sale/GetTopBranchesInterface';
 import { GetTopClientsResponse } from '../interfaces/api/Sale/GetTopClientsInterface';
 import { GetTopProductsResponse } from '../interfaces/api/Sale/GetTopProductsInterface';
@@ -11,6 +11,7 @@ import { GetTopTypeProductsResponse } from '../interfaces/api/Sale/GetTopTypePro
 import { TopBranch, TopClient, TopProduct, TopTypeProduct } from '../interfaces/models/SaleInterface';
 import { RangePeriod } from '../types/DashboardType';
 import { formatDate } from '../helpers/format';
+import { PropsTopFromSales } from '../interfaces/api/Sale/GetTopFromSales';
 
 interface ContextProps {
   period:              RangePeriod;
@@ -28,7 +29,7 @@ interface ContextProps {
   changeFinalDate:     ( date: Date | null ) => void;
 }
 
-const dashboardInitState: DashboardState = {
+const dashboardInitState: DashboardContextState = {
   period:    'Mensual',
   initDate:  new Date(),
   finalDate: new Date(),
