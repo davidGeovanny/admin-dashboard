@@ -12,6 +12,7 @@ interface ContextProps {
   waterCommissions:   Commission[];
   icebarCommissions:  Commission[];
   icecubeCommissions: Commission[];
+  deliveryPointCommissions: Commission[];
   getCommissions:     ( dates: GetCommissionsRequest ) => void;
 }
 
@@ -20,6 +21,7 @@ const salesInitState: SalesContextState = {
   waterCommissions:   [],
   icebarCommissions:  [],
   icecubeCommissions: [],
+  deliveryPointCommissions: [],
 }
 
 export const SalesContext = createContext( {} as ContextProps );
@@ -56,6 +58,7 @@ export const SalesProvider: React.FC = ({ children }) => {
           water:   data.water_commissions,
           icebar:  data.icebar_commissions,
           icecube: data.icecube_commissions,
+          deliveryPoint: data.delivery_point_commissions,
         }
       });
 
@@ -77,6 +80,7 @@ export const SalesProvider: React.FC = ({ children }) => {
           water:   [],
           icebar:  [],
           icecube: [],
+          deliveryPoint: [],
         }
       });
     }

@@ -6,7 +6,7 @@ import {
 
 type SalesAction = 
 	| { type: 'setLoadingCommission' }
-	| { type: 'setCommissions', payload: { water: Commission[], icebar: Commission[], icecube: Commission[] } }
+	| { type: 'setCommissions', payload: { water: Commission[], icebar: Commission[], icecube: Commission[], deliveryPoint: Commission[] } }
 
 export const SalesReducer =  ( state: SalesContextState, action: SalesAction ): SalesContextState => {
 	switch ( action.type ) {
@@ -23,6 +23,7 @@ export const SalesReducer =  ( state: SalesContextState, action: SalesAction ): 
 				waterCommissions: 	action.payload.water,
 				icebarCommissions: 	action.payload.icebar,
 				icecubeCommissions: action.payload.icecube,
+				deliveryPointCommissions: action.payload.deliveryPoint,
 			};
 	
 		default:

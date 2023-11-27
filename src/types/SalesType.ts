@@ -1,6 +1,6 @@
 import { ColumnDefinitionType } from './SimpleTableType';
 
-export type CommissionsSection = 'water' | 'icebar' | 'icecube';
+export type CommissionsSection = 'water' | 'icebar' | 'icecube' | 'deliveryPoint';
 
 export type TableCommissionsProps<T, K extends keyof T, Y> = {
 	section: 		 CommissionsSection;

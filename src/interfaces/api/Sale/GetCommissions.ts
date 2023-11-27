@@ -8,6 +8,7 @@ export interface GetCommissionsResponse {
   water_commissions:   Commission[];
   icebar_commissions:  Commission[];
   icecube_commissions: Commission[];
+  delivery_point_commissions: Commission[];
 }
 
 export interface Commission {

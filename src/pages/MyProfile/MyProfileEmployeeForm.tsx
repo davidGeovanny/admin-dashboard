@@ -87,7 +87,7 @@ export const MyProfileEmployeeForm = () => {
                 <Input
                   autoComplete="off"
                   name="second_lastname"
-                  label="Apellido paterno del empleado"
+                  label="Apellido materno del empleado"
                   placeholder="Ingrese su apellido matero"
                   className={`${ ( errors.second_lastname && touched.second_lastname ) ? 'is-invalid' : '' }`}
                 />

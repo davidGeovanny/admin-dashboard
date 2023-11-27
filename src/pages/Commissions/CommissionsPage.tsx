@@ -34,13 +34,15 @@ export const CommissionsPage = () => {
     loadingCommissions, 
     waterCommissions, 
     icebarCommissions, 
-    icecubeCommissions 
+    icecubeCommissions, 
+    deliveryPointCommissions,
   } = useContext( SalesContext );
 
   const [ showCommissions, setShowCommissions ] = useState({
     water:   false,
     icebar:  false,
     icecube: false,
+    deliveryPoint: false,
   });
 
   const changeSetShowCommission = ( value: boolean, section: CommissionsSection ) => {
@@ -94,6 +96,18 @@ export const CommissionsPage = () => {
             dataExport={ icecubeCommissions.map( item => ({ Sucursal: item.branch, Empleado: item.employee, 'Comisión': item.commission }) ) }
             columns={ columns }
             title='Comisiones de cubo'
+            loading={ loadingCommissions }
+          />
+        </div>
+        <div className='col-12'>
+          <CommissionsTable 
+            show={ showCommissions.deliveryPoint }
+            setShow={ changeSetShowCommission }
+            section='deliveryPoint'
+            data={ deliveryPointCommissions }
+            dataExport={ deliveryPointCommissions.map( item => ({ Sucursal: item.branch, Empleado: item.employee, 'Comisión': item.commission }) ) }
+            columns={ columns }
+            title='Comisiones de punto de entrega'
             loading={ loadingCommissions }
           />
         </div>

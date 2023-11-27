@@ -5,4 +5,5 @@ export interface SalesContextState {
 	waterCommissions:  	Commission[];
 	icebarCommissions: 	Commission[];
 	icecubeCommissions: Commission[];
+	deliveryPointCommissions: Commission[];
 }
