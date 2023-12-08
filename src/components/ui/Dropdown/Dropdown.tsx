@@ -12,6 +12,7 @@ interface Props<T> {
   loading?:  boolean;
   variant?:  'primary' | 'success' | 'warning' | 'danger' | 'info' | 'secondary' | 'dark';
   position?: 'up' | 'down' | 'right' | 'left';
+  onSelectedItem?: ( item: T ) => void;
 }
 
 export const Dropdown = <T,>({
@@ -20,6 +21,7 @@ export const Dropdown = <T,>({
   loading  = false,
   position = 'down',
   variant  = 'primary',
+  onSelectedItem = (item: T) => {},
   ...props
 }: Props<T>) => {
   const { setFieldValue } = useFormikContext();
@@ -41,6 +43,7 @@ export const Dropdown = <T,>({
       setFieldValue( field.name, dropItem );
     }
 
+    onSelectedItem( dropItem );
     setShow( false );
   }
 
@@ -72,9 +75,9 @@ export const Dropdown = <T,>({
         { position !== 'left' && renderIcon() }
       </button>
       
-      <ul className={`dropdown-menu dropdown-${ variant } ${ show && 'show' }`}>
+      <ul className={`dropdown-menu dropdown-${ variant } ${ show && 'show' } ${ position === 'down' || position === 'up' ? 'w-100' : '' }`}>
         {
-          data.map( ( item, index )  => (
+          data.map( ( item, index ) => (
             <li
               key={ index }
               className={`dropdown-item pointer ${ field.value === item && 'active' }`}

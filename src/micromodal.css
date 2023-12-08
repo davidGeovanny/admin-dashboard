@@ -40,6 +40,16 @@
   align-items: center;
 }
 
+.modal__footer_commission {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.modal__footer_commission button {
+  margin-left: 10px;
+}
+
 .modal__title {
   margin-top: 0;
   margin-bottom: 0;

@@ -33,8 +33,8 @@ export const Input = ({ name, label, ...props }: Props) => {
         { ...field }
         { ...props }
         type={ ( props.type ) ? props.type : 'text' }
-        placeholder={ ( props.placeholder ) ? props.placeholder : label }
-        value={ ( field.value ) ? field.value : '' }
+        placeholder={ ( props.placeholder !== null && props.placeholder !== undefined ) ? props.placeholder : label }
+        value={ ( field.value !== null && field.value !== undefined ) ? field.value : '' }
         onChange={ handleChange }
         onFocus={ handleFocus }
         onBlur={ handleBlur }

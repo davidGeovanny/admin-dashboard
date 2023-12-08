@@ -25,6 +25,11 @@ export const menu: SidebarMenu[] = [
           id: v4(),
           name: 'Comisiones',
           redirection: '/commissions',
+        },
+        {
+          id: v4(),
+          name: 'Configuración',
+          redirection: '/commissions-config',
         }
       ]
     }

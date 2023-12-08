@@ -1,19 +1,39 @@
+import { DeliveryPointCommissionConfigResponse, SaveDeliveryPointCommissionConfigResponse } from '../interfaces/api/CommissionConfig/DeliveryPointInterface';
+import adminApi from '../helpers/adminApi';
+import { DeliveryPointCommissionConfig } from '../interfaces/models/DeliveryPointCommissionConfigInterface';
 import { AxiosResponse } from 'axios';
 
-import { GetUserEmployeeResponse } from '../interfaces/api/User/GetUserEmployeeInterface';
-import { UpdateUserPasswordRequest, UpdateUserPasswordResponse } from '../interfaces/api/User/UpdateUserPasswordInterface';
-import adminApi from '../helpers/adminApi';
-
-export const apiGetUserEmployee = async ( id: number ): Promise<AxiosResponse<GetUserEmployeeResponse>> => {
-  return await adminApi.get<GetUserEmployeeResponse>(`/users/${ id }/employee`);
+export const apiGetDeliveryPointCommissionConfig = async (): Promise<DeliveryPointCommissionConfigResponse | undefined> => {
+  try {
+    const { data } = await adminApi.get<DeliveryPointCommissionConfigResponse>(`/delivery-point-commission-config/`, { 
+      params: { paginated: false }
+    });
+    return data;
+  } catch (error) {
+    return undefined;
+  }
 }
 
-export const apiUpdateUserPassword = async ( data: UpdateUserPasswordRequest ): Promise<AxiosResponse<UpdateUserPasswordResponse>> => {
-  const { id, password, confirmPassword, currentPassword } = data;
+export const apiSaveDeliveryPointCommissionConfig = async (data: DeliveryPointCommissionConfig): Promise<AxiosResponse<SaveDeliveryPointCommissionConfigResponse>> => {
+  const { id, min_range, max_range, percent, id_branch_company } = data;
 
-  return await adminApi.put(`/users/${ id }/change-password`, {
-    password,
-    password_confirmation: confirmPassword,
-    current_password:      currentPassword,
+  if (id === 0) {
+    return await adminApi.post(`/delivery-point-commission-config/`, {
+      min_range,
+      max_range,
+      percent,
+      id_branch_company,
+    });
+  }
+
+  return await adminApi.put(`/delivery-point-commission-config/${ id }`, {
+    min_range,
+    max_range,
+    percent,
+    id_branch_company,
   });
+}
+
+export const apiDeleteDeliveryPointCommissionConfig = async (id: number): Promise<AxiosResponse<SaveDeliveryPointCommissionConfigResponse>> => {
+  return await adminApi.delete(`/delivery-point-commission-config/${ id }`);
 }

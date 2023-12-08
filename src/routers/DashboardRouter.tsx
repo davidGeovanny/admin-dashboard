@@ -13,9 +13,9 @@ import { DashboardPage } from '../pages/Dashboard/DashboardPage';
 import { Sidebar } from '../components/Sidebar/Sidebar';
 import { Topbar } from '../components/Topbar/Topbar';
 import { MyProfilePage } from '../pages/MyProfile/MyProfilePage';
+import { CommissionsConfigPage } from '../pages/CommissionsConfig/CommissionsConfigPage';
 
 import { MyProfileProvider } from '../context/MyProfileContext';
-
 const MyProfilePageState: React.FC = () => {
   return (
     <MyProfileProvider>
@@ -53,6 +53,12 @@ export const DashboardRouter = () => {
               exact
               path='/profile'
               component={ MyProfilePageState }
+            />
+
+            <Route
+              exact
+              path='/commissions-config'
+              component={ CommissionsConfigPage }
             />
 
             {/* <Route
