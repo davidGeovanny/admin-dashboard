@@ -5,4 +5,5 @@ export interface DeliveryPointCommissionConfig {
 	id_branch_company: 	number;
 	branch?:           	string;
 	id:               	number;
+	type_product:      	string;
 }

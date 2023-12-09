@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import * as Yup from 'yup';
 import { ErrorMessage, Form, Formik, FormikTouched } from 'formik';
 import { CommissionConfigContext } from '../../context/CommissionConfigContext';
 import { DeliveryPointCommissionConfig } from '../../interfaces/models/DeliveryPointCommissionConfigInterface';
 import { Input } from '../../components/ui/Input/Input';
+import { Dropdown } from '../../components/ui/Dropdown/Dropdown';
 import '../../micromodal.css';
 
 const defaultValues: DeliveryPointCommissionConfig = {
@@ -13,6 +14,7 @@ const defaultValues: DeliveryPointCommissionConfig = {
 	percent:   					0.0,
 	id_branch_company: 	0,
 	id: 								0,
+	type_product: 			'AGUA EMBOTELLADA',
 }
 
 export const CommissionsConfigModalForm = () => {
@@ -29,6 +31,7 @@ export const CommissionsConfigModalForm = () => {
 		percent:   					deliveryPointCommissionConfigSelected?.percent || defaultValues.percent,
 		id_branch_company: 	deliveryPointCommissionConfigSelected?.id_branch_company || selectedBranch?.id || defaultValues.id_branch_company,
 		id: 								deliveryPointCommissionConfigSelected?.id || defaultValues.id,
+		type_product: 			deliveryPointCommissionConfigSelected?.type_product || defaultValues.type_product,
 	}
 
 	const handleSubmit = (data: DeliveryPointCommissionConfig) => {
@@ -58,6 +61,10 @@ export const CommissionsConfigModalForm = () => {
 			.required('El id es obligatorio'),
 		//-> branch no es obligatorio
 		branch: Yup.string(),
+		//-> type_product sí es obligatorio
+		type_product: Yup.string()
+			.required('El tipo de producto es obligatorio')
+			.oneOf(['BARRA', 'CUBO', 'AGUA EMBOTELLADA']),
 	});
 
   return (
@@ -125,6 +132,19 @@ export const CommissionsConfigModalForm = () => {
 													/>
 												</div>
 												<ErrorMessage name="percent" component="div" className="invalid-feedback" />
+											</div>
+											
+											<div className="col-md-8"></div>
+
+											<div className="col-sm-12 col-md-4 mt-3">
+												<div className={`input-group ${ ( errors.type_product && touched.type_product ) ? 'is-invalid' : '' }`}>
+													<Dropdown
+														data={ ['BARRA', 'CUBO', 'AGUA EMBOTELLADA'] }
+														name="type_product"
+														position='left'
+													/>
+												</div>
+												<ErrorMessage name="type_product" component="div" className="invalid-feedback" />
 											</div>
 										</div>
 									</main>

@@ -15,7 +15,7 @@ export const apiGetDeliveryPointCommissionConfig = async (): Promise<DeliveryPoi
 }
 
 export const apiSaveDeliveryPointCommissionConfig = async (data: DeliveryPointCommissionConfig): Promise<AxiosResponse<SaveDeliveryPointCommissionConfigResponse>> => {
-  const { id, min_range, max_range, percent, id_branch_company } = data;
+  const { id, min_range, max_range, percent, id_branch_company, type_product } = data;
 
   if (id === 0) {
     return await adminApi.post(`/delivery-point-commission-config/`, {
@@ -23,6 +23,7 @@ export const apiSaveDeliveryPointCommissionConfig = async (data: DeliveryPointCo
       max_range,
       percent,
       id_branch_company,
+      type_product,
     });
   }
 
@@ -31,6 +32,7 @@ export const apiSaveDeliveryPointCommissionConfig = async (data: DeliveryPointCo
     max_range,
     percent,
     id_branch_company,
+    type_product,
   });
 }
 

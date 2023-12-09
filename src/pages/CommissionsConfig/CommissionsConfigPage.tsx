@@ -60,7 +60,7 @@ const _CommissionsConfigPage = () => {
 											type="button"
 											onClick={ () => openModal(null) }
 										>
-												Nueva Configuración
+											Nueva Configuración
 										</button>
 									)
 									: ''
@@ -78,6 +78,7 @@ const _CommissionsConfigPage = () => {
 										<th>Rango Mínimo</th>
 										<th>Rango Máximo</th>
 										<th>Porcentaje de Comisión</th>
+										<th>Tipo de Producto</th>
 										{/* El TH de acciones debe abarcar solo lo que los botones ocupen */}
 										<th className='text-right w-15'>Acciones</th>
 									</tr>
@@ -89,6 +90,7 @@ const _CommissionsConfigPage = () => {
 												<td className='align-middle'>{ config.min_range }</td>
 												<td className='align-middle'>{ config.max_range }</td>
 												<td className='align-middle'>{ config.percent }</td>
+												<td className='align-middle'>{ config.type_product }</td>
 												<td className='align-middle' style={{
 													display: 'flex',
 													justifyContent: 'flex-end',

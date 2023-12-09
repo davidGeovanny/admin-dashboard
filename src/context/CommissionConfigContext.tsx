@@ -88,6 +88,7 @@ export const CommissionConfigProvider: React.FC = ({ children }) => {
 			dispatch({ type: 'setLoading' });
 
 			const { data: resp } = await apiSaveDeliveryPointCommissionConfig(config);
+			resp.data.type_product = config.type_product;
 
 			dispatch({
 				type: config.id === 0 ? 'insertDeliveryPointConfig' : 'updateDeliveryPointConfig',
